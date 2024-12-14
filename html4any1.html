@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="url">
+    <style>
+	    body {
+      margin: 0;
+      overflow: hidden;
+    }
+/*
+    #background-overlay {
+      position: absolute;
+      bottom:0;
+      right: 0;
+      width: 70%;
+      height: 70%;
+      z-index: -1;
+      transition: opacity 2s ease-in-out;
+    }
+
+    #background-overlay img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+*/
+    #background-container {
+      position: fixed;
+      bottom: 50px;
+      right: 0;
+      width: 70%;
+      height: 70%;
+      transition: opacity 1s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+	  z-index: -1;
+    }
+
+    #background-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    #slideshow-controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+    }
+
+    .control-button {
+      margin: 0 10px;
+      padding: 10px;
+      background-color: transparent;
+      color: #333;
+      border: none;
+      cursor: pointer;
+    }
+
+    #number-buttons {
+      display: flex;
+    }
+
+    .number-button {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #eef;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    .current-slide {
+      background-color: #dee;
+    }
+	.dropup {
+		position: relative;
+		display: inline-block;
+	}
+        /* Additional inline styles if needed */
+		a {
+		text-decoration: none;
+		}
+    </style>
+</head>
+<body>
+	<nav>
+		<menu>
+			<menuitem id="demo">
+				<a>Design</a>		
+				<menu>
+				<menuitem id="demo1">
+					<a>Drop1</a>
+					<menu>
+					<menuitem>
+						<a>Drop1a</a>
+						<menu>
+							<menuitem><a href="url">urlname</menuitem>
+							<menuitem><a href="url">urlname</menuitem>
+						</menu>
+					</menuitem>
+					<menuitem>
+						<a>Drop1b</a>
+						<menu>
+							<menuitem><a href="url">urlname</menuitem>
+							<menuitem><a href="url">urlname</menuitem>
+						</menu>
+					</menuitem>
+					<menuitem>
+						<a>Drop1c</a>
+						<menu>
+							<menuitem><a href="url">urlname</menuitem>
+							<menuitem><a href="url">urlname</menuitem>
+						</menu>
+					</menuitem>					
+					<menuitem>
+						<a>Drop1d</a>
+						<menu>
+							<menuitem><a href="url">urlname</menuitem>
+							<menuitem><a href="url">urlname</menuitem>
+						</menu>
+					</menuitem>
+					<menuitem><a href="url">urlname</menuitem>
+					<menuitem><a href="url">urlname</menuitem>			
+					</menu>
+				</menuitem>
+				<menuitem id="demo2">
+					<a>NOC</a>
+					<menu>
+					<menuitem><a href="url">urlname</menuitem>
+					<menuitem><a href="url">urlname</menuitem>
+					</menu>
+				</menuitem>
+				<menuitem id="demo3">	
+					<a>Security</a>
+					<menu>
+					<menuitem><a href="url">urlname</menuitem>
+					<menuitem><a href="url">urlname</menuitem>
+					</menu>				
+				</menuitem>
+				<menuitem id="demo4">
+					<a>Misc</a>
+					<menu>
+					<menuitem>
+						<a>Misc3</a>
+						<menu>
+							<menuitem><a href="url">urlname</menuitem>
+							<menuitem><a href="url">urlname</menuitem>
+						</menu>
+					</menuitem>
+					<menuitem>
+						<a>Misc2</a>
+						<menu>
+							<menuitem><a href="url">urlname</menuitem>
+							<menuitem><a href="url">urlname</menuitem>
+						</menu>
+					</menuitem>
+					<menuitem>
+						<a>Misc1</a>
+						<menu>
+							<menuitem><a href="url">urlname</menuitem>
+						</menu>
+					</menuitem>
+					<menuitem>
+						<a>Misc0</a>
+						<menu>			
+						</menu>
+					</menuitem>					
+					</menu>
+				</menuitem>
+				<menuitem id="demo5">
+					<a>AON</a>
+					<menu>
+					<menuitem><a href="url">urlname</menuitem>
+					<menuitem><a href="url">urlname</menuitem>
+					</menu>
+				</menuitem>									
+				</menu>
+			</menuitem>
+			<menuitem><a href="url">github</a></menuitem>
+			<menuitem><a href="url">K9s</menuitem>
+		</menu>
+	</nav>
+<div id="background-container">urlname</div>
+<div id="slideshow-controls">
+  <button class="control-button" onclick="prevSlide()">Prev</button>
+  <button class="control-button" onclick="nextSlide()">Next</button>
+  <div id="number-buttons">urlname</div>
+</div>
+<script>
+  const images = [
+imgname.jpg',
+imgname.jpg',
+imgname.jpg',
+imgname.jpg',
+imgname.jpg',
+imgname.jpg',
+imgname.jpg',
+imgname.jpg'
+    // Add more image URLs as needed
+  ];
+/*
+  let currentIndex = 0;
+  const backgroundOverlay = document.getElementById('background-overlay');
+
+  function changeBackground() {
+    backgroundOverlay.style.opacity = 0.5;
+
+    setTimeout(() => {
+      backgroundOverlay.innerHTML = `<img src="${images[currentIndex]}" alt="Background Image">`;
+      currentIndex = (currentIndex + 1) % images.length;
+      backgroundOverlay.style.opacity = 1;
+    }, 1000); // Adjust the duration based on your preference
+  }
+
+  // Initial background setup
+  changeBackground();
+
+  // Change background every 5 seconds (adjust the interval as needed)
+  setInterval(changeBackground, 10000);
+*/
+
+  let currentIndex = 0;
+  const backgroundContainer = document.getElementById('background-container');
+  const numberButtonsContainer = document.getElementById('number-buttons');
+
+  function updateBackground() {
+    backgroundContainer.style.opacity = 0;
+
+    setTimeout(() => {
+      backgroundContainer.innerHTML = `<img src="${images[currentIndex]}" alt="Slide ${currentIndex + 1}">`;
+      backgroundContainer.style.opacity = 1;
+    }, 1000); // Adjust the duration based on your preference
+
+    updateNumberButtons();
+  }
+
+  function updateNumberButtons() {
+    numberButtonsContainer.innerHTML = '';
+
+    images.forEach((_, index) => {
+      const button = document.createElement('div');
+      button.className = `number-button ${index === currentIndex ? 'current-slide' : ''}`;
+      button.addEventListener('click', () => {
+        currentIndex = index;
+        updateBackground();
+      });
+      numberButtonsContainer.appendChild(button);
+    });
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    updateBackground();
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % images.length;
+    updateBackground();
+  }
+
+  // Initial background setup
+  updateBackground();
+</script>
+</body>
+</html>
