@@ -3,16 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Viewer</title>
+    <title>DOCX Viewer</title>
+    <script src="https://cdn.jsdelivr.net/npm/mammoth/mammoth.browser.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #docx-container {
+            border: 1px solid #ddd;
+            padding: 20px;
+            overflow: auto;
+            max-height: 600px;
+        }
+    </style>
 </head>
 <body>
-    <h1>PDF Viewer</h1>
-    <iframe 
-        src="https://view.officeapps.live.com/op/embed.aspx?file=https://github.com/qaswarh/4any1/blob/main/packetcorekt.docx" 
-        width="100%" 
-        height="500px" 
-        style="border: none;">
-    </iframe>
+    <h1>DOCX Viewer</h1>
+    <div id="docx-container">Loading document...</div>
+    <script>
+        // Replace with the URL to your .docx file
+        const docxUrl = 'https://your-username.github.io/your-repo/docs/sample.docx';
+        
+        fetch(docxUrl)
+            .then(response => response.arrayBuffer())
+            .then(data => {
+                const options = {};
+                mammoth.convertToHtml({ arrayBuffer: data }, options)
+                    .then(result => {
+                        document.getElementById('docx-container').innerHTML = result.value;
+                    })
+                    .catch(err => {
+                        document.getElementById('docx-container').innerHTML = 'Error loading document.';
+                        console.error(err);
+                    });
+            });
+    </script>
 </body>
 </html>
+
 
