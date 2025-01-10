@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOCX Viewer</title>
+    <title>Mammoth.js DOCX Viewer</title>
     <script src="https://cdn.jsdelivr.net/npm/mammoth/mammoth.browser.min.js"></script>
     <style>
         body {
@@ -15,31 +15,37 @@
             padding: 20px;
             overflow: auto;
             max-height: 600px;
+            white-space: pre-wrap; /* For preserving formatting */
         }
     </style>
 </head>
 <body>
-    <h1>DOCX Viewer</h1>
+    <h1>Mammoth.js DOCX Viewer</h1>
     <div id="docx-container">Loading document...</div>
     <script>
-        // Replace with the URL to your .docx file
-        const docxUrl = 'https://github.com/qaswarh/4any1/blob/main/packetcorekt.docx';
+        // Replace this URL with the URL to your .docx file on GitHub Pages
+        const docxUrl = 'https://your-username.github.io/your-repo/docs/sample.docx';
         
+        // Fetch the .docx file as binary data
         fetch(docxUrl)
-            .then(response => response.arrayBuffer())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.arrayBuffer();
+            })
             .then(data => {
-                const options = {};
-                mammoth.convertToHtml({ arrayBuffer: data }, options)
-                    .then(result => {
-                        document.getElementById('docx-container').innerHTML = result.value;
-                    })
-                    .catch(err => {
-                        document.getElementById('docx-container').innerHTML = 'Error loading document.';
-                        console.error(err);
-                    });
+                // Use Mammoth.js to convert .docx to HTML
+                return mammoth.extractRawText({ arrayBuffer: data });
+            })
+            .then(result => {
+                // Display the extracted text in the container
+                document.getElementById('docx-container').innerHTML = result.value;
+            })
+            .catch(error => {
+                console.error('Error loading .docx file:', error);
+                document.getElementById('docx-container').innerHTML = 'Failed to load document.';
             });
     </script>
 </body>
 </html>
-
-
