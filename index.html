@@ -140,6 +140,10 @@
   <button class="control-button" onclick="nextSlide()">Next</button>
   <div id="number-buttons"></div>
 </div>
+<div id="docx-viewer">
+    <h2>Mammoth.js DOCX Viewer</h2>
+    <div id="docx-container">Loading document...</div>
+</div>	
 <script>
   const images = [
 'https://github.com/qaswarh/4any1/blob/main/2345G.JPG?raw=true',	  
@@ -191,6 +195,25 @@
 
   // Initial background setup
   updateBackground();
+</script>
+	<script src="https://cdn.jsdelivr.net/npm/mammoth/mammoth.browser.min.js"></script>
+<script>
+    const docxUrl = 'https://your-username.github.io/your-repo/docs/sample.docx';
+    fetch(docxUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.arrayBuffer();
+        })
+        .then(data => mammoth.extractRawText({ arrayBuffer: data }))
+        .then(result => {
+            document.getElementById('docx-container').innerHTML = result.value;
+        })
+        .catch(error => {
+            console.error('Error loading .docx file:', error);
+            document.getElementById('docx-container').innerHTML = 'Failed to load document.';
+        });
 </script>
 </body>
 </html>
