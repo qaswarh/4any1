@@ -71,6 +71,27 @@
 		a {
 		text-decoration: none;
 		}
+        .scroll-container {
+            width: 300px;
+            height: 50px;
+            overflow: hidden;
+            border: 1px solid white;
+            position: fixed;
+            top: 10px; /* Close to the top */
+            right: 20px; /* Similar to browser search bar placement */
+            background-color: rgba(0, 0, 0, 0.8); /* Slight transparency */
+            border-radius: 8px;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.5);
+        }
+        .scroll-content {
+            position: absolute;
+            top: 100%;
+            white-space: nowrap;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
     </style>
 </head>
 <body>
@@ -200,6 +221,36 @@
 
   // Initial background setup
   updateBackground();
+        async function loadGlossary() {
+            try {
+                const response = await fetch('glossary.txt');
+                const text = await response.text();
+                document.getElementById("scrollText").textContent = text.replace(/\n/g, ' ⚡ '); // Adds separator for better readability
+                startScrolling();
+            } catch (error) {
+                console.error('Error loading glossary:', error);
+            }
+        }
+
+        function startScrolling() {
+            const text = document.getElementById("scrollText");
+            let pos = text.offsetTop;
+
+            function scrollUp() {
+                pos -= 0.5; // Slower, smooth scroll
+                text.style.top = pos + "px";
+
+                if (pos < -text.scrollHeight) {
+                    pos = document.querySelector(".scroll-container").offsetHeight;
+                }
+                requestAnimationFrame(scrollUp);
+            }
+
+            scrollUp();
+        }
+
+        window.onload = loadGlossary;
+
 </script>
 
 </body>
