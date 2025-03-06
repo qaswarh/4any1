@@ -1,0 +1,34 @@
+Private IPv4 address blocks are 10.0.0.0 to 10.255.255.255 (10/8), 172.16.0.0 to 172.31.255.255.255 (172.16/8), and 192.168.0.0 to 192.168.255.255 (192.168/16)
+/27 mask has 5 host bits: 2^5 − 2 = 30 hosts. The bit-number representation of 255.255.255.248 (256-248 = 2^3=> 32-3=29) is /29
+A /26 (255.255.255.(256-2^6=192) mask has 26 network bits and 6 host bits 
+Upper-layer protocols are identified in the IP header’s Protocol field. TCP is protocol 6, and UDP is protocol 17.
+Loopback addresses should have a /32 mask so that address space is not wasted.
+The precedence bits are in the ‘Type of Service’ field of the IPv4 header.
+Multicast addresses range from 224.0.0.1 to 239.255.255.255.
+150.10.192.0/21 (2^3 from /24) summarizes subnetworks from 150.10.192.0/24 to 150.10.199.0/24. 
+Point-to-point links need only two host addresses. They use a /30 mask, which provides 2^2 − 2 = 2 host addresses.
+DHCP assigns IP addresses dynamically. DHCP can be used to specify several host IP configuration parameters, including IP address, mask, default gateway, DNS servers, and TFTP server.
+The minimum size of an IPv4 header is 20 bytes, without any option.
+Static NAT is used to statically translate public IP addresses to private IP addresses.
+NAT uses different IP addresses for translations. PAT uses different port numbers to identify translations
+The DS field of DSCP (Differentiated Services Code Point) allocates 6 bits in the Type of Service (ToS) field, thus making it capable of 64 distinct codepoints.
+The header checksum field only includes a checksum of the IP header; it does not check the data portion.
+The subnet is 172.56.4.0/22, the address range is from 172.56.4.1 to 172.56.7.254, network address 172.56.4.0, Subnet Mask: /22 (255.255.(256-2^2=252).0) and the subnet broadcast is 172.56.7.255.
+When packets are fragmented at the network layer, the fragments get reassembled at the IP layer in the destination host.
+DHCP can be used to configure the IP address, subnet mask, default gateway, and other optional parameters.
+Class B networks have 16 bits for host addresses with the default mask: 2^16 − 2 = 65,534.
+192.170.20.16/30 => .16 to .19 and 92.170.20.20/30 => .20 to .23 can be summarized by 192.170.20.16/29 => .16 to .23
+AF3 is backward compatible with IP precedence priority traffic with a binary of 011.
+IPv4 packets can be fragmented by the sending host and routers.
+Multicast addresses are received by a set of hosts subscribed to the multicast group.
+The three types of IPv4 address are unicast, broadcast, and multicast.
+End-user workstations, Cisco IP phones, and mobile devices should have their IP addresses assigned dynamically.
+Dynamic name resolution reduces administrative overhead. Name-to-IP address tables do not need to be configured.
+/28 leaves 4 bits to determine the number of host addresses: 2^4 − 2 = 16 − 2 = 14.
+E-commerce, Internet connection and Remote access/VPN are examples where private IPv4 address space can’t be used
+PAT technology allows a company to use a single public IP address when using private IPv4 addresses in the internal LAN
+RIPE is European RIR (Regional Internet Registry)
+VLSM allows you to divide address blocks into subnets of different sizes
+ARIN (American Registry for Internet Numbers) for North America allocates IP address blocks for the United States, Canada, several parts of the Caribbean region, and Antarctica.
+APNIC (Asia-Pacific Network Information Centre) for the Asia-Pacific region allocates IP address blocks for Asia, Australia, New Zealand, and neighboring countries.
+172.16.45.227/27 (256 – 2^5=224) resides in subnet 172.16.45.224.
