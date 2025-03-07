@@ -71,25 +71,29 @@
 		a {
 		text-decoration: none;
 		}
+        .scroll-wrapper {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
         .scroll-container {
-            width: 900px;
-            height: 90px;
+            width: 850px; /* Letter size width approximation */
+            height: 120px; /* Enough to show 4-5 lines */
             overflow: hidden;
-            border: 1px solid white;
-            position: fixed;
-            top: 50px; /* Close to the top */
-            right: 400px; /* Similar to browser search bar placement */
-            background-color: rgba(255, 255, 255, 1);  /* Slight transparency */
+            border: 1px solid black;
+            position: absolute;
+            top: 50px; /* 50px from the top */
+            background-color: white;
             border-radius: 8px;
-            padding: 5px;
-            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
         .scroll-content {
             position: absolute;
             top: 100%;
-            white-space: nowrap;
             line-height: 1.5;
-            font-size: 14px;
+            font-size: 16px;
+            white-space: pre-wrap; /* Preserve line breaks */
         }
 
     </style>
@@ -161,9 +165,12 @@
   <button class="control-button" onclick="nextSlide()">Next</button>
   <div id="number-buttons"></div>
 </div>
-<div class="scroll-container">
-  <div class="scroll-content" id="scrollText"></div>
-</div>
+    <div class="scroll-wrapper">
+        <div class="scroll-container">
+            <div class="scroll-content" id="scrollText"></div>
+        </div>
+    </div>
+
 <script>
   const images = [
 'https://github.com/qaswarh/4any1/blob/main/2345G.JPG?raw=true',
@@ -228,7 +235,7 @@
             try {
                 const response = await fetch('glossary.txt');
                 const text = await response.text();
-                document.getElementById("scrollText").textContent = text.replace(/\n/g, ' ⚡ '); // Adds separator for better readability
+                document.getElementById("scrollText").textContent = text;
                 startScrolling();
             } catch (error) {
                 console.error('Error loading glossary:', error);
@@ -240,7 +247,7 @@
             let pos = text.offsetTop;
 
             function scrollUp() {
-                pos -= 0.5; // Slower, smooth scroll
+                pos -= 0.5; // Slow scroll
                 text.style.top = pos + "px";
 
                 if (pos < -text.scrollHeight) {
