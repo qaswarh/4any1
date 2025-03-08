@@ -74,8 +74,12 @@
         .scroll-wrapper {
             display: flex;
             justify-content: center;
-            position: relative;
-            margin-top: 20px; /* Keep close to the top */
+            position: fixed;
+            top: 50px; /* Keep it 50px from the top */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            z-index: 1000;
         }
         .scroll-container {
             width: 1200px;
