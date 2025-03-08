@@ -243,7 +243,7 @@
                 const text = await response.text();
                 const textElement = document.getElementById("scrollText");
                 textElement.textContent = text;
-                textElement.style.top = "0px"; // Ensure it starts correctly
+                textElement.style.top = "100%"; // Start at bottom of container
                 startScrolling();
             } catch (error) {
                 console.error('Error loading glossary:', error);
@@ -252,13 +252,13 @@
 
         function startScrolling() {
             const text = document.getElementById("scrollText");
-            let pos = 0;
+            let pos = text.offsetHeight;
 
             function scrollUp() {
                 pos -= 1; // Adjusted scroll speed
-                text.style.transform = `translateY(${pos}px)`;
+                text.style.top = `${pos}px`;
 
-                if (Math.abs(pos) > text.scrollHeight) {
+                if (pos + text.scrollHeight <= 0) {
                     pos = document.querySelector(".scroll-container").offsetHeight;
                 }
                 scrollAnimation = requestAnimationFrame(scrollUp);
