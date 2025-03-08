@@ -90,7 +90,7 @@
         }
         .scroll-content {
             position: absolute;
-            top: 100%;
+            bottom: -100%;
             width: 100%;
             line-height: 1.5;
             font-size: 16px;
@@ -106,7 +106,7 @@
             padding: 5px 10px;
             cursor: pointer;
             border-radius: 5px;
-        }  
+        }
 
     </style>
 </head>
@@ -177,6 +177,7 @@
   <button class="control-button" onclick="nextSlide()">Next</button>
   <div id="number-buttons"></div>
 
+<body>
     <div class="scroll-wrapper">
         <div class="scroll-container">
             <button class="control-btn" id="toggleScroll">Pause</button>
@@ -247,6 +248,7 @@
 	
         let scrollAnimation;
         let scrolling = true;
+        let speed = 30;
 
         async function loadGlossary() {
             try {
@@ -254,7 +256,7 @@
                 const text = await response.text();
                 const textElement = document.getElementById("scrollText");
                 textElement.textContent = text;
-                textElement.style.top = "100%";
+                textElement.style.bottom = "-100%";
                 startScrolling();
             } catch (error) {
                 console.error('Error loading glossary:', error);
@@ -263,16 +265,16 @@
 
         function startScrolling() {
             const text = document.getElementById("scrollText");
-            let pos = text.offsetHeight;
+            let pos = -text.scrollHeight;
 
             function scrollUp() {
                 if (!scrolling) return;
-                pos -= 1;
-                text.style.top = `${pos}px`;
-                if (pos + text.scrollHeight <= 0) {
-                    pos = document.querySelector(".scroll-container").offsetHeight;
+                pos += 1;
+                text.style.bottom = `${pos}px`;
+                if (pos >= document.querySelector(".scroll-container").offsetHeight) {
+                    pos = -text.scrollHeight;
                 }
-                scrollAnimation = requestAnimationFrame(scrollUp);
+                scrollAnimation = setTimeout(scrollUp, speed);
             }
 
             scrollUp();
@@ -282,6 +284,7 @@
             scrolling = !scrolling;
             this.textContent = scrolling ? "Pause" : "Play";
             if (scrolling) startScrolling();
+            else clearTimeout(scrollAnimation);
         });
 
         window.onload = loadGlossary;
