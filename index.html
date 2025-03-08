@@ -71,62 +71,41 @@
 		a {
 		text-decoration: none;
 		}
-        .scroll-wrapper {
+        .scroll-container {
+            width: 1200px;
+            height: 120px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px auto;
+            background-color: white;
             display: flex;
             justify-content: center;
-            position: relative;
-        }
-        .scroll-container {
-            width: 1200px; /* Increased width */
-            height: 120px; /* Enough to show 4-5 lines */
-            overflow: hidden;
-            border: 1px solid black;
-            position: absolute;
-            top: 10; /* Kept close to the top */
-            background-color: white;
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            display: flex;
             align-items: center;
-            justify-content: space-between;
         }
-        .scroll-content {
-            position: relative;
-            top: 0; /* Start from the top */
-            line-height: 1.5;
-            font-size: 16px;
-            white-space: pre-wrap; /* Preserve line breaks */
-            flex-grow: 1;
-        }
-        }
-        .scroll-wrapper {
-            display: flex;
-            justify-content: center;
-            position: relative;
-        }
-        .scroll-container {
-            width: 1200px; /* Increased width */
-            height: 120px; /* Enough to show 4-5 lines */
-            overflow: hidden;
-            border: 1px solid black;
+
+        .scrolling-text {
             position: absolute;
-            top: 10px; /* Kept close to the top */
-            background-color: white;
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
+            white-space: nowrap;
+            animation: scroll-text 20s linear infinite;
+            color: black;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
         }
-        .scroll-content {
+
+        .pause-play-button {
             position: absolute;
-            top: 100%; /* Start from the bottom */
-            width: 100%;
-            line-height: 1.5;
-            font-size: 16px;
-            white-space: pre-wrap; /* Preserve line breaks */
+            right: 10px;
+            top: 10px;
+        }
+
+        @keyframes scroll-text {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
         }
     </style>
 </head>
@@ -197,11 +176,11 @@
   <button class="control-button" onclick="nextSlide()">Next</button>
   <div id="number-buttons"></div>
 
-    <div class="scroll-wrapper">
-        <div class="scroll-container">
-            <div class="scroll-content" id="scrollText"></div>
-        </div>
+    <div class="scroll-container">
+        <div class="scrolling-text" id="scrollingText"></div>
+        <button class="pause-play-button" id="pausePlayButton">Pause</button>
     </div>
+
 <script>
   const images = [
 'https://github.com/qaswarh/4any1/blob/main/2345G.JPG?raw=true',
@@ -262,7 +241,26 @@
 
   // Initial background setup
   updateBackground();
+        function fetchText() {
+            fetch('glossary.txt')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('scrollingText').textContent = data;
+                });
+        }
 
+        function toggleScroll() {
+            const scrollingText = document.getElementById('scrollingText');
+            const button = document.getElementById('pausePlayButton');
+            const animationState = scrollingText.style.animationPlayState || 'running';
+            scrollingText.style.animationPlayState = animationState === 'running' ? 'paused' : 'running';
+            button.textContent = animationState === 'running' ? 'Play' : 'Pause';
+        }
+
+        document.getElementById('pausePlayButton').addEventListener('click', toggleScroll);
+
+        // Fetch the text content on page load
+        fetchText();
 </script>
 
 </body>
