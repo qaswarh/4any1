@@ -71,42 +71,7 @@
 		a {
 		text-decoration: none;
 		}
-        .scroll-container {
-            width: 1200px;
-            height: 120px;
-            overflow: hidden;
-            position: relative;
-            margin: 20px auto;
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
 
-        .scrolling-text {
-            position: absolute;
-            white-space: nowrap;
-            animation: scroll-text 20s linear infinite;
-            color: black;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .pause-play-button {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-        }
-
-        @keyframes scroll-text {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
     </style>
 </head>
 <body>
@@ -176,10 +141,6 @@
   <button class="control-button" onclick="nextSlide()">Next</button>
   <div id="number-buttons"></div>
 
-    <div class="scroll-container">
-        <div class="scrolling-text" id="scrollingText"></div>
-        <button class="pause-play-button" id="pausePlayButton">Pause</button>
-    </div>
 
 <script>
   const images = [
@@ -241,26 +202,7 @@
 
   // Initial background setup
   updateBackground();
-        function fetchText() {
-            fetch('glossary.txt')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('scrollingText').textContent = data;
-                });
-        }
 
-        function toggleScroll() {
-            const scrollingText = document.getElementById('scrollingText');
-            const button = document.getElementById('pausePlayButton');
-            const animationState = scrollingText.style.animationPlayState || 'running';
-            scrollingText.style.animationPlayState = animationState === 'running' ? 'paused' : 'running';
-            button.textContent = animationState === 'running' ? 'Play' : 'Pause';
-        }
-
-        document.getElementById('pausePlayButton').addEventListener('click', toggleScroll);
-
-        // Fetch the text content on page load
-        fetchText();
 </script>
 
 </body>
