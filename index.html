@@ -71,7 +71,42 @@
 		a {
 		text-decoration: none;
 		}
-	    
+        .scroll-wrapper {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            margin-top: 20px; /* Keep close to the top */
+        }
+        .scroll-container {
+            width: 1200px;
+            height: 120px;
+            overflow: hidden;
+            background-color: white;
+            color: black;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        .scroll-content {
+            position: absolute;
+            top: 100%;
+            width: 100%;
+            line-height: 1.5;
+            font-size: 16px;
+            white-space: pre-wrap;
+        }
+        .control-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }    
 
     </style>
 </head>
@@ -142,7 +177,13 @@
   <button class="control-button" onclick="nextSlide()">Next</button>
   <div id="number-buttons"></div>
 
-
+<body>
+    <div class="scroll-wrapper">
+        <div class="scroll-container">
+            <button class="control-btn" id="toggleScroll">Pause</button>
+            <div class="scroll-content" id="scrollText"></div>
+        </div>
+    </div>
 
 <script>
   const images = [
@@ -205,7 +246,39 @@
   // Initial background setup
   updateBackground();
 	
+        let scrollAnimation;
 
+        async function loadGlossary() {
+            try {
+                const response = await fetch('glossary.txt');
+                const text = await response.text();
+                const textElement = document.getElementById("scrollText");
+                textElement.textContent = text;
+                textElement.style.top = "100%"; // Start at bottom of container
+                startScrolling();
+            } catch (error) {
+                console.error('Error loading glossary:', error);
+            }
+        }
+
+        function startScrolling() {
+            const text = document.getElementById("scrollText");
+            let pos = text.offsetHeight;
+
+            function scrollUp() {
+                pos -= 1; // Adjusted scroll speed
+                text.style.top = `${pos}px`;
+
+                if (pos + text.scrollHeight <= 0) {
+                    pos = document.querySelector(".scroll-container").offsetHeight;
+                }
+                scrollAnimation = requestAnimationFrame(scrollUp);
+            }
+
+            scrollUp();
+        }
+
+        window.onload = loadGlossary;
 </script>
 
 </body>
