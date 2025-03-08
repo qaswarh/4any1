@@ -99,6 +99,35 @@
             white-space: pre-wrap; /* Preserve line breaks */
             flex-grow: 1;
         }
+        }
+        .scroll-wrapper {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        .scroll-container {
+            width: 1200px; /* Increased width */
+            height: 120px; /* Enough to show 4-5 lines */
+            overflow: hidden;
+            border: 1px solid black;
+            position: absolute;
+            top: 10px; /* Kept close to the top */
+            background-color: white;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .scroll-content {
+            position: absolute;
+            top: 100%; /* Start from the bottom */
+            width: 100%;
+            line-height: 1.5;
+            font-size: 16px;
+            white-space: pre-wrap; /* Preserve line breaks */
+        }
     </style>
 </head>
 <body>
