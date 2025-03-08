@@ -11,14 +11,15 @@ DHCP assigns IP addresses dynamically. DHCP can be used to specify several host 
 The minimum size of an IPv4 header is 20 bytes, without any option.
 Static NAT is used to statically translate public IP addresses to private IP addresses.
 NAT uses different IP addresses for translations. PAT uses different port numbers to identify translations
-The DS field of DSCP (Differentiated Services Code Point) allocates 6 bits in the Type of Service (ToS) field, thus making it capable of 64 distinct codepoints.
+The DS field of DSCP (Differentiated Services Code Point) allocates 6 bits (2^6 = 64 code points)in the Type of Service (ToS) field (DSCP + 2 bits for Explicit Congestion Notification (ECN)).
 The header checksum field only includes a checksum of the IP header; it does not check the data portion.
 The subnet is 172.56.4.0/22, the address range is from 172.56.4.1 to 172.56.7.254, network address 172.56.4.0, Subnet Mask: /22 (255.255.(256-2^2=252).0) and the subnet broadcast is 172.56.7.255.
 When packets are fragmented at the network layer, the fragments get reassembled at the IP layer in the destination host.
 DHCP can be used to configure the IP address, subnet mask, default gateway, and other optional parameters.
 Class B networks have 16 bits for host addresses with the default mask: 2^16 − 2 = 65,534.
 192.170.20.16/30 => .16 to .19 and 92.170.20.20/30 => .20 to .23 can be summarized by 192.170.20.16/29 => .16 to .23
-AF3 is backward compatible with IP precedence priority traffic with a binary of 011.
+AF3 is backward compatible with IP precedence priority traffic with a binary of 011. 
+The Expedited Forwarding (EF) uses a direct binary-to-decimal conversion for its DSCP (6 bits) value. The Assured Forwarding (AF) Per-Hop Behavior (PHB) uses the most significant 3 bits of DSCP for AF class and the least significant 3 bits are use for drop precedence (010=1, 011=2 and so on)
 IPv4 packets can be fragmented by the sending host and routers.
 Multicast addresses are received by a set of hosts subscribed to the multicast group.
 The three types of IPv4 address are unicast, broadcast, and multicast.
