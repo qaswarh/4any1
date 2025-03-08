@@ -262,35 +262,7 @@
 
   // Initial background setup
   updateBackground();
-        async function loadGlossary() {
-            try {
-                const response = await fetch('glossary.txt');
-                const text = await response.text();
-                document.getElementById("scrollText").textContent = text;
-                startScrolling();
-            } catch (error) {
-                console.error('Error loading glossary:', error);
-            }
-        }
 
-        function startScrolling() {
-            const text = document.getElementById("scrollText");
-            let pos = text.offsetTop;
-
-            function scrollUp() {
-                pos -= 0.5; // Slow scroll
-                text.style.top = pos + "px";
-
-                if (pos < -text.scrollHeight) {
-                    pos = document.querySelector(".scroll-container").offsetHeight;
-                }
-                requestAnimationFrame(scrollUp);
-            }
-
-            scrollUp();
-        }
-
-        window.onload = loadGlossary;
 </script>
 
 </body>
