@@ -71,6 +71,7 @@
 		a {
 		text-decoration: none;
 		}
+	    
         .scroll-wrapper {
             display: flex;
             justify-content: center;
@@ -81,7 +82,7 @@
             height: 120px; /* Enough to show 4-5 lines */
             overflow: hidden;
             border: 1px solid black;
-            position: absolute;
+            position: relative;
             top: 10px; /* Kept close to the top */
             background-color: white;
             border-radius: 8px;
@@ -235,6 +236,7 @@
 
   // Initial background setup
   updateBackground();
+	
         let scrollAnimation;
 
         async function loadGlossary() {
