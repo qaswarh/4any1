@@ -77,16 +77,19 @@
             position: relative;
         }
         .scroll-container {
-            width: 1200px; /* Letter size width approximation */
+            width: 1200px; /* Increased width */
             height: 120px; /* Enough to show 4-5 lines */
             overflow: hidden;
             border: 1px solid black;
             position: absolute;
-            top: 0; /* 1px from the top */
+            top: 10px; /* Kept close to the top */
             background-color: white;
             border-radius: 8px;
             padding: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         .scroll-content {
             position: absolute;
@@ -94,6 +97,18 @@
             line-height: 1.5;
             font-size: 16px;
             white-space: pre-wrap; /* Preserve line breaks */
+            flex-grow: 1;
+        }
+        .controls {
+            position: relative;
+            right: 10px;
+            z-index: 10;
+        }
+        button {
+            margin: 0 5px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -167,6 +182,10 @@
     <div class="scroll-wrapper">
         <div class="scroll-container">
             <div class="scroll-content" id="scrollText"></div>
+            <div class="controls">
+                <button onclick="pauseScroll()">Pause</button>
+                <button onclick="resumeScroll()">Play</button>
+            </div>
         </div>
     </div>
 
@@ -231,6 +250,9 @@
   // Initial background setup
   updateBackground();
 	
+        let scrollAnimation;
+        let isPaused = false;
+
         async function loadGlossary() {
             try {
                 const response = await fetch('glossary.txt');
@@ -247,19 +269,27 @@
             let pos = text.offsetTop;
 
             function scrollUp() {
-                pos -= 0.5; // Slow scroll
-                text.style.top = pos + "px";
+                if (!isPaused) {
+                    pos -= 0.5; // Slow scroll
+                    text.style.top = pos + "px";
 
-                if (pos < -text.scrollHeight) {
-                    pos = document.querySelector(".scroll-container").offsetHeight;
+                    if (pos < -text.scrollHeight) {
+                        pos = document.querySelector(".scroll-container").offsetHeight;
+                    }
                 }
-                requestAnimationFrame(scrollUp);
+                scrollAnimation = requestAnimationFrame(scrollUp);
             }
 
             scrollUp();
         }
 
-        window.onload = loadGlossary;
+        function pauseScroll() {
+            isPaused = true;
+        }
+
+        function resumeScroll() {
+            isPaused = false;
+        }
 
         window.onload = loadGlossary;
 
