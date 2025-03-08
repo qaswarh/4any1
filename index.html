@@ -78,7 +78,7 @@
         }
         .scroll-container {
             width: 1200px; /* Increased width */
-            height: 150px; /* Adjusted for buttons inside */
+            height: 120px; /* Enough to show 4-5 lines */
             overflow: hidden;
             border: 1px solid black;
             position: absolute;
@@ -88,7 +88,6 @@
             padding: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: space-between;
         }
@@ -98,18 +97,7 @@
             line-height: 1.5;
             font-size: 16px;
             white-space: pre-wrap; /* Preserve line breaks */
-            width: 100%;
-            text-align: center;
-        }
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin-top: 5px;
-        }
-        button {
-            padding: 6px 12px;
-            font-size: 14px;
-            cursor: pointer;
+            flex-grow: 1;
         }
     </style>
 </head>
@@ -183,10 +171,6 @@
     <div class="scroll-wrapper">
         <div class="scroll-container">
             <div class="scroll-content" id="scrollText"></div>
-            <div class="controls">
-                <button onclick="pauseScroll()">Pause</button>
-                <button onclick="resumeScroll()">Play</button>
-            </div>
         </div>
     </div>
 
@@ -252,7 +236,6 @@
   updateBackground();
 	
         let scrollAnimation;
-        let isPaused = false;
 
         async function loadGlossary() {
             try {
@@ -272,26 +255,16 @@
             let pos = 0;
 
             function scrollUp() {
-                if (!isPaused) {
-                    pos -= 1; // Adjusted scroll speed
-                    text.style.transform = `translateY(${pos}px)`;
+                pos -= 1; // Adjusted scroll speed
+                text.style.transform = `translateY(${pos}px)`;
 
-                    if (Math.abs(pos) > text.scrollHeight) {
-                        pos = document.querySelector(".scroll-container").offsetHeight;
-                    }
+                if (Math.abs(pos) > text.scrollHeight) {
+                    pos = document.querySelector(".scroll-container").offsetHeight;
                 }
                 scrollAnimation = requestAnimationFrame(scrollUp);
             }
 
             scrollUp();
-        }
-
-        function pauseScroll() {
-            isPaused = true;
-        }
-
-        function resumeScroll() {
-            isPaused = false;
         }
 
         window.onload = loadGlossary;
