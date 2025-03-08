@@ -106,7 +106,7 @@
             padding: 5px 10px;
             cursor: pointer;
             border-radius: 5px;
-        }    
+        }  
 
     </style>
 </head>
@@ -177,7 +177,6 @@
   <button class="control-button" onclick="nextSlide()">Next</button>
   <div id="number-buttons"></div>
 
-<body>
     <div class="scroll-wrapper">
         <div class="scroll-container">
             <button class="control-btn" id="toggleScroll">Pause</button>
@@ -247,6 +246,7 @@
   updateBackground();
 	
         let scrollAnimation;
+        let scrolling = true;
 
         async function loadGlossary() {
             try {
@@ -254,7 +254,7 @@
                 const text = await response.text();
                 const textElement = document.getElementById("scrollText");
                 textElement.textContent = text;
-                textElement.style.top = "100%"; // Start at bottom of container
+                textElement.style.top = "100%";
                 startScrolling();
             } catch (error) {
                 console.error('Error loading glossary:', error);
@@ -266,9 +266,9 @@
             let pos = text.offsetHeight;
 
             function scrollUp() {
-                pos -= 1; // Adjusted scroll speed
+                if (!scrolling) return;
+                pos -= 1;
                 text.style.top = `${pos}px`;
-
                 if (pos + text.scrollHeight <= 0) {
                     pos = document.querySelector(".scroll-container").offsetHeight;
                 }
@@ -277,6 +277,12 @@
 
             scrollUp();
         }
+
+        document.getElementById("toggleScroll").addEventListener("click", function () {
+            scrolling = !scrolling;
+            this.textContent = scrolling ? "Pause" : "Play";
+            if (scrolling) startScrolling();
+        });
 
         window.onload = loadGlossary;
 </script>
