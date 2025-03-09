@@ -71,21 +71,23 @@
 		a {
 		text-decoration: none;
 		}
+
         .scrolling-window {
             width: 1200px;
             height: 120px;
             overflow: hidden;
-            position: absolute;
-            top: 20px; /* Adjust this value to position it near the top */
+            position: fixed; /* Use fixed positioning to avoid overlapping */
+            top: 20px; /* Position near the top */
             left: 50%;
             transform: translateX(-50%);
             border: 1px solid #ccc;
             background-color: #f9f9f9;
+            z-index: 1000; /* Ensure it stays above other content */
         }
 
         #scrolling-text {
-            position: relative;
-            top: 120px; /* Start the text below the visible area */
+            position: absolute;
+            top: 120px; /* Start below the visible area */
             white-space: nowrap;
         }
     </style>
@@ -157,8 +159,9 @@
   <button class="control-button" onclick="nextSlide()">Next</button>
   <div id="number-buttons"></div>
 
+	
     <div class="scrolling-window">
-        <div id="scrolling-text"></div>
+        <div id="scrolling-text">Loading glossary...</div>
     </div>
 
 <script>
@@ -233,7 +236,10 @@
                     scrollingText.textContent = text;
                     scrollText();
                 })
-                .catch(error => console.error('Error loading glossary:', error));
+                .catch(error => {
+                    console.error('Error loading glossary:', error);
+                    scrollingText.textContent = "Failed to load glossary.";
+                });
 
             function scrollText() {
                 let pos = parseInt(scrollingText.style.top, 10);
