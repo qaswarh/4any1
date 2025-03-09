@@ -272,8 +272,12 @@
                 console.error('Error loading glossary:', error);
             }
         }
-	
-	function scrollUp() {
+
+        function startScrolling() {
+            const text = document.getElementById("scrollText");
+            let pos = text.scrollHeight;
+
+            function scrollUp() {
                 if (!scrolling) return;
                 pos += 1;
                 text.style.bottom = `${pos}px`;
