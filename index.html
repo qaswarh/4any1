@@ -71,19 +71,20 @@
 		a {
 		text-decoration: none;
 		}
-        .scroll-wrapper {
-            display: flex;
-            justify-content: center;
-            position: fixed;
-            top: 50px; /* Keep it 50px from the top */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            z-index: 1000;
-        }
+.scroll-wrapper {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 50px; /* Keep it near the top */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 1000;
+}
+
 .scroll-container {
-    width: 1200px;
-    height: 200px; /* Increase height */
+    width: 1200px; /* Keep the previous width */
+    height: 120px; /* Show 4-5 lines */
     overflow: hidden;
     background-color: white;
     color: black;
@@ -92,16 +93,15 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     position: relative;
 }
-	    
+
 .scroll-content {
     position: absolute;
-    top: 100%;
+    bottom: 0; /* Make sure text starts at the bottom */
     width: 100%;
-    line-height: 1.5;
+    line-height: 1.5; /* Keep good spacing */
     font-size: 16px;
     white-space: pre-wrap;
 }
-
         .control-btn {
             position: absolute;
             top: 10px;
