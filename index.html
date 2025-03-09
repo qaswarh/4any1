@@ -84,7 +84,7 @@
 
 .scroll-container {
     width: 1200px; /* Keep the previous width */
-    height: 120px; /* Show 4-5 lines */
+    height: 150px; /* Show 4-5 lines */
     overflow: hidden;
     background-color: white;
     color: black;
@@ -95,8 +95,9 @@
 }
 
 .scroll-content {
-    position: absolute;
-    bottom: 0; /* Make sure text starts at the bottom */
+  //position: absolute;
+    top: 0;	/* added */
+    bottom: auto; /* Make sure text starts at the bottom, changed to auto from 0 */
     width: 100%;
     line-height: 1.5; /* Keep good spacing */
     font-size: 16px;
