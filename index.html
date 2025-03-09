@@ -71,23 +71,23 @@
 		a {
 		text-decoration: none;
 		}
-.scrolling-window {
-    width: 1200px;
-    height: 120px;
-    overflow: hidden;
-    position: absolute;
-    top: 20px; /* Adjust this value to position it near the top */
-    left: 50%;
-    transform: translateX(-50%);
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-}
+        .scrolling-window {
+            width: 1200px;
+            height: 120px;
+            overflow: hidden;
+            position: absolute;
+            top: 20px; /* Adjust this value to position it near the top */
+            left: 50%;
+            transform: translateX(-50%);
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
 
-#scrolling-text {
-    position: relative;
-    top: 120px; /* Start the text below the visible area */
-    white-space: nowrap;
-}
+        #scrolling-text {
+            position: relative;
+            top: 120px; /* Start the text below the visible area */
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -222,30 +222,30 @@
   // Initial background setup
   updateBackground();
 
-document.addEventListener("DOMContentLoaded", function() {
-    const scrollingText = document.getElementById('scrolling-text');
-    const scrollSpeed = 1; // Adjust the speed of scrolling (pixels per frame)
+        document.addEventListener("DOMContentLoaded", function () {
+            const scrollingText = document.getElementById('scrolling-text');
+            const scrollSpeed = 1; // Adjust the speed of scrolling (pixels per frame)
 
-    // Fetch the glossary text from glossary.txt
-    fetch('glossary.txt')
-        .then(response => response.text())
-        .then(text => {
-            scrollingText.textContent = text;
-            scrollText();
-        })
-        .catch(error => console.error('Error loading glossary:', error));
+            // Fetch the glossary text from glossary.txt
+            fetch('glossary.txt')
+                .then(response => response.text())
+                .then(text => {
+                    scrollingText.textContent = text;
+                    scrollText();
+                })
+                .catch(error => console.error('Error loading glossary:', error));
 
-    function scrollText() {
-        let pos = parseInt(scrollingText.style.top, 10);
-        if (pos + scrollingText.offsetHeight < 0) {
-            pos = 120; // Reset to the bottom of the scrolling window
-        } else {
-            pos -= scrollSpeed;
-        }
-        scrollingText.style.top = pos + 'px';
-        requestAnimationFrame(scrollText);
-    }
-});
+            function scrollText() {
+                let pos = parseInt(scrollingText.style.top, 10);
+                if (pos + scrollingText.offsetHeight < 0) {
+                    pos = 120; // Reset to the bottom of the scrolling window
+                } else {
+                    pos -= scrollSpeed;
+                }
+                scrollingText.style.top = pos + 'px';
+                requestAnimationFrame(scrollText);
+            }
+        });
 
 </script>
 
