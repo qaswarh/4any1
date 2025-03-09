@@ -72,23 +72,45 @@
 		text-decoration: none;
 		}
 
-        .scrolling-window {
+        .scroll-wrapper {
+            display: flex;
+            justify-content: center;
+            position: fixed;
+            top: 50px; /* Keep it 50px from the top */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            z-index: 1000;
+        }
+        .scroll-container {
             width: 1200px;
             height: 120px;
             overflow: hidden;
-            position: fixed; /* Use fixed positioning to avoid overlapping */
-            top: 20px; /* Position near the top */
-            left: 50%;
-            transform: translateX(-50%);
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            z-index: 1000; /* Ensure it stays above other content */
+            background-color: white;
+            color: black;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
         }
-
-        #scrolling-text {
+        .scroll-content {
             position: absolute;
-            top: 120px; /* Start below the visible area */
-            white-space: nowrap;
+            bottom: -100%;
+            width: 100%;
+            line-height: 1.5;
+            font-size: 16px;
+            white-space: pre-wrap;
+        }
+        .control-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -160,9 +182,11 @@
   <div id="number-buttons"></div>
 
 	
-    <div class="scrolling-window">
-        <div id="scrolling-text">Loading glossary...</div>
-    </div>
+    <div class="scroll-wrapper">
+        <div class="scroll-container">
+            <button class="control-btn" id="toggleScroll">Pause</button>
+            <div class="scroll-content" id="scrollText"></div>
+        </div>>
 
 <script>
   const images = [
@@ -225,33 +249,48 @@
   // Initial background setup
   updateBackground();
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const scrollingText = document.getElementById('scrolling-text');
-            const scrollSpeed = 1; // Adjust the speed of scrolling (pixels per frame)
+        let scrollAnimation;
+        let scrolling = true;
+        let speed = 30;
 
-            // Fetch the glossary text from glossary.txt
-            fetch('glossary.txt')
-                .then(response => response.text())
-                .then(text => {
-                    scrollingText.textContent = text;
-                    scrollText();
-                })
-                .catch(error => {
-                    console.error('Error loading glossary:', error);
-                    scrollingText.textContent = "Failed to load glossary.";
-                });
-
-            function scrollText() {
-                let pos = parseInt(scrollingText.style.top, 10);
-                if (pos + scrollingText.offsetHeight < 0) {
-                    pos = 120; // Reset to the bottom of the scrolling window
-                } else {
-                    pos -= scrollSpeed;
-                }
-                scrollingText.style.top = pos + 'px';
-                requestAnimationFrame(scrollText);
+        async function loadGlossary() {
+            try {
+                const response = await fetch('glossary.txt');
+                const text = await response.text();
+                const textElement = document.getElementById("scrollText");
+                textElement.textContent = text;
+                textElement.style.bottom = "-100%";
+                startScrolling();
+            } catch (error) {
+                console.error('Error loading glossary:', error);
             }
+        }
+
+        function startScrolling() {
+            const text = document.getElementById("scrollText");
+            let pos = -text.scrollHeight;
+
+            function scrollUp() {
+                if (!scrolling) return;
+                pos += 1;
+                text.style.bottom = `${pos}px`;
+                if (pos >= document.querySelector(".scroll-container").offsetHeight) {
+                    pos = -text.scrollHeight;
+                }
+                scrollAnimation = setTimeout(scrollUp, speed);
+            }
+
+            scrollUp();
+        }
+
+        document.getElementById("toggleScroll").addEventListener("click", function () {
+            scrolling = !scrolling;
+            this.textContent = scrolling ? "Pause" : "Play";
+            if (scrolling) startScrolling();
+            else clearTimeout(scrollAnimation);
         });
+
+        window.onload = loadGlossary;
 
 </script>
 
