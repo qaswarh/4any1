@@ -273,26 +273,18 @@
             }
         }
 	
-	function startScrolling() {
-	    const text = document.getElementById("scrollText");
-	    const container = document.querySelector(".scroll-container");
-	    let pos = 0;
-	
-	    function scrollUp() {
-	        if (!scrolling) return;
-	        pos -= 1; // Move upwards
-	        text.style.bottom = `${pos}px`;
-	        
-	        // Reset when the entire text has scrolled up
-	        if (Math.abs(pos) >= text.scrollHeight) {
-	            pos = container.offsetHeight; // Start from below the container
-	        }
-	        
-	        scrollAnimation = requestAnimationFrame(scrollUp);
-	    }
-	
-	    scrollUp();
-	}
+	function scrollUp() {
+                if (!scrolling) return;
+                pos += 1;
+                text.style.bottom = `${pos}px`;
+                if (pos >= document.querySelector(".scroll-container").offsetHeight) {
+                    pos = -text.scrollHeight;
+                }
+                scrollAnimation = setTimeout(scrollUp, speed);
+            }
+
+            scrollUp();
+        }
 
         document.getElementById("toggleScroll").addEventListener("click", function () {
             scrolling = !scrolling;
