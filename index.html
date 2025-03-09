@@ -71,50 +71,23 @@
 		a {
 		text-decoration: none;
 		}
-.scroll-wrapper {
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    top: 50px; /* Keeps it near the top */
+.scrolling-window {
+    width: 1200px;
+    height: 120px;
+    overflow: hidden;
+    position: absolute;
+    top: 20px; /* Adjust this value to position it near the top */
     left: 50%;
     transform: translateX(-50%);
-    width: 1200px; /* Match the container width */
-    z-index: 1000;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
 }
 
-.scroll-container {
-    width: 1200px;
-    height: 150px; /* Increased height to show multiple lines */
-    overflow: hidden;
-    background-color: white;
-    color: black;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+#scrolling-text {
     position: relative;
+    top: 120px; /* Start the text below the visible area */
+    white-space: nowrap;
 }
-
-.scroll-content {
-    position: absolute;
-    top: 100%; /* Start below the container */
-    width: 100%;
-    line-height: 1.5;
-    font-size: 16px;
-    white-space: pre-wrap;
-}
-
-        .control-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: black;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
     </style>
 </head>
 <body>
@@ -184,12 +157,8 @@
   <button class="control-button" onclick="nextSlide()">Next</button>
   <div id="number-buttons"></div>
 
-<body>
-    <div class="scroll-wrapper">
-        <div class="scroll-container">
-            <button class="control-btn" id="toggleScroll">Pause</button>
-            <div class="scroll-content" id="scrollText"></div>
-        </div>
+    <div class="scrolling-window">
+        <div id="scrolling-text"></div>
     </div>
 
 <script>
@@ -252,50 +221,32 @@
 
   // Initial background setup
   updateBackground();
-	
-        let scrollAnimation;
-        let scrolling = true;
-        let speed = 30;
 
-        async function loadGlossary() {
-            try {
-                const response = await fetch('glossary.txt');
-                const text = await response.text();
-                const textElement = document.getElementById("scrollText");
-                textElement.textContent = text;
-                textElement.style.bottom = "-100%";
-                startScrolling();
-            } catch (error) {
-                console.error('Error loading glossary:', error);
-            }
+document.addEventListener("DOMContentLoaded", function() {
+    const scrollingText = document.getElementById('scrolling-text');
+    const scrollSpeed = 1; // Adjust the speed of scrolling (pixels per frame)
+
+    // Fetch the glossary text from glossary.txt
+    fetch('glossary.txt')
+        .then(response => response.text())
+        .then(text => {
+            scrollingText.textContent = text;
+            scrollText();
+        })
+        .catch(error => console.error('Error loading glossary:', error));
+
+    function scrollText() {
+        let pos = parseInt(scrollingText.style.top, 10);
+        if (pos + scrollingText.offsetHeight < 0) {
+            pos = 120; // Reset to the bottom of the scrolling window
+        } else {
+            pos -= scrollSpeed;
         }
-
-function startScrolling() {
-    const text = document.getElementById("scrollText");
-    let pos = document.querySelector(".scroll-container").offsetHeight; // Start below visible area
-
-    function scrollUp() {
-        if (!scrolling) return;
-        pos -= 1; // Move text up
-        text.style.top = `${pos}px`;
-
-        if (pos <= -text.scrollHeight) {
-            pos = document.querySelector(".scroll-container").offsetHeight;
-        }
-        scrollAnimation = setTimeout(scrollUp, speed);
+        scrollingText.style.top = pos + 'px';
+        requestAnimationFrame(scrollText);
     }
+});
 
-    scrollUp();
-}
-
-        document.getElementById("toggleScroll").addEventListener("click", function () {
-            scrolling = !scrolling;
-            this.textContent = scrolling ? "Pause" : "Play";
-            if (scrolling) startScrolling();
-            else clearTimeout(scrollAnimation);
-        });
-
-        window.onload = loadGlossary;
 </script>
 
 </body>
