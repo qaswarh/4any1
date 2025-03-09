@@ -71,6 +71,46 @@
 		a {
 		text-decoration: none;
 		}
+        .scroll-wrapper {
+            display: flex;
+            justify-content: center;
+            position: fixed;
+            top: 50px; /* Keep it 50px from the top */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            z-index: 1000;
+        }
+        .scroll-container {
+            width: 1200px;
+            height: 120px;
+            overflow: hidden;
+            background-color: white;
+            color: black;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        .scroll-content {
+            position: absolute;
+            bottom: -100%;
+            width: 100%;
+            line-height: 1.5;
+            font-size: 16px;
+            white-space: pre-wrap;
+        }
+        .control-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -140,6 +180,12 @@
   <button class="control-button" onclick="nextSlide()">Next</button>
   <div id="number-buttons"></div>
 
+    <div class="scroll-wrapper">
+        <div class="scroll-container">
+            <button class="control-btn" id="toggleScroll">Pause</button>
+            <div class="scroll-content" id="scrollText"></div>
+        </div>
+    </div>
 <script>
   const images = [
 'https://github.com/qaswarh/4any1/blob/main/2345G.JPG?raw=true',
@@ -201,7 +247,48 @@
   // Initial background setup
   updateBackground();
 
+        let scrollAnimation;
+        let scrolling = true;
+        let speed = 30;
 
+        async function loadGlossary() {
+            try {
+                const response = await fetch('glossary.txt');
+                const text = await response.text();
+                const textElement = document.getElementById("scrollText");
+                textElement.textContent = text;
+                textElement.style.bottom = "-100%";
+                startScrolling();
+            } catch (error) {
+                console.error('Error loading glossary:', error);
+            }
+        }
+
+        function startScrolling() {
+            const text = document.getElementById("scrollText");
+            let pos = -text.scrollHeight;
+
+            function scrollUp() {
+                if (!scrolling) return;
+                pos += 1;
+                text.style.bottom = `${pos}px`;
+                if (pos >= document.querySelector(".scroll-container").offsetHeight) {
+                    pos = -text.scrollHeight;
+                }
+                scrollAnimation = setTimeout(scrollUp, speed);
+            }
+
+            scrollUp();
+        }
+
+        document.getElementById("toggleScroll").addEventListener("click", function () {
+            scrolling = !scrolling;
+            this.textContent = scrolling ? "Pause" : "Play";
+            if (scrolling) startScrolling();
+            else clearTimeout(scrollAnimation);
+        });
+
+        window.onload = loadGlossary;
 </script>
 
 </body>
