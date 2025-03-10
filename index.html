@@ -257,48 +257,55 @@
   // Initial background setup
   updateBackground();
 
-        let scrollAnimation;
-        let scrolling = true;
-        let speed = 30;
 
-        async function loadGlossary() {
-            try {
-                const response = await fetch('glossary.txt');
-                const text = await response.text();
-                const textElement = document.getElementById("scrollText");
-                textElement.textContent = text;
-                textElement.style.bottom = "-100%";
-                startScrolling();
-            } catch (error) {
-                console.error('Error loading glossary:', error);
-            }
+let scrolling = true;
+let speed = 30;
+let pos = 0; // Store the current scroll position
+
+async function loadGlossary() {
+    try {
+        const response = await fetch('glossary.txt');
+        const text = await response.text();
+        const textElement = document.getElementById("scrollText");
+        textElement.textContent = text;
+        textElement.style.bottom = `${pos}px`; // Start from last position
+        startScrolling();
+    } catch (error) {
+        console.error('Error loading glossary:', error);
+    }
+}
+
+function startScrolling() {
+    const text = document.getElementById("scrollText");
+
+    function scrollUp() {
+        if (!scrolling) return; // Stop scrolling if paused
+        pos += 1;
+        text.style.bottom = `${pos}px`;
+
+        if (pos >= document.querySelector(".scroll-container").offsetHeight) {
+            pos = -text.scrollHeight; // Reset when text fully scrolls out
         }
 
-        function startScrolling() {
-            const text = document.getElementById("scrollText");
-            let pos = text.scrollHeight;
+        scrollAnimation = setTimeout(scrollUp, speed);
+    }
 
-            function scrollUp() {
-                if (!scrolling) return;
-                pos += 1;
-                text.style.bottom = `${pos}px`;
-                if (pos >= document.querySelector(".scroll-container").offsetHeight) {
-                    pos = -text.scrollHeight;
-                }
-                scrollAnimation = setTimeout(scrollUp, speed);
-            }
+    scrollUp();
+}
 
-            scrollUp();
-        }
+document.getElementById("toggleScroll").addEventListener("click", function () {
+    scrolling = !scrolling;
+    this.textContent = scrolling ? "Pause" : "Play";
 
-        document.getElementById("toggleScroll").addEventListener("click", function () {
-            scrolling = !scrolling;
-            this.textContent = scrolling ? "Pause" : "Play";
-            if (scrolling) startScrolling();
-            else clearTimeout(scrollAnimation);
-        });
+    if (scrolling) {
+        startScrolling(); // Resume from last position
+    } else {
+        clearTimeout(scrollAnimation); // Pause without resetting position
+    }
+});
 
-        window.onload = loadGlossary;
+window.onload = loadGlossary;
+
 </script>
 
 </body>
