@@ -32,4 +32,83 @@ RIPE is European RIR (Regional Internet Registry)
 VLSM allows you to divide address blocks into subnets of different sizes
 ARIN (American Registry for Internet Numbers) for North America allocates IP address blocks for the United States, Canada, several parts of the Caribbean region, and Antarctica.
 APNIC (Asia-Pacific Network Information Centre) for the Asia-Pacific region allocates IP address blocks for Asia, Australia, New Zealand, and neighboring countries.
-172.16.45.227/27 (256 – 2^5=224) resides in subnet 172.16.45.224.
+172.16.45.227/27 (256 – 2^5=224) resides in subnet 172.16.45.224
+
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Length (bits)</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Version</td>
+    <td>4</td>
+    <td>Indicates the IP version number. For IPv4, it is set to 4.</td>
+  </tr>
+  <tr>
+    <td>Header Length</td>
+    <td>4</td>
+    <td>Specifies the length of the IPv4 header in 32-bit words.</td>
+  </tr>
+  <tr>
+    <td>Type of Service (ToS)</td>
+    <td>8</td>
+    <td>Specifies the priority and handling of the packet, now known as Differentiated Services (DiffServ).</td>
+  </tr>
+  <tr>
+    <td>Total Length</td>
+    <td>16</td>
+    <td>Indicates the total length of the IP packet, including both header and data, in bytes.</td>
+  </tr>
+  <tr>
+    <td>Identification</td>
+    <td>16</td>
+    <td>Used to identify fragments of the original IP packet.</td>
+  </tr>
+  <tr>
+    <td>Flags</td>
+    <td>3</td>
+    <td>Contains control flags for fragmentation (e.g., Don't Fragment, More Fragments).</td>
+  </tr>
+  <tr>
+    <td>Fragment Offset</td>
+    <td>13</td>
+    <td>Specifies the offset of a fragment relative to the beginning of the original IP packet.</td>
+  </tr>
+  <tr>
+    <td>Time to Live (TTL)</td>
+    <td>8</td>
+    <td>Specifies the maximum number of hops (routers) the packet can traverse before being discarded.</td>
+  </tr>
+  <tr>
+    <td>Protocol</td>
+    <td>8</td>
+    <td>Indicates the higher-layer protocol used in the data portion of the IP packet (e.g., TCP, UDP).</td>
+  </tr>
+  <tr>
+    <td>Header Checksum</td>
+    <td>16</td>
+    <td>Used for error-checking the header of the packet.</td>
+  </tr>
+  <tr>
+    <td>Source Address</td>
+    <td>32</td>
+    <td>The IPv4 address of the originating node (source).</td>
+  </tr>
+  <tr>
+    <td>Destination Address</td>
+    <td>32</td>
+    <td>The IPv4 address of the intended recipient (destination).</td>
+  </tr>
+  <tr>
+    <td>Options</td>
+    <td>Variable</td>
+    <td>Optional fields for additional information, such as security, timestamp, or record route.</td>
+  </tr>
+  <tr>
+    <td>Padding</td>
+    <td>Variable</td>
+    <td>Added to ensure the header length is a multiple of 32 bits.</td>
+  </tr>
+</table>
+

@@ -72,15 +72,15 @@
 		text-decoration: none;
 		}
 
+
 .scroll-wrapper {
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    top: 15px; /* Keep it near the top */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    z-index: 1000;
+    display: flex !important;
+    justify-content: flex-end !important; /* Align to the right */
+    position: fixed !important;
+    top: 15px !important; /* 15px from the top */
+    right: 15px !important; /* 15px from the right */
+    width: auto !important;
+    z-index: 1000 !important;
 }
 
 .scroll-container {
@@ -103,6 +103,47 @@
     font-size: 16px;
     white-space: pre-wrap;
 }
+
+.scroll-content th,
+.scroll-content td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: left;
+    word-wrap: break-word; /* Prevents overflow */
+    white-space: normal; /* Allows proper text wrapping */
+}
+
+.scroll-content th {
+    background-color: #f2f2f2;
+} */
+
+.table-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow-x: auto; /* Prevents table from going off-screen */
+    padding-top: 5px; /* Ensure spacing between text and table */
+}
+
+.scroll-table {
+    border-collapse: collapse;
+    max-width: 1000px; /* Keeps table within 1200px scrolling window */
+    min-width: 800px;
+    width: auto;
+    text-align: left;
+    margin: auto;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    background-color: white;
+}
+
+.scroll-table th, .scroll-table td {
+    padding: 8px;
+    border: 1px solid black;
+}
+
+.scroll-table thead {
+    background-color: #ddd;
+}
         .control-btn {
             position: absolute;
             top: 10px;
@@ -115,7 +156,9 @@
             cursor: pointer;
             border-radius: 5px;
             z-index: 10;
-        }
+                }
+
+
     </style>
 </head>
 <body>
@@ -259,22 +302,82 @@
   // Initial background setup
   updateBackground();
 
-
 let scrolling = true;
 let speed = 30;
 let pos = 0; // Store the current scroll position
+let scrollAnimation; // Store the animation reference
 
 async function loadGlossary() {
     try {
         const response = await fetch('glossary.txt');
         const text = await response.text();
         const textElement = document.getElementById("scrollText");
-        textElement.textContent = text;
+
+        // Convert text to structured HTML, keeping tables in sequence
+        textElement.innerHTML = formatContent(text);
+
         textElement.style.bottom = `${pos}px`; // Start from last position
         startScrolling();
     } catch (error) {
         console.error('Error loading glossary:', error);
     }
+}
+
+// Function to format content while maintaining text-table order
+function formatContent(text) {
+    let lines = text.trim().split("\n");
+    let formattedHTML = "";
+    let tableData = [];
+    let isTable = false;
+
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i].trim();
+
+        if (line.includes("\t")) {
+            isTable = true; 
+            tableData.push(line); // Collect table lines
+        } else {
+            if (isTable) {
+                // Insert table when transitioning back to text
+                formattedHTML += convertTextToTable(tableData.join("\n"));
+                tableData = []; // Reset for next table
+                isTable = false;
+            }
+            formattedHTML += `<div class="scroll-line">${line}</div>`; // Normal text
+        }
+    }
+
+    // If the last part is a table, insert it at the end
+    if (tableData.length > 0) {
+        formattedHTML += convertTextToTable(tableData.join("\n"));
+    }
+
+    return formattedHTML;
+}
+
+// Function to convert tab-separated text into an HTML table
+function convertTextToTable(text) {
+    let lines = text.trim().split("\n");
+    let tableHTML = `
+        <div class="table-wrapper">
+            <table class="scroll-table">
+    `;
+
+    lines.forEach((line, index) => {
+        let columns = line.split("\t"); // Split by tab spaces
+        if (index === 0) {
+            tableHTML += `<thead><tr>` +
+                columns.map(col => `<th>${col}</th>`).join("") +
+                `</tr></thead><tbody>`;
+        } else {
+            tableHTML += `<tr>` +
+                columns.map(col => `<td>${col}</td>`).join("") +
+                `</tr>`;
+        }
+    });
+
+    tableHTML += "</tbody></table></div>";
+    return tableHTML;
 }
 
 function startScrolling() {
@@ -295,6 +398,7 @@ function startScrolling() {
     scrollUp();
 }
 
+// Toggle Play/Pause button functionality
 document.getElementById("toggleScroll").addEventListener("click", function () {
     scrolling = !scrolling;
     this.textContent = scrolling ? "Pause" : "Play";
@@ -306,6 +410,7 @@ document.getElementById("toggleScroll").addEventListener("click", function () {
     }
 });
 
+// Load glossary on page load
 window.onload = loadGlossary;
 
 </script>
