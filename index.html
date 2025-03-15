@@ -111,25 +111,27 @@
     text-align: left;
     word-wrap: break-word; /* Prevents overflow */
     white-space: normal; /* Allows proper text wrapping */
+    max-width: 300px; /* Prevents excessive stretching of columns */
+    overflow: hidden;
 }
 
 .scroll-content th {
     background-color: #f2f2f2;
-} */
+}
 
 .table-wrapper {
     display: flex;
     justify-content: center;
     width: 100%;
-    overflow-x: auto; /* Prevents table from going off-screen */
-    padding-top: 5px; /* Ensure spacing between text and table */
+    overflow-x: auto; /* Ensures the table doesn’t go off-screen */
+    padding-top: 5px; /* Ensures spacing between text and table */
 }
 
 .scroll-table {
     border-collapse: collapse;
+    width: 95%; /* Makes sure table fits within the scrolling window */
     max-width: 1000px; /* Keeps table within 1200px scrolling window */
     min-width: 800px;
-    width: auto;
     text-align: left;
     margin: auto;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);

@@ -29,7 +29,9 @@ Dynamic name resolution reduces administrative overhead. Name-to-IP address tabl
 E-commerce, Internet connection and Remote access/VPN are examples where private IPv4 address space can’t be used
 PAT technology allows a company to use a single public IP address when using private IPv4 addresses in the internal LAN
 RIPE is European RIR (Regional Internet Registry)
-VLSM allows you to divide address blocks into subnets of different sizes
+Variable Length Subnet Mask (VLSM) allows you to divide address blocks into subnets of different sizes. As an example, from the 192.168.1.0/24 network, you can create multiple subnets with varying sizes, such as 192.168.1.0/26 (64 addresses), 
+192.168.1.64/26 (64 addresses), and so on. Classless Inter-Domain Routing (CIDR) is a method for allocating IP addresses and routing Internet Protocol packets. It replaces the traditional class-based addressing (Class A, B, C, etc.)
+CIDR notation represents IP addresses with a prefix and a suffix, such as 192.168.1.0/24 --> Network Prefix: 192.168.1.0, Suffix: /24 
 ARIN (American Registry for Internet Numbers) for North America allocates IP address blocks for the United States, Canada, several parts of the Caribbean region, and Antarctica.
 APNIC (Asia-Pacific Network Information Centre) for the Asia-Pacific region allocates IP address blocks for Asia, Australia, New Zealand, and neighboring countries.
 172.16.45.227/27 (256 – 2^5=224) resides in subnet 172.16.45.224
@@ -111,4 +113,220 @@ APNIC (Asia-Pacific Network Information Centre) for the Asia-Pacific region allo
     <td>Added to ensure the header length is a multiple of 32 bits.</td>
   </tr>
 </table>
+IPv6 uses 128 (32+96) bits for addresses, and IPv4 uses 32 bits.
+The IPv6 header is 40 bytes in length.
+The defining first hexadecimal digits for link-local addresses are FE8 (Other examples  = 2001:db8::/32 (Global Unicast), fc00::/7 (Unicast Local), ff00::/8 (Multicast), .
+IPv6 addresses can be unicast, anycast, or multicast.
+3f00:0000:0000:a7fb:0000:0000:b100:0023 = 3f00::a7fb:0000:0000:b100:23 = 3f00:0000:0000:a7fb::b1:23
+you can not use the double colons (::) twice. 
+DNS64 (DNS query from IPv6 client for an IPv4 destination, DNS64 respond with synthetic IPv6, typically prefix 64:ff9b::/96 to route the traffic through NAT64 GW) is a DNS mechanism that synthesizes AAAA records from A records.
+The IPv6 multicast address type handles broadcasts.
+The IPv6 loopback address is ::1 (0000:0000:0000:0000:0000:0000:0000:0001), similar to the IPv4 loopback 127.0.0.1.
+IPv4-compatible IPv6 addresses have the format ::d.d.d.d.
+The DNS maps fully qualified domain names to IPv6 addresses using (AAAA) records.
+IPv6 increases the address space, which allows globally unique IP addresses. Broadcasts are no longer used.
+RIPng, OSPFv3, EIGRP for IPv6
+From IPv4 to IPv6: Protocol Type became the Next Header field, Neighbor Discovery (ND) is used rather than Address Resolution Protocol (ARP), AAAA records are used rather than A records.
+IP Migrate is not an IPv4-to-IPv6 migration strategy.
+OSPFv3 supports IPv6. OSPFv2 is used in IPv4 networks.
+DNS AAAA records are used in IPv6 networks for name-to-IPv6 address resolution.
+IPv6 ND is like ARP for IPv4 networks. IPv6 ND (Neighbor Discovery) is a protocol used in IPv6 networks to discover other devices on the same local link, determine their link-layer addresses, find routers, and maintain reachability information. 
+ND plays a crucial role in the operation of IPv6 networks by performing functions similar to those of ARP (Address Resolution Protocol) and ICMP Router Discovery in IPv4.
+<table>
+    <thead>
+        <tr>
+            <th>Feature</th>
+            <th>IPv4 ARP</th>
+            <th>IPv6 ND</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Purpose</td>
+            <td>Resolves IP addresses to MAC addresses</td>
+            <td>Discovers neighbors, routers, and addresses</td>
+        </tr>
+        <tr>
+            <td>Protocol</td>
+            <td>ARP (Address Resolution Protocol)</td>
+            <td>ICMPv6 (Internet Control Message Protocol for IPv6)</td>
+        </tr>
+        <tr>
+            <td>Message Types</td>
+            <td>ARP Request, ARP Reply</td>
+            <td>Router Solicitation (RS), Router Advertisement (RA), Neighbor Solicitation (NS), Neighbor Advertisement (NA), Redirect</td>
+        </tr>
+        <tr>
+            <td>Address Resolution</td>
+            <td>IP to MAC address</td>
+            <td>IPv6 to MAC address</td>
+        </tr>
+        <tr>
+            <td>Router Discovery</td>
+            <td>Not included</td>
+            <td>Included</td>
+        </tr>
+        <tr>
+            <td>Reachability Detection</td>
+            <td>Not included</td>
+            <td>Neighbor Unreachability Detection (NUD)</td>
+        </tr>
+        <tr>
+            <td>Security</td>
+            <td>Generally, lacks security features</td>
+            <td>Secure Neighbor Discovery (SEND) available</td>
+        </tr>
+        <tr>
+            <td>Multicast Usage</td>
+            <td>Uses broadcast</td>
+            <td>Uses multicast</td>
+        </tr>
+    </tbody>
+</table>
+16 bits are there between the colons in an IPv6 address
+The first field of the IPv6 header is the Version field, which is 4 bits in length. This field is always set to binary number 0110. This corresponds to the decimal number 6, indicating that it is an IPv6 packet.
+DHCP is not required for dynamic allocation of IPv6 addresses.
+IPv6 multicast addresses always begin with the hexadecimal prefix FF. This indicates that the address is a multicast address, which is used for one-to-many communication in IPv6 networks.
+IPv6 link-local addresses always begin with the hexadecimal prefix FE80. These addresses are used for communication within a single network segment and are automatically configured on all IPv6-enabled interfaces.
+ISATAP (Intra-Site Automatic Tunnel Addressing Protocol) is a tunneling mechanism that allows IPv6 packets to be transmitted over an IPv4 network. It is designed to facilitate the transition from IPv4 to IPv6 by enabling IPv6 communication within an IPv4 infrastructure.
+The IPv6 header consists of eight fields, Version, Traffic Class (the class or priority of the packet, similar to the Type of Service (ToS) field in IPv4), Flow Label (belonging to the same flow, helping with packet handling and quality of service), Payload Length (the data portion in bytes), Next Header (such as TCP, UDP, or another extension header), Hop Limit (the maximum number of hops (routers) the packet can traverse before being discarded, similar to the Time to Live (TTL) field in IPv4), Source Address, Destination Address.
+IPv6 address types are unicast, anycast, and multicast.
+2001:0:0:1234:0:0:0:abcd, the longer set of zeros can be compressed => 2001:0:0:1234::abcd.
+subnet prefix of 2001:1:0:ab0:34:ab1:0:1/64 is 2001:1:0:ab0::/64.
+32 (128/4) hexadecimal numbers in an IPv6 address
+FF01:0:0:0:0:0:0:2 is a multicast address. All IPv6 multicast addresses begin with hexadecimal FF.
+2102:0010:0000:0000:0000:fc23:0100:00ab = 2102:10::fc23:100:ab
+The dual-stack backbone routers handle packets between IPv4 hosts and IPv6 hosts.
+The dual-stack host requests DNS to indicate which stack to use. DNS A records return IPv4 addresses. DNS AAAA records return IPv6 addresses.
+Ethernet uses EtherType values to identify different protocols. The EtherType value for IPv4 is 0x0800 and for IPv6 is 0x86DD
+<table>
+    <thead>
+        <tr>
+            <th>Field</th>
+            <th>Length (bits)</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Version</td>
+            <td>4</td>
+            <td>Indicates the IP version number. For IPv6, it is set to 6.</td>
+        </tr>
+        <tr>
+            <td>Traffic Class</td>
+            <td>8</td>
+            <td>Specifies the class or priority of the packet. Similar to the Type of Service (ToS) field in IPv4.</td>
+        </tr>
+        <tr>
+            <td>Flow Label</td>
+            <td>20</td>
+            <td>Used to label packets belonging to the same flow, helping with packet handling and quality of service.</td>
+        </tr>
+        <tr>
+            <td>Payload Length</td>
+            <td>16</td>
+            <td>Indicates the length of the payload (the data portion) in bytes, excluding the IPv6 header.</td>
+        </tr>
+        <tr>
+            <td>Next Header</td>
+            <td>8</td>
+            <td>Identifies the type of header immediately following the IPv6 header, such as TCP, UDP, or another extension header.</td>
+        </tr>
+        <tr>
+            <td>Hop Limit</td>
+            <td>8</td>
+            <td>Specifies the maximum number of hops (routers) the packet can traverse before being discarded. Similar to the Time to Live (TTL) field in IPv4.</td>
+        </tr>
+        <tr>
+            <td>Source Address</td>
+            <td>128</td>
+            <td>The IPv6 address of the originating node (source). Identifies the sender of the packet.</td>
+        </tr>
+        <tr>
+            <td>Destination Address</td>
+            <td>128</td>
+            <td>The IPv6 address of the intended recipient (destination). Identifies the receiver of the packet.</td>
+        </tr>
+    </tbody>
+</table>
+IPv4 packets can be fragmented by the sending host and routers. IPv6 packets are fragmented by the sending host only.
+Anycast addresses reach the nearest destination in a group of hosts.
+Two colons (::) are used to represent successive hexadecimal fields of 0s. A single interface will have multiple IPv6 addresses of different types, for example: Link-Local Address (for communication within a single network segment, FE80::/10), Global Unicast Address (typically starts with 2000::/3, can be routed on the internet similar to public IPv4 addresses), Unique Local Address (intended for local communications within a site or between a limited number of sites, not routable on the global internet, FC00::/7 (commonly FD00::/8)), Multicast Address (FF00::/8, one-to-many communication), Anycast Address (routed to the nearest interface, for load balancing, Redundancy and HA, improved latency, CDNs, DNS Services)
+Running dual-stack IPv4 and IPv6 on hosts and routers allows for full flexibility for communications for the corporation internally, with partners, and with the Internet.
+2001:0db8:85a3:0000:0000:8a2e:0370:7334 --> 2001:0db8:85a3 = Global Routing Prefix (48 bits) + 0000 = Subnet ID (16 bits) + 8a2e:0370:7334 = Interface Identifier (64 bits, usually derived from the device’s MAC address or assigned manually)
+NAT-PT (Network Address Translation - Protocol Translation) is a mechanism used to translate between IPv4 and IPv6 addresses, enabling communication between IPv4-only and IPv6-only networks.
+<table>
+    <thead>
+        <tr>
+            <th>Feature</th>
+            <th>IPv4 Header</th>
+            <th>IPv6 Header</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Header Length</td>
+            <td>Variable (20-60 bytes)</td>
+            <td>Fixed (40 bytes)</td>
+        </tr>
+        <tr>
+            <td>Number of Fields</td>
+            <td>12</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>Checksum</td>
+            <td>Included</td>
+            <td>Not included</td>
+        </tr>
+        <tr>
+            <td>Fragmentation Fields</td>
+            <td>Included</td>
+            <td>Handled at source, not included</td>
+        </tr>
+        <tr>
+            <td>Field Alignment</td>
+            <td>Not optimized</td>
+            <td>Aligned on 64-bit boundaries</td>
+        </tr>
+        <tr>
+            <td>Optional Fields</td>
+            <td>Options included in header</td>
+            <td>Handled via extension headers</td>
+        </tr>
+        <tr>
+            <td>Flow Label</td>
+            <td>Not available</td>
+            <td>Included for QoS</td>
+        </tr>
+        <tr>
+            <td>Need for NAT</td>
+            <td>Often required due to address exhaustion</td>
+            <td>Not required due to larger address space</td>
+        </tr>
+    </tbody>
+</table>
+ISATAP tunneling protocol allows dual stack hosts to tunnel over an IPv4 network that is not multicast enabled
+3 hextet + nyble = 3*16+4 =52 => 2001:0db8:2a3e:4000::/52 to summarize:
+2001:0db8:2a3e:4490::/64
+2001:0db8:2a3e:4a1b::/64
+2001:0db8:2a3e:4ff2::/64
+2001:0db8:2a3e:4c5b::/64
+SLAAC (Stateless Address Auto-Configuration) is a method used in IPv6 networks to allow devices to automatically configure their own IPv6 addresses without the need for a centralized server. DHCPv6 can be used in conjunction with SLAAC to provide additional configuration information that SLAAC does not provide, such as DNS server addresses
+Link-local and site-local addresses are unicast addresses, and multicast addresses are sent to a group of hosts. Anycast addresses are routed to the nearest receiver from a group of hosts.
+A packet with a link-local source address remains with the local link for communication within a single network segment.
+Both OSPF and IS-IS are link-state routing protocols, support IPv6 routing.
+Dual-stack, tunneled, and translation are strategies for transitioning to IPv6.
+ISATAP uses a well-defined IPv6 address format composed of any unicast prefix of 64 bits, which can be a link-local or global IPv6 unicast prefix. It then uses the 32 bits 0000:5EFE that define the ISATAP address ending with the 32-bit IPv4
+address of the ISATAP link, 0000:5EFE:IPv4-Address like 2001:db8::5EFE:C000:0201 (C000:0201 = 192.0.2.1)
+IPv6 multicast “all-nodes” addresses replace IPv4 broadcasts.
+ULA addresses have a fixed prefix of FC00::/7. However, current practices typically use FD00::/8.
+The format of a ULA address is: Prefix (FD) + Global ID (xx:xxxx:xxxx) + Subnet ID (yyyy) + Interface ID (zzzz:zzzz:zzzz:zzzz)
+NAT64 is a transition mechanism that does translation where the IPv6 client can reach IPv4-only servers.
+2001:004C:0000:0000:9A:0000:0000:0001 = 2001:4C::9A:0:0:1 is the correct representation since the first set of 16-bit pairs is the set that should be compressed.
+::FFFF:0:0/96 (e.g. ::FFFF:C0A8:3200 for 192.168.50.0 ) addresses are IPv4-mapped IPv6 addresses. 2000::/3 addresses are global unicast addresses, FE80::/10 addresses are link-local addresses, and 0000::/96 addresses were IPv4-compatible IPv6 addresses that have been deprecated.
+IPv6 Rapid Deployment (6RD) tunnels allow an SP to provide unicast IPv6 service to its customers over its IPv4 network. This feature enables the encapsulation of IPv6 packets within IPv4 packets, allowing IPv6 services to be delivered over an existing IPv4 infrastructure. Unlike 6to4 tunneling, 6RD does not require addresses to have a 2002::/16 prefix. Instead, the prefix can be from the SP's own address block
+If an AAAA query is returned empty, the DNS64 server queries the IPv4 DNS authoritative server for an A record.
+Well-Known Prefix (WKP) 64:ff9b::/96 is specifically reserved for NAT64 and facilitates the translation of IPv6 addresses to IPv4 addresses, allowing seamless communication between IPv6 and IPv4 networks. The WKP 64:ff9b::/96 is not globally routable. 
 
