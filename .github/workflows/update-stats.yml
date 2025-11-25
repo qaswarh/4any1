@@ -16,9 +16,9 @@ jobs:
         run: |
           mkdir -p data
           echo "Fetching stats..."
-          views=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          views=$(curl -s -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
             https://api.github.com/repos/qaswarh/4any1/traffic/views)
-          clones=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          clones=$(curl -s -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
             https://api.github.com/repos/qaswarh/4any1/traffic/clones)
 
           n=$(echo $views | jq '.count')
