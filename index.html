@@ -323,6 +323,12 @@
 			</menuitem>
 		</menu>
 	</nav>
+<div id="traffic-stats"
+     style="position:fixed;bottom:10px;left:0;z-index:9999;
+            font-size:18px;font-weight:bold;color:#444;
+            padding-left:10px;">
+  Loading stats...
+</div>
 <div id="background-container"></div>
 <div id="slideshow-controls">
   <button class="control-button" onclick="prevSlide()">Prev</button>
@@ -515,6 +521,18 @@ document.getElementById("toggleScroll").addEventListener("click", function () {
         clearTimeout(scrollAnimation); // Pause without resetting position
     }
 });
+
+async function loadStats() {
+  try {
+    const response = await fetch("data/stats.json");
+    const stats = await response.json();
+    document.getElementById("traffic-stats").innerText =
+      `${stats.views} views and ${stats.clones} clones during the last 14 days`;
+  } catch (e) {
+    document.getElementById("traffic-stats").innerText = "Stats unavailable";
+  }
+}
+loadStats();
 
 // Load glossary on page load
 window.onload = loadGlossary;
