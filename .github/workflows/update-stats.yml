@@ -2,11 +2,11 @@ name: Update Stats
 
 on:
   schedule:
-    - cron: '0 0 * * *'   # runs daily at 08:50 UTC
+    - cron: '50 8 * * *'   # runs daily at 08:50 UTC
   workflow_dispatch:       # allow manual trigger
 
 permissions:
-  contents: write          # allow pushing changes
+  contents: write          # allow pushing changes back to repo
 
 jobs:
   update:
@@ -15,19 +15,19 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Fetch traffic stats
+      - name: Fetch traffic stats and write stats.json
         run: |
           mkdir -p data
-          echo "Fetching stats..."
           views=$(curl -s -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
             https://api.github.com/repos/qaswarh/4any1/traffic/views)
           clones=$(curl -s -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
             https://api.github.com/repos/qaswarh/4any1/traffic/clones)
 
-          n=$(echo $views | jq '.count')
-          m=$(echo $clones | jq '.count')
-
-          echo "{\"views\": $n, \"clones\": $m}" > data/stats.json
+          node -e "const v=JSON.parse(process.env.VIEWS); const c=JSON.parse(process.env.CLONES); console.log(JSON.stringify({views:v.count, clones:c.count}));" \
+            > data/stats.json
+        env:
+          VIEWS: ${{ steps.fetch.outputs.views }}
+          CLONES: ${{ steps.fetch.outputs.clones }}
 
       - name: Commit stats.json
         run: |
