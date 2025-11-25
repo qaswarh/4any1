@@ -2,7 +2,7 @@ name: Update Stats
 
 on:
   schedule:
-    - cron: '50 8 * * *'   # runs daily at 08:50 UTC
+    - cron: '0 0 * * *'   # runs daily at 08:50 UTC
   workflow_dispatch:       # allow manual trigger
 
 permissions:
