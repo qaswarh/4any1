@@ -527,7 +527,7 @@ async function loadStats() {
     const response = await fetch("data/stats.json");
     const stats = await response.json();
     document.getElementById("traffic-stats").innerText =
-      `${stats.views} views and ${stats.clones} clones during the last 14 days`;
+      `${stats.views} Views and ${stats.clones} Clones during the last 14 Days`;
   } catch (e) {
     document.getElementById("traffic-stats").innerText = "Stats unavailable";
   }
