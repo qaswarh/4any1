@@ -3,33 +3,33 @@ Routers control broadcast, connect LAN to WAN, choose the best path for packets 
 Routers are used for static or dynamic routing and functions such as NAT, ACL and inter-VLAN routing etc.
 Routers interconnect different networks, switches connect devices in a network 
 Router consists of the following major components:
-.CPU – OS System initialization, routing functions, and network interface control etc. 
-.# sh processes
-.ROM - POST (Power on Self-Test), bootstrap program and basic OS Software.
-.RAM – Routing Tables and running config, volatile contents
-.NVRAM – Startup configuration
-.Flash Memory – NV memory for IOS image
-.RXBOOT Image – mini IOS for recovery and basic operations
-.Interfaces
-.Buses
-.Power Supply
-.Configuration Register - resides in the router’s ROM and controls how the device boots, including whether it loads the startup configuration from NVRAM.
+CPU – OS System initialization, routing functions, and network interface control etc. 
+# sh processes
+ROM - POST (Power on Self-Test), bootstrap program and basic OS Software.
+RAM – Routing Tables and running config, volatile contents
+NVRAM – Startup configuration
+Flash Memory – NV memory for IOS image
+RXBOOT Image – mini IOS for recovery and basic operations
+Interfaces
+Buses
+Power Supply
+Configuration Register - resides in the router’s ROM and controls how the device boots, including whether it loads the startup configuration from NVRAM.
 <b>Modes</b>
-.ROMmon – ctrl+Break after power on during the first 60 seconds for password recovery
-.Router> - user/defaut mode with basic monitoring and cmds like ping, telnet, ver, etc.
-.Router# - For cmds like ping, telnet, save, show, history privileged with Router> enable and can be used to check running-config, startup-config, flash, version, ip int br etc.
-.Router(config)# - For Global Configuration from Router# conf t 
-.Router(config-if)# - For a specific interface from Global Configuration
-.Router(config-subif)# - A specific sub-interface, for example, Router(config)# interface GigabitEthernet0/1.10
-.Router(config-controller)# - For controller interface typically for WAN modules like T1/E1 or serial/ISDN/DSL, e.g. Router(config)# controller T1 0/0/0
-.Router(config-map-list)# - From Global configuration when configuring a route map or prefix list that uses a map list as part of its logic, typically used in route filtering, policy routing, or redistribution control. E.g. Router(config)# map-list MYMAP
-.Router(config-map-class)# - To define traffic classification rules - especially for Quality of Service (QoS), WAAS (Wide Area Application Services), or AppNav deployments. For example, Router(config)# class-map match-any VOICE. 
-.Router(config-pmap)# - Once you define a class map, you apply it in a policy map, for example, Router(config)# policy-map QOS_POLICY
-.Router(config-pmap-c)# - To a class from pmap, for example, Router(config-pmap)# class VOICE to set priority the class as an example.
-.Router(config-line)# - To manage access methods like console, auxiliary (AUX), or virtual terminal (VTY) lines for remote access (e.g., Telnet or SSH), for example, Router(config)# line vty 0 4
-.Router(config-router)# - To customize the behavior of a specific routing protocol like RIP, OSPF, EIGRP, or BGP. For example, Router(config)# router ospf 1
-.Router(config-ipx-router)# - To configure IPX (Internetwork Packet Exchange), obsolete protocol, developed by Novell for NetWare networks. Router(config)# router ipx
-.Router(config-route-map)#- To control and manipulate routing decisions, redistribute routes, or apply policy-based routing. For example, Router(config)# route-map PBR permit 10 and then apply to interface, Router(config-if)# ip policy route-map PBR
+ROMmon – ctrl+Break after power on during the first 60 seconds for password recovery
+Router> - user/defaut mode with basic monitoring and cmds like ping, telnet, ver, etc.
+Router# - For cmds like ping, telnet, save, show, history privileged with Router> enable and can be used to check running-config, startup-config, flash, version, ip int br etc.
+Router(config)# - For Global Configuration from Router# conf t 
+Router(config-if)# - For a specific interface from Global Configuration
+Router(config-subif)# - A specific sub-interface, for example, Router(config)# interface GigabitEthernet0/1.10
+Router(config-controller)# - For controller interface typically for WAN modules like T1/E1 or serial/ISDN/DSL, e.g. Router(config)# controller T1 0/0/0
+Router(config-map-list)# - From Global configuration when configuring a route map or prefix list that uses a map list as part of its logic, typically used in route filtering, policy routing, or redistribution control. E.g. Router(config)# map-list MYMAP
+Router(config-map-class)# - To define traffic classification rules - especially for Quality of Service (QoS), WAAS (Wide Area Application Services), or AppNav deployments. For example, Router(config)# class-map match-any VOICE. 
+Router(config-pmap)# - Once you define a class map, you apply it in a policy map, for example, Router(config)# policy-map QOS_POLICY
+Router(config-pmap-c)# - To a class from pmap, for example, Router(config-pmap)# class VOICE to set priority the class as an example.
+Router(config-line)# - To manage access methods like console, auxiliary (AUX), or virtual terminal (VTY) lines for remote access (e.g., Telnet or SSH), for example, Router(config)# line vty 0 4
+Router(config-router)# - To customize the behavior of a specific routing protocol like RIP, OSPF, EIGRP, or BGP. For example, Router(config)# router ospf 1
+Router(config-ipx-router)# - To configure IPX (Internetwork Packet Exchange), obsolete protocol, developed by Novell for NetWare networks. Router(config)# router ipx
+Router(config-route-map)#- To control and manipulate routing decisions, redistribute routes, or apply policy-based routing. For example, Router(config)# route-map PBR permit 10 and then apply to interface, Router(config-if)# ip policy route-map PBR
 
 Private IPv4 address blocks are 10.0.0.0 to 10.255.255.255 (10/8), 172.16.0.0 to 172.31.255.255.255 (172.16/8), and 192.168.0.0 to 192.168.255.255 (192.168/16)
 /27 mask has 5 host bits: 2^5 − 2 = 30 hosts. The bit-number representation of 255.255.255.248 (256-248 = 2^3=> 32-3=29) is /29
