@@ -14,7 +14,7 @@ Interfaces
 Buses
 Power Supply
 Configuration Register - resides in the router’s ROM and controls how the device boots, including whether it loads the startup configuration from NVRAM.
-<b>Modes</b>
+Modes
 ROMmon – ctrl+Break after power on during the first 60 seconds for password recovery
 Router> - user/defaut mode with basic monitoring and cmds like ping, telnet, ver, etc.
 Router# - For cmds like ping, telnet, save, show, history privileged with Router> enable and can be used to check running-config, startup-config, flash, version, ip int br etc.
