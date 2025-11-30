@@ -524,7 +524,8 @@ document.getElementById("toggleScroll").addEventListener("click", function () {
 
 async function loadStats() {
   try {
-    const response = await fetch("data/stats.json");
+    // Add a timestamp query string to bust the cache
+    const response = await fetch(`data/stats.json?ts=${Date.now()}`);
     const stats = await response.json();
     document.getElementById("traffic-stats").innerText =
       `${stats.views} Views and ${stats.clones} Clones during the last 14 Days`;
