@@ -25,7 +25,7 @@ jobs:
 
           echo "Views JSON: $views"
           echo "Clones JSON: $clones"
-          //node[0] -e "inline js code"[1] "$views"[2] "$clones"[3]
+          # node[0] -e "inline js code"[1] "$views"[2] "$clones"[3]
           node -e " 
             const fs = require('fs'); //built‑in filesystem module to write files
             const views = JSON.parse(process.argv[1] || '{}');  //index shifted by 1 due to inline code
