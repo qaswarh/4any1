@@ -29,6 +29,28 @@ Modes
 *Router(config-router)# - To customize the behavior of a specific routing protocol like RIP, OSPF, EIGRP, or BGP. For example, Router(config)# router ospf 1
 *Router(config-ipx-router)# - To configure IPX (Internetwork Packet Exchange), obsolete protocol, developed by Novell for NetWare networks. Router(config)# router ipx
 *Router(config-route-map)#- To control and manipulate routing decisions, redistribute routes, or apply policy-based routing. For example, Router(config)# route-map PBR permit 10 and then apply to interface, Router(config-if)# ip policy route-map PBR
+Any network interface, physical or virtual, has Media Access Control Address (MAC). 
+MAC addresses, at data link layer of OSI model, are only meaningful within a single local network segment (Layer 2 broadcast domain).
+Address Resolution Protocol (ARP) resolves IP to MAC in the same subnet, Routers strip/replace MACs across subnets/hops
+L2 switches read Mac addresses in the frame header and forward to the physical port as per MAC address tab	le, work within the same broadcast domain (same subnet/VLAN)
+L3 switches look for destination IP address, decide for subnet/VLAN, support routing protocols, static routes, redundancy protocols, PBR and rely on MAC addresses to deliver frames hop-by-hop
+L3 switches are optimized for LAN routing, generally don’t support NAT/PAT, don’t provide full firewall functionality, limited to Ethernet-based LANs for inter-network connectivity
+Specialized/industrial L3 switches can perform NAT/PAT and sometimes connect to non‑Ethernet networks, making them capable of limited WAN gateway functions.
+MAC addresses (aka HW/Physical/Permanent address) are 48 bits (6-byte, about 281 trillion) addresses. The Organizationally Unique Identifier (OUI), the first half, is assigned to manufacturers. The Device Identifier, the second half, is unique to specific NIC.
+The MAC addresses can be Unicast (most common), multicast to send frames to group of devices or Broadcast (FF:FF:FF:FF:FF:FF) to deliver frames to all devices on the LAN
+L2 switches have MAC address table (show mac address-table) for same segment forwarding compared to L3 switches which still use said table for same broadcast domain or intra VLAN and routing table (show ip route) for inter VLAN
+Switches rely on dynamic learning for scalability, have an aging timer (commonly 300 seconds for inactive MAC) but static entries are used for security and control in special cases
+At startup, the table is empty, and the switch floods unknown traffic until it learns where devices are, an automatic and continuous process, keeping the table fresh with active devices.
+Content Addressable Memory (CAM) is used for exact match (MAC to port) lookup whereas Ternary Content Addressable Memory (TCAM) is used for pattern matching CLI examples like ACLs, QoS, and PBR:
+Switch(config)# access-list 100 permit ip 192.168.1.0 0.0.0.255 any
+Switch(config)# access-list 101 permit tcp any any eq 80
+Switch(config)# access-list 101 deny ip any any
+Switch(config)# class-map match-any WEB-TRAFFIC
+Switch(config-cmap)# match protocol http
+Switch(config-cmap)# match protocol https
+Switch(config)# route-map PBR permit 10
+Switch(config-route-map)# match ip address 110
+Switch(config-route-map)# set ip next-hop 10.1.1.1
 
 Private IPv4 address blocks are 10.0.0.0 to 10.255.255.255 (10/8), 172.16.0.0 to 172.31.255.255.255 (172.16/8), and 192.168.0.0 to 192.168.255.255 (192.168/16)
 /27 mask has 5 host bits: 2^5 − 2 = 30 hosts. The bit-number representation of 255.255.255.248 (256-248 = 2^3=> 32-3=29) is /29
