@@ -32,7 +32,7 @@ Modes
 Any network interface, physical or virtual, has Media Access Control Address (MAC). 
 MAC addresses, at data link layer of OSI model, are only meaningful within a single local network segment (Layer 2 broadcast domain).
 Address Resolution Protocol (ARP) resolves IP to MAC in the same subnet, Routers strip/replace MACs across subnets/hops
-L2 switches read Mac addresses in the frame header and forward to the physical port as per MAC address tab	le, work within the same broadcast domain (same subnet/VLAN)
+L2 switches read Mac addresses in the frame header and forward to the physical port as per MAC address table, work within the same broadcast domain (same subnet/VLAN)
 L3 switches look for destination IP address, decide for subnet/VLAN, support routing protocols, static routes, redundancy protocols, PBR and rely on MAC addresses to deliver frames hop-by-hop
 L3 switches are optimized for LAN routing, generally don’t support NAT/PAT, don’t provide full firewall functionality, limited to Ethernet-based LANs for inter-network connectivity
 Specialized/industrial L3 switches can perform NAT/PAT and sometimes connect to non‑Ethernet networks, making them capable of limited WAN gateway functions.
