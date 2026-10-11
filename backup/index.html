@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css4any1.css">
+    <style>
+	    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #background-container {
+      position: fixed;
+      bottom: 50px;
+      right: 0;
+      width: 70%;
+      height: 70%;
+      transition: opacity 1s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+	    z-index: -1;
+    }
+
+    #background-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    #slideshow-controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+    }
+
+    .control-button {
+      margin: 0 10px;
+      padding: 10px;
+      background-color: transparent;
+      color: #333;
+      border: none;
+      cursor: pointer;
+    }
+
+    #number-buttons {
+      display: flex;
+    }
+
+    .number-button {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #eef;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    .current-slide {
+      background-color: #dee;
+    }
+	.dropup {
+		position: relative;
+		display: inline-block;
+	}
+        /* Additional inline styles if needed */
+		a {
+		text-decoration: none;
+		}
+
+
+.scroll-wrapper {
+    display: flex !important;
+    justify-content: flex-end !important; /* Align to the right */
+    position: fixed !important;
+    top: 15px !important; /* 15px from the top */
+    right: 15px !important; /* 15px from the right */
+    width: auto !important;
+    z-index: 1000 !important;
+}
+
+.scroll-container {
+    width: 1220px; /* Keep the previous width */
+    height: 100px; /* Show 4-5 lines */
+    overflow: hidden;
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.scroll-content {
+    position: absolute;
+    bottom: -100%; /* Make sure text starts at the bottom, changed to -100 from 0 */
+    width: 100%;
+    line-height: 1.5; /* Keep good spacing */
+    font-size: 16px;
+    white-space: pre-wrap;
+}
+
+.scroll-content th,
+.scroll-content td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: left;
+    word-wrap: break-word; /* Prevents overflow */
+    white-space: normal; /* Allows proper text wrapping */
+    max-width: 300px; /* Prevents excessive stretching of columns */
+    overflow: hidden;
+}
+
+.scroll-content th {
+    background-color: #f2f2f2;
+}
+
+.table-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow-x: auto; /* Ensures the table doesn’t go off-screen */
+    padding-top: 5px; /* Ensures spacing between text and table */
+}
+
+.scroll-table {
+    border-collapse: collapse;
+    width: 95%; /* Makes sure table fits within the scrolling window */
+    max-width: 1000px; /* Keeps table within 1200px scrolling window */
+    min-width: 800px;
+    text-align: left;
+    margin: auto;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    background-color: white;
+}
+
+.scroll-table th, .scroll-table td {
+    padding: 8px;
+    border: 1px solid black;
+}
+
+.scroll-table thead {
+    background-color: #ddd;
+}
+        .control-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #75f;
+            opacity:0.9;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 10;
+                }
+
+
+    </style>
+</head>
+<body>
+    <div class="scroll-wrapper">
+        <div class="scroll-container">
+          <button class="control-btn" id="toggleScroll">Pause</button>
+            <div class="scroll-content" id="scrollText"></div>
+        </div>
+    </div>
+
+    <nav>
+		<menu>
+			<menuitem id="demo1">
+				<a>start here</a>
+				<menu>
+          <menuitem id="demo1a">
+			  <a>Local2any1</a>
+			  <menu>
+          <menuitem id="demo1b">
+            <a>Wipro</a>
+            <menu>
+              <menuitem><a href="https://thedot.wipro.com" target="_blank">dot</a></menuitem>
+              <menuitem><a href="https://myaccount.microsoft.com/" target="_blank">myaccount</a></menuitem>
+              <menuitem><a href="https://teams.microsoft.com/?tenantId=258ac4e4-146a-411e-9dc8-79a9e12fd6da&prompt=select_account" target="_blank">teams</a></menuitem>
+              <menuitem><a href="https://outlook.office.com/mail/?auth=2&domain_hint=wipro.com&prompt=select_account" target="_blank">outlook</a></menuitem>
+              <menuitem><a href="https://wiprocio.service-now.com/sp" target="_blank">snow</a></menuitem>
+              <menuitem><a href="https://my.adp.com/" target="_blank">adp</a></menuitem>
+              <menuitem><a href="https://m365.cloud.microsoft.mcas.ms/chat/?auth=2" target="_blank">copilot</a></menuitem>
+              <menuitem><a href="https://digital.alight.com/wipro" target="_blank">alight</a></menuitem>
+              <menuitem><a href="https://wilearn.edcast.com/" target="_blank">wilearn</a></menuitem>
+              <menuitem><a href="https://hcm-eu30.hr.cloud.sap.mcas.ms/sf/home?bplte_company=wiprolimitP2" target="_blank">SF-Home</a></menuitem>
+              <menuitem><a href="https://wipro365.sharepoint.com.mcas.ms/sites/AIFutura2026" target="_blank">AIFutura</a></menuitem>
+              <menuitem><a href="https://m365.cloud.microsoft/apps" target="_blank">MS365Cloud</a></menuitem>
+              <menuitem><a href="https://wipro.udemy.com/organization/home/" target="_blank">udemy</a></menuitem>
+            </menu>
+          </menuitem>
+          <menuitem><a href="http://localhost:5000/" target="_blank">CyberNet Dashboard</a></menuitem>
+          <menuitem><a href="http://192.168.85.128" target="_blank">CCIE</a></menuitem>
+          <menuitem><a href="http://192.168.49.128" target="_blank">GNS3</a></menuitem>
+          <menuitem><a href="http://192.168.10.146" target="_blank">paloalto</a></menuitem>
+			  </menu>
+		  </menuitem>
+      <menuitem>
+        <a>3GPP</a>
+        <menu>
+			    <menuitem id="demo2">
+			    <a>5G</a>
+			    <menu>
+          <menuitem><a href="https://www.tech-invite.com/3m23/tinv-3gpp-23-501.html" target="_blank">Architecture</a></menuitem>
+          <menuitem><a href="https://www.tech-invite.com/3m23/tinv-3gpp-23-502.html" target="_blank">Procedures</a></menuitem>
+          <menuitem><a href="https://www.tech-invite.com/3m23/tinv-3gpp-23-503.html" target="_blank">PCC</a></menuitem>
+          <menuitem><a href="https://www.tech-invite.com/3m33/tinv-3gpp-33-501.html" target="_blank">Security</a></menuitem>
+		      <menuitem><a href="https://www.tech-invite.com/3m22/tinv-3gpp-22-261.html" target="_blank">Service</a></menuitem>
+		      <menuitem><a href="https://www.tech-invite.com/3m24/tinv-3gpp-24-501.html" target="_blank">NAS</a></menuitem>
+		      <menuitem><a href="https://www.tech-invite.com/tinv-topic-5gnr.html" target="_blank">NR</a></menuitem>
+		      <menuitem><a href="https://www.tech-invite.com/tinv-topic-5gserv.html" target="_blank">SBA</a></menuitem>
+		      <menuitem><a href="https://github.com/jdegre/5GC_APIs/blob/Rel-18/README.md" target="_blank">5GC APIs</a></menuitem>
+          <menuitem><a href="https://docs.ngkore.org/" target="_blank">NGKORE</a></menuitem>
+			  </menu>
+		  </menuitem>
+			<menuitem id="demo3">
+			  <a>Misc</a>
+			  <menu>
+		      <menuitem><a href="https://www.tech-invite.com/tinv-topic-ims.html" target="_blank">IMS</a></menuitem>
+		      <menuitem><a href="https://www.tech-invite.com/tinv-topic-eps.html" target="_blank">EPS</a></menuitem>
+		      <menuitem><a href="https://www.tech-invite.com/tinv-topic-uas.html" target="_blank">UAS</a></menuitem>
+		      <menuitem><a href="https://www.tech-invite.com/tinv-topic-lcs.html" target="_blank">LCS</a></menuitem>
+		      <menuitem><a href="https://www.tech-invite.com/tinv-topic-mcs.html" target="_blank">MCS</a></menuitem>
+	        <menuitem><a href="https://www.tech-invite.com/tinv-topic-seal.html" target="_blank">SEAL</a></menuitem>
+		      <menuitem><a href="https://www.tech-invite.com/tinv-topic-sms.html" target="_blank">SMS</a></menuitem>
+	        <menuitem><a href="https://www.tech-invite.com/tinv-topic-cbase.html" target="_blank">CBASE</a></menuitem>
+        </menu>  
+      </menuitem>
+		  </menu>
+		</menuitem>
+					<menuitem><a href="https://github.com/qaswarh/4any1/blob/main/packetcorekt.pdf" target="_blank">4G5GPacketCore</a></menuitem>
+          <menuitem><a href="https://www.youtube.com/playlist?list=PLbPW06RB5w6m_xizacLr6dMXP58IHq23D" target="_blank">Satellite Communication</a></menuitem>
+					<menuitem id="demo4">
+						<a>AI</a>
+						<menu>
+							<menuitem id="demo5">
+								<a>Google</a>
+								<menu>
+                  <menuitem id="demo6">
+                  <a>WhitePapers</a>
+                  <menu>
+                    <menuitem><a href="https://www.kaggle.com/whitepaper-foundational-llm-and-text-generation"_blank">LLMs & Text</a></menuitem>
+                    <menuitem id="demo7">
+                      <a>Gen AI @YouTube</a>
+                      <menu>
+                      <menuitem id="demo7a">
+                      <a>AI Agents @YouTube</a>
+                      <menu>
+                        <menuitem><a href="https://www.youtube.com/watch?v=zTxvGzpfF-g" target="_blank">Intro2Agents</a></menuitem>
+                        <menuitem><a href="https://www.youtube.com/watch?v=Cr4NA6rxHAM" target="_blank">Tools&MCP</a></menuitem>
+                        <menuitem><a href="https://www.youtube.com/watch?v=FMcExVE15a4" target="_blank">Sessions&Memory</a></menuitem>
+                        <menuitem><a href="https://www.youtube.com/watch?v=LFQRy-Ci-lk" target="_blank">Quality</a></menuitem>
+                        <menuitem><a href="https://www.youtube.com/watch?v=8Wyt9l7ge-g" target="_blank">Production</a></menuitem>
+                        <menuitem><a href="https://www.youtube.com/playlist?list=PLqFaTIg4myu9r7uRoNfbJhHUbLp-1t1YE" target="_blank">5Days AI Agents</a></menuitem>
+                      </menu>  
+                    </menuitem>
+                      <menuitem><a href="https://www.youtube.com/watch?v=Na3O4Pkbp-U&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=2" target="_blank">LLMs & Text</a></menuitem>
+                      <menuitem><a href="https://www.youtube.com/watch?v=CFtX0ZyLSAY&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=3" target="_blank">Prompt Engineering</a></menuitem>
+                      <menuitem><a href="https://www.youtube.com/watch?v=xCAVsst6WJ8&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=4" target="_blank">Embeddings&VectorStores</a></menuitem>
+                      <menuitem><a href="https://www.youtube.com/watch?v=D3Kaqz7VW28&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=5" target="_blank">Agents</a></menuitem>
+                      <menuitem><a href="https://www.youtube.com/watch?v=MWqspvVvNzA&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=7" target="_blank">Domain Specific</a></menuitem>
+                      <menuitem><a href="https://www.youtube.com/watch?v=Hbk8UXavHrk&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=8" target="_blank">Vertex AI using MLOps</a></menuitem>
+                      <menuitem><a href="https://www.youtube.com/watch?v=yIRIT_EtALs&t=235s" target="_blank">Agent Starter Pack</a></menuitem>
+                      <menuitem><a href="https://www.youtube.com/playlist?list=PLqFaTIg4myu-lbBTrUpoQQIzZZxvrOaP5" target="_blank">5Days Gen AI</a></menuitem>
+                    </menu>
+                    </menuitem>
+                    <menuitem><a href="https://www.kaggle.com/whitepaper-prompt-engineering"_blank">Prompt Engineering</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/whitepaper-embeddings-and-vector-stores" target="_blank">Embeddings&VectorStores</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/whitepaper-agents" target="_blank">Agents</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/whitepaper-solving-domains-specific-problems-using-llms" target="_blank">Domain Specific</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/whitepaper-operationalizing-generative-ai-on-vertex-ai-using-mlops" target="_blank">Vertex AI using MLOps</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/whitepaper-introduction-to-agents" target="_blank">Intro2Agents</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/whitepaper-agent-tools-and-interoperability-with-mcp" target="_blank">Tools&MCP</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/whitepaper-context-engineering-sessions-and-memory" target="_blank">Sessions&Memory</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/whitepaper-agent-quality" target="_blank">Quality</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/whitepaper-prototype-to-production" target="_blank">Production</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/whitepaper-agent-companion" target="_blank">Agents Companion</a></menuitem>
+                  </menuitem>
+                  </menu>
+                  </menuitem>
+									<menuitem id="demo8">
+                  <a>Gen AI @Kaggle</a>
+                  <menu>
+                    <menuitem id="demo8a">
+                    <a>AI Agents @Kaggle</a>
+                    <menu>
+                    <menuitem><a href="https://www.kaggle.com/code/kaggle5daysofai/day-1a-from-prompt-to-action" target="_blank">Prompt2Action</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/kaggle5daysofai/day-1b-agent-architectures" target="_blank">Architectures</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/kaggle5daysofai/day-2a-agent-tools" target="_blank">Tools</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/kaggle5daysofai/day-2b-agent-tools-best-practices" target="_blank">Best Practices</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/kaggle5daysofai/day-3a-agent-sessions" target="_blank">Sessions</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/kaggle5daysofai/day-3b-agent-memory" target="_blank">Memory</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/kaggle5daysofai/day-4a-agent-observability" target="_blank">Observability</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/kaggle5daysofai/day-4b-agent-evaluation" target="_blank">Evaluation</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/kaggle5daysofai/day-5a-agent2agent-communication" target="_blank">Agent2Agent</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/kaggle5daysofai/day-5b-agent-deployment" target="_blank">Deployment</a></menuitem>
+                    </menu>
+                  </menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/markishere/day-1-prompting" target="_blank">Prompting</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/markishere/day-1-evaluation-and-structured-output" target="_blank">Evaluation and structured</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/markishere/day-2-document-q-a-with-rag" target="_blank">RAG</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/markishere/day-2-embeddings-and-similarity-scores" target="_blank">Embeddings</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/markishere/day-2-classifying-embeddings-with-keras" target="_blank">Embeddings with Keras</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/markishere/day-3-function-calling-with-the-gemini-api" target="_blank">Function</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/markishere/day-3-building-an-agent-with-langgraph/" target="_blank">LangGraph</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/markishere/day-4-fine-tuning-a-custom-model" target="_blank">Fine Tuning</a></menuitem>
+                    <menuitem><a href="https://www.kaggle.com/code/markishere/day-4-google-search-grounding" target="_blank">Grounding</a></menuitem>
+                  </menu>
+                  </menuitem>
+									<menuitem><a href="https://aistudio.google.com/prompts/new_chat" target="_blank">AI Studio</a></menuitem>
+									<menuitem><a href="https://www.kaggle.com/code/markishere/day-0-troubleshooting-and-faqs/">TS & FAQ</a></menuitem>
+                  <menuitem><a href="https://textfx.withgoogle.com/" target="_blank">textfx</a></menuitem>
+                  <menuitem><a href="https://sql-talk-r5gdynozbq-uc.a.run.app/" target="_blank">BigQuery SQLTalk</a></menuitem>
+                  <menuitem><a href="https://notebooklm.google/" target="_blank">NotebookLM</a></menuitem>
+                  <menuitem><a href="https://keras.io/guides/" target="_blank">Keras</a></menuitem>
+                  <menuitem><a href="https://ai.google.dev/api/caching#Schema" target="_blank">Caching</a></menuitem>
+                  <menuitem><a href="https://www.langchain.com/langgraph" target="_blank">LangGraph</a></menuitem>
+                  <menuitem><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/models/evaluation-overview" target="_blank">GenAI</a></menuitem>
+                  <menuitem><a href="https://cloud.google.com/blog/products/ai-machine-learning/supervised-fine-tuning-for-gemini-llm" target="_blank">supervised fine-tuning</a></menuitem>
+                  <menuitem><a href="https://ai.google.dev/gemini-api/docs/model-tuning/tutorial?hl=en&lang=python" target="_blank">Fine-tuning tutorial</a></menuitem>
+								</menu>
+							</menuitem>
+							<menuitem id="demo9">
+              <a>MS</a>
+              <menu>
+                <menuitem><a href="https://adoption.microsoft.com/en-us/copilot/chat-and-agent-starter-kit/" target="_blank">Agent Starter Kit</a></menuitem>
+                <menuitem><a href="https://learn.microsoft.com/en-us/training/courses/ai-102t00" target="_blank">MS AI-102</a></menuitem>	
+                <menuitem><a href="https://learn.microsoft.com/en-us/training/modules/prepare-to-develop-ai-solutions-azure/" target="_blank">AI Azure</a></menuitem>
+              </menu>
+            </menuitem>
+            <menuitem id="demo10">
+            <a>databricks</a>
+            <menu>
+              <menuitem><a href="https://www.databricks.com/learn/training/generative-ai-fundamentals-accreditation" target="_blank">AI Fundamentals</a></menuitem>
+            </menu>
+          </menuitem>
+          <menuitem id="demo11">
+            <a>Stanford</a>
+            <menu>
+              <menuitem><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOca_Ovz1DvdtWuz8BfSWL2" target="_blank">CS221</a></menuitem>
+              <menuitem><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D" target="_blank">CS224N</a></menuitem>
+              <menuitem><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rPt5D0zs3YhbWSZA8Q_DyiJ" target="_blank">CS224U</a></menuitem>
+              <menuitem><a href="https://www.youtube.com/watch?v=K_Dh0Sxujuc&list=PLoROMvodv4rOwvldxftJTmoR3kRcWkJBp" target="_blank">XCS224U</a></menuitem>
+              <menuitem><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU" target="_blank">CS229</a></menuitem>
+              <menuitem><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rP8nAmISxFINlGKSK4rbLKh" target="_blank">CS229M</a></menuitem>              
+              <menuitem><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOABXSygHTsbvUz4G_YQhOb" target="_blank">CS230</a></menuitem>
+              <menuitem><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16" target="_blank">CS231N</a></menuitem>
+              <menuitem><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rN4wG6Nk6sNpTEbuOSosZdX" target="_blank">CS234</a></menuitem>
+              <menuitem><a href="https://www.youtube.com/watch?v=SQ3fZ1sAqXI&list=PLoROMvodv4rOY23Y0BoGoBGgQ1zmU_MT_" target="_blank">CS336</a></menuitem>
+              <menuitem><a href="https://cme295.stanford.edu/syllabus/" target="_blank">CME295</a></menuitem>
+              <menuitem><a href="https://cme296.stanford.edu/syllabus/" target="_blank">CME296</a></menuitem>
+            </menu>
+          </menuitem>
+          <menuitem><a href="https://scikit-learn.org/0.19/datasets/twenty_newsgroups.html" target="_blank">scikit-learn</a></menuitem>		
+				</menu>
+					</menuitem>
+          <menuitem id="demo12">
+            <a>Job Search</a>
+            <menu>
+              <menuitem><a href="https://att.wd1.myworkdayjobs.com/en-US/ATTGeneral/login?redirect=%2Fen-US%2FATTGeneral%2FuserHome" target="_blank">AT&T</a></menuitem>
+            </menu>
+          </menuitem>
+          <menuitem><a href="https://k9scli.io/topics/commands/" target="_blank">K9s</a></menuitem>
+          <menuitem><a href="https://rafeeqarabic.com/" target="_blank">Rafeeq Arabic</a></menuitem>
+          <menuitem><a href="https://pro.terefic.com/manage" target="_blank">Terefic</a></menuitem>
+          <menuitem><a href="https://app.skillsurvey.com/Reference/Candidate/MyReferences/?candidateId=7WploMrAh%2BY0F773c3AIag%253d%253d" target="_blank">Skillsurvey</a></menuitem>
+				</menu>     
+			</menuitem>
+		</menu>
+	</nav>
+<div id="traffic-stats"
+     style="position:fixed;top:10px;left:10;z-index:9999;
+            font-size:14px;font-weight:bold;color:#444;
+            padding-left:10px;">
+  Loading stats...
+</div>
+<div id="background-container"></div>
+<div id="slideshow-controls">
+  <button class="control-button" onclick="prevSlide()">Prev</button>
+  <button class="control-button" onclick="nextSlide()">Next</button>
+  <div id="number-buttons"></div>
+
+    <!-- <div class="scroll-wrapper">
+        <div class="scroll-container">
+            <button class="control-btn" id="toggleScroll">Pause</button>
+            <div class="scroll-content" id="scrollText"></div>
+        </div>
+    </div>  -->
+<script>
+  const images = [
+'https://github.com/qaswarh/4any1/blob/main/5G.JPG?raw=true',    
+'https://github.com/qaswarh/4any1/blob/main/2345G.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/5GStack.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/IMS.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/5GAir1.jpg?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/5GAir2.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/6G.JPG?raw=true',  
+'https://github.com/qaswarh/4any1/blob/main/ORAN1.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/ORAN2.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/ORAN3.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/k8cs1.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/k8cs2.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/docker.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/sdwan.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/ath.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/aiglossary.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/5GRegister1.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/5GRegister2.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/5GDeregister1.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/5GSvcReq1.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/5GUEConfigUpdate.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/5GNSSAA.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/charging.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/UCC1.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/UCC2.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/bsf.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/CDL.JPG?raw=true',
+'https://github.com/qaswarh/4any1/blob/main/confused-smiley-clipart-3.jpg?raw=true'
+    // Add more image URLs as needed
+  ];
+
+  let currentIndex = 0;
+  const backgroundContainer = document.getElementById('background-container');
+  const numberButtonsContainer = document.getElementById('number-buttons');
+
+  function updateBackground() {
+    backgroundContainer.style.opacity = 0;
+
+    setTimeout(() => {
+      backgroundContainer.innerHTML = `<img src="${images[currentIndex]}" alt="Slide ${currentIndex + 1}">`;
+      backgroundContainer.style.opacity = 1;
+    }, 1000); // Adjust the duration based on your preference
+
+    updateNumberButtons();
+  }
+
+  function updateNumberButtons() {
+    numberButtonsContainer.innerHTML = '';
+
+    images.forEach((_, index) => {
+      const button = document.createElement('div');
+      button.className = `number-button ${index === currentIndex ? 'current-slide' : ''}`;
+      button.addEventListener('click', () => {
+        currentIndex = index;
+        updateBackground();
+      });
+      numberButtonsContainer.appendChild(button);
+    });
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    updateBackground();
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % images.length;
+    updateBackground();
+  }
+
+  // Initial background setup
+  updateBackground();
+
+let scrolling = true;
+let speed = 30;
+let pos = 0; // Store the current scroll position
+let scrollAnimation; // Store the animation reference
+
+async function loadGlossary() {
+    try {
+        const response = await fetch('glossary.txt');
+        const text = await response.text();
+        const textElement = document.getElementById("scrollText");
+
+        // Convert text to structured HTML, keeping tables in sequence
+        textElement.innerHTML = formatContent(text);
+
+        textElement.style.bottom = `${pos}px`; // Start from last position
+        startScrolling();
+    } catch (error) {
+        console.error('Error loading glossary:', error);
+    }
+}
+
+// Function to format content while maintaining text-table order
+function formatContent(text) {
+    let lines = text.trim().split("\n");
+    let formattedHTML = "";
+    let tableData = [];
+    let isTable = false;
+
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i].trim();
+
+        if (line.includes("\t")) {
+            isTable = true; 
+            tableData.push(line); // Collect table lines
+        } else {
+            if (isTable) {
+                // Insert table when transitioning back to text
+                formattedHTML += convertTextToTable(tableData.join("\n"));
+                tableData = []; // Reset for next table
+                isTable = false;
+            }
+            formattedHTML += `<div class="scroll-line">${line}</div>`; // Normal text
+        }
+    }
+
+    // If the last part is a table, insert it at the end
+    if (tableData.length > 0) {
+        formattedHTML += convertTextToTable(tableData.join("\n"));
+    }
+
+    return formattedHTML;
+}
+
+// Function to convert tab-separated text into an HTML table
+function convertTextToTable(text) {
+    let lines = text.trim().split("\n");
+    let tableHTML = `
+        <div class="table-wrapper">
+            <table class="scroll-table">
+    `;
+
+    lines.forEach((line, index) => {
+        let columns = line.split("\t"); // Split by tab spaces
+        if (index === 0) {
+            tableHTML += `<thead><tr>` +
+                columns.map(col => `<th>${col}</th>`).join("") +
+                `</tr></thead><tbody>`;
+        } else {
+            tableHTML += `<tr>` +
+                columns.map(col => `<td>${col}</td>`).join("") +
+                `</tr>`;
+        }
+    });
+
+    tableHTML += "</tbody></table></div>";
+    return tableHTML;
+}
+
+function startScrolling() {
+    const text = document.getElementById("scrollText");
+
+    function scrollUp() {
+        if (!scrolling) return; // Stop scrolling if paused
+        pos += 1;
+        text.style.bottom = `${pos}px`;
+
+        if (pos >= document.querySelector(".scroll-container").offsetHeight) {
+            pos = -text.scrollHeight; // Reset when text fully scrolls out
+        }
+
+        scrollAnimation = setTimeout(scrollUp, speed);
+    }
+
+    scrollUp();
+}
+
+// Toggle Play/Pause button functionality
+document.getElementById("toggleScroll").addEventListener("click", function () {
+    scrolling = !scrolling;
+    this.textContent = scrolling ? "Pause" : "Play";
+
+    if (scrolling) {
+        startScrolling(); // Resume from last position
+    } else {
+        clearTimeout(scrollAnimation); // Pause without resetting position
+    }
+});
+
+async function loadStats() {
+  try {
+    // Add a timestamp query string to bust the cache
+    const response = await fetch(`data/stats.json?ts=${Date.now()}`);
+    const stats = await response.json();
+    document.getElementById("traffic-stats").innerText =
+      `${stats.views} Views and ${stats.clones} Clones during the last 14 Days`;
+  } catch (e) {
+    document.getElementById("traffic-stats").innerText = "Stats unavailable";
+  }
+}
+loadStats();
+
+// Load glossary on page load
+window.onload = loadGlossary;
+
+</script>
+
+</body>
+</html>
