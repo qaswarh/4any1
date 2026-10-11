@@ -116,3 +116,28 @@ li > ul > li:hover > ul > li{
 /* Normalize list elements for the original dropdown appearance */
 nav ul { list-style: none; margin: 0; padding: 0; }
 nav li { list-style: none; }
+
+/* Position menu items */
+nav li {
+    position: relative;
+}
+
+/* Remove old submenu arrows */
+nav li > a + ul::after {
+    content: none !important;
+}
+
+/* Default: right arrow for nested submenus */
+nav li:has(> ul) > a::before {
+    content: "▶";
+    display: inline-block;
+    margin-right: 12px;
+    font-size: 12px;
+    color: white;
+    vertical-align: middle;
+}
+
+/* Top-level menu: downward arrow */
+nav > ul > li:has(> ul) > a::before {
+    content: "▼";
+}
