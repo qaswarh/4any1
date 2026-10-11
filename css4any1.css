@@ -13,30 +13,30 @@ body * {
 /* HTML Nav Styles */
 /* HTML Nav Styles */
 /* HTML Nav Styles */
-nav menuitem {
+nav li {
    position:relative;
    display:block;
    opacity:0;
    cursor:pointer;
 }
 
-nav menuitem > menu {
+nav li > ul {
    position: absolute;
    pointer-events:none;
 }
-nav > menu { display:flex; }
+nav > ul { display:flex; }
 
-nav > menu > menuitem { pointer-events: all; opacity:1; }
-menu menuitem a { white-space:nowrap; display:block; }
+nav > ul > li { pointer-events: all; opacity:1; }
+ul li a { white-space:nowrap; display:block; }
    
-menuitem:hover > menu {
+li:hover > ul {
    pointer-events:initial;
 }
-menuitem:hover > menu > menuitem,
-menu:hover > menuitem{
+li:hover > ul > li,
+ul:hover > li{
    opacity:1;
 }
-nav > menu > menuitem menuitem menu {
+nav > ul > li li ul {
    transform:translateX(100%);
    top:0; right:0;
 }
@@ -72,7 +72,7 @@ nav a:hover:before {
    z-index
 }
 
-nav > menu > menuitem > a + menu:after{
+nav > ul > li > a + ul:after{
    content: '';
    position:absolute;
    border:10px solid transparent;
@@ -80,7 +80,7 @@ nav > menu > menuitem > a + menu:after{
    left:12px;
    top: -40px;
 }
-nav menuitem > menu > menuitem > a + menu:after{ 
+nav li > ul > li > a + ul:after{ 
    content: '';
    position:absolute;
    border:10px solid transparent;
@@ -90,25 +90,29 @@ nav menuitem > menu > menuitem > a + menu:after{
    transition: opacity 0.6, transform 0s;
 }
 
-nav > menu > menuitem > menu > menuitem{
+nav > ul > li > ul > li{
    transition: transform 0.6s, opacity 0.6s;
    transform:translateY(150%);
    opacity:0;
 }
-/*nav > menu > menuitem:hover > menu > menuitem,*/
-nav > menu > menuitem:hover > menu > menuitem{
+/*nav > ul > li:hover > ul > li,*/
+nav > ul > li:hover > ul > li{
    transform:translateY(0%);
    opacity: 1;
 }
 
-menuitem > menu > menuitem > menu > menuitem{
+li > ul > li > ul > li{
    transition: transform 0.6s, opacity 0.6s;
    transform:translateX(195px) translateY(0%);
    opacity: 0;
 } 
-/*menuitem > menu > menuitem:hover > menu > menuitem,*/  
-menuitem > menu > menuitem:hover > menu > menuitem{  
+/*li > ul > li:hover > ul > li,*/  
+li > ul > li:hover > ul > li{  
    transform:translateX(0) translateY(0%);
    opacity: 1;
 }
 
+
+/* Normalize list elements for the original dropdown appearance */
+nav ul { list-style: none; margin: 0; padding: 0; }
+nav li { list-style: none; }
