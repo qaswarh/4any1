@@ -141,3 +141,4 @@ nav li:has(> ul) > a::before {
 nav > ul > li:has(> ul) > a::before {
     content: "▼";
 }
+
