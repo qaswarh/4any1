@@ -668,7 +668,7 @@ window.onload = loadGlossary;
     if (e.key === 'Escape') closeIpv4v6Modal();
   });
     window.addEventListener('message', function (e) {
-    if (e.origin === 'https://qaswarh.github.io/ipv4v6/' && e.data === 'closeIpv4v6Modal') {
+    if (e.origin === 'https://qaswarh.github.io' && e.data === 'closeIpv4v6Modal') {
       closeIpv4v6Modal();
     }
   });
