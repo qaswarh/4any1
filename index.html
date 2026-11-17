@@ -261,6 +261,7 @@
         <li><a href="https://www.youtube.com/playlist?list=PLkGSnjw5y2U7QNr9jL6TAgwQvYBI_LEtK" target="_blank">YouTubeList</a></li>
       </ul>
     </li>
+          <li><a href="https://qaswarh.github.io/ipv4v6/" onclick="openIpv4v6Modal(event)">IP Visualizer</a></li>
 					<li><a href="https://github.com/qaswarh/4any1/blob/main/packetcorekt.pdf" target="_blank">4G5GPacketCore</a></li>
           <li><a href="https://www.youtube.com/playlist?list=PLbPW06RB5w6m_xizacLr6dMXP58IHq23D" target="_blank">Satellite Communication</a></li>
 					<li id="demo4">
@@ -384,7 +385,8 @@
             </ul>
           </li>
           <li><a href="https://scikit-learn.org/0.19/datasets/twenty_newsgroups.html" target="_blank">scikit-learn</a></li>
-          <li><a href="https://kikivoice.ai/ai-voice-cloning" target="_blank">kikivoice</a></li>		
+          <li><a href="https://kikivoice.ai/ai-voice-cloning" target="_blank">kikivoice</a></li>
+          <li><a href="https://aireleasetracker.com/" target="_blank">AI Tracker</a></li>	
 				</ul>
 					</li>
           <li id="demo12">
@@ -393,6 +395,7 @@
               <li><a href="https://att.wd1.myworkdayjobs.com/en-US/ATTGeneral/login?redirect=%2Fen-US%2FATTGeneral%2FuserHome" target="_blank">AT&T</a></li>
               <li><a href="https://boeing.wd1.myworkdayjobs.com/en-US/EXTERNAL_CAREERS/login" target="_blank">Boeing</a></li>
               <li><a href="https://careers.cisco.com/" target="_blank">Cisco</a></li>
+              <li><a href="https://workforcenow.adp.com/mascsr/applicant/mdf/recruitment/postLogin.html?cid=09a14fa2-30e8-49e6-80ed-82a5812bd326&ccId=9200365399883_2" target="_blank">Contech</a></li>
               <li><a href="https://attract-careers1-echostar.icims.com/jobs/dashboard" target="_blank">Echostar</a></li>
               <li><a href="https://jobs.ericsson.com/" target="_blank">Ericsson</a></li>
               <li><a href="https://careers.f5.com/" target="_blank">F5</a></li>
@@ -402,10 +405,13 @@
               <li><a href="https://careers.huawei.com/reccampportal/portal5/index.html" target="_blank">Huawei</a></li>
               <li><a href="https://careers.juniper.net/" target="_blank">Juniper</a></li>
               <li><a href="https://inabia.applytojob.com/" target="_blank">Inabia</a></li>
+              <li><a href="https://intel.wd1.myworkdayjobs.com/en-US/External/userHome" target="_blank">Intel</a></li>
               <li><a href="https://jobs.keysight.com/external/jobs/" target="_blank">Keysight</a></li>
+              <li><a href="https://www.governmentjobs.com/careers/kingcounty" target="_blank">kingcounty</a></li>
               <li><a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn</a></li>
               <li><a href="https://explore.jobs.netflix.net/careers?pid=790318653296&domain=netflix.com&sort_by=relevance" target="_blank">Netflix</a></li>
               <li><a href="https://www.oracle.com/corporate/careers/" target="_blank">Oracle</a></li>
+              <li><a href="https://jobs.verstela.com/search?keywords=&AndOr=OR&postal_code=98008&branch=&radius=15&submit=true" target="_blank">verstela</a></li>
               <li><a href="https://career55.sapsf.eu/careers?company=wiprolimitP2/" target="_blank">wipro</a></li>
             </ul>
           </li>
@@ -636,6 +642,36 @@ loadStats();
 window.onload = loadGlossary;
 
 </script>
+<!-- Full-Screen Popup Modal for IPv4 & IPv6 Visualizer -->
+<div id="ipv4v6Modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:9999; padding:24px;">
+  <div style="position:relative; width:100%; height:100%; max-width:1440px; margin:0 auto; background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 20px 25px -5px rgba(0,0,0,0.3);">
+    <button onclick="closeIpv4v6Modal()" style="position:absolute; top:12px; right:16px; z-index:10000; padding:6px 14px; font-size:14px; font-weight:700; color:#fff; background:#dc2626; border:none; border-radius:8px; cursor:pointer;">
+      ✕ Close
+    </button>
+    <iframe id="ipv4v6Frame" src="" title="IPv4 & IPv6 Visualizer" style="width:100%; height:100%; border:none;"></iframe>
+  </div>
+</div>
 
+<script>
+  function openIpv4v6Modal(e) {
+    e.preventDefault();
+    var frame = document.getElementById('ipv4v6Frame');
+    if (frame.getAttribute('src') !== 'https://qaswarh.github.io/ipv4v6/') {
+      frame.src = 'https://qaswarh.github.io/ipv4v6/';
+    }
+    document.getElementById('ipv4v6Modal').style.display = 'block';
+  }
+  function closeIpv4v6Modal() {
+    document.getElementById('ipv4v6Modal').style.display = 'none';
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeIpv4v6Modal();
+  });
+    window.addEventListener('message', function (e) {
+    if (e.origin === 'https://qaswarh.github.io/ipv4v6/' && e.data === 'closeIpv4v6Modal') {
+      closeIpv4v6Modal();
+    }
+  });
+</script>
 </body>
 </html>
