@@ -580,14 +580,14 @@
               <ul>
                 <li>
                   <a
-                    href="https://github.io"
+                    href="https://qaswarh.github.io"
                     onclick="openToolModal(event, this.href)"
                     >IP Visualizer</a
                   >
                 </li>
                 <li>
                   <a
-                    href="https://github.io"
+                    href="https://qaswarh.github.io"
                     onclick="openToolModal(event, this.href)"
                     >RSTP Simulator</a
                   >
@@ -1631,6 +1631,7 @@
     <script>
       function openToolModal(e, url) {
         e.preventDefault();
+        e.stopPropagation();
         var modal = document.getElementById("ipv4v6Modal");
         var frame = document.getElementById("ipv4v6Frame");
         frame.src = url;
