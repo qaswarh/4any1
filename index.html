@@ -594,9 +594,9 @@
                 </li>
                 <li>
                   <a
-                    href="https://www.youtube.com/playlist?list=PLWZJrj6t5o0g8k1X3n7y9z5x2y5y5y5y5"
-                    target="_blank"
-                    >YouTube</a
+                    href="https://qaswarh.github.io/encir-ospf"
+                    onclick="openToolModal(event, this.href)"
+                    >OSPF Explorer</a
                   >
                 </li>
               </ul>
@@ -1656,7 +1656,9 @@
       window.addEventListener("message", function (e) {
         if (
           e.origin === "https://qaswarh.github.io" &&
-          (e.data === "closeIpv4v6Modal" || e.data === "closeStpModal")
+          (e.data === "closeIpv4v6Modal" ||
+            e.data === "closeStpModal" ||
+            e.data === "closeOspfModal")
         ) {
           closeIpv4v6Modal();
         }
