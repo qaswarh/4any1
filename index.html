@@ -1,440 +1,1367 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css4any1.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css4any1.css" />
     <style>
-	    body {
-      margin: 0;
-      overflow: hidden;
-    }
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
 
-    #background-container {
-      position: fixed;
-      bottom: 50px;
-      right: 0;
-      width: 70%;
-      height: 70%;
-      transition: opacity 1s ease-in-out;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-	    z-index: -1;
-    }
+      #background-container {
+        position: fixed;
+        bottom: 50px;
+        right: 0;
+        width: 70%;
+        height: 70%;
+        transition: opacity 1s ease-in-out;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: -1;
+      }
 
-    #background-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
+      #background-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
 
-    #slideshow-controls {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-    }
+      #slideshow-controls {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+      }
 
-    .control-button {
-      margin: 0 10px;
-      padding: 10px;
-      background-color: transparent;
-      color: #333;
-      border: none;
-      cursor: pointer;
-    }
+      .control-button {
+        margin: 0 10px;
+        padding: 10px;
+        background-color: transparent;
+        color: #333;
+        border: none;
+        cursor: pointer;
+      }
 
-    #number-buttons {
-      display: flex;
-    }
+      #number-buttons {
+        display: flex;
+      }
 
-    .number-button {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background-color: #eef;
-      margin: 0 5px;
-      cursor: pointer;
-    }
+      .number-button {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #eef;
+        margin: 0 5px;
+        cursor: pointer;
+      }
 
-    .current-slide {
-      background-color: #dee;
-    }
-	.dropup {
-		position: relative;
-		display: inline-block;
-	}
-        /* Additional inline styles if needed */
-		a {
-		text-decoration: none;
-		}
+      .current-slide {
+        background-color: #dee;
+      }
 
+      .dropup {
+        position: relative;
+        display: inline-block;
+      }
 
-.scroll-wrapper {
-    display: flex !important;
-    justify-content: flex-end !important; /* Align to the right */
-    position: fixed !important;
-    top: 15px !important; /* 15px from the top */
-    right: 15px !important; /* 15px from the right */
-    width: auto !important;
-    z-index: 1000 !important;
-}
+      /* Additional inline styles if needed */
+      a {
+        text-decoration: none;
+      }
 
-.scroll-container {
-    width: 1220px; /* Keep the previous width */
-    height: 100px; /* Show 4-5 lines */
-    overflow: hidden;
-    background-color: white;
-    color: black;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    position: relative;
-}
+      .scroll-wrapper {
+        display: flex !important;
+        justify-content: flex-end !important;
+        /* Align to the right */
+        position: fixed !important;
+        top: 15px !important;
+        /* 15px from the top */
+        right: 15px !important;
+        /* 15px from the right */
+        width: auto !important;
+        z-index: 1000 !important;
+      }
 
-.scroll-content {
-    position: absolute;
-    bottom: -100%; /* Make sure text starts at the bottom, changed to -100 from 0 */
-    width: 100%;
-    line-height: 1.5; /* Keep good spacing */
-    font-size: 16px;
-    white-space: pre-wrap;
-}
+      .scroll-container {
+        width: 1220px;
+        /* Keep the previous width */
+        height: 100px;
+        /* Show 4-5 lines */
+        overflow: hidden;
+        background-color: white;
+        color: black;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        position: relative;
+      }
 
-.scroll-content th,
-.scroll-content td {
-    border: 1px solid black;
-    padding: 5px;
-    text-align: left;
-    word-wrap: break-word; /* Prevents overflow */
-    white-space: normal; /* Allows proper text wrapping */
-    max-width: 300px; /* Prevents excessive stretching of columns */
-    overflow: hidden;
-}
+      .scroll-content {
+        position: absolute;
+        bottom: -100%;
+        /* Make sure text starts at the bottom, changed to -100 from 0 */
+        width: 100%;
+        line-height: 1.5;
+        /* Keep good spacing */
+        font-size: 16px;
+        white-space: pre-wrap;
+      }
 
-.scroll-content th {
-    background-color: #f2f2f2;
-}
+      .scroll-content th,
+      .scroll-content td {
+        border: 1px solid black;
+        padding: 5px;
+        text-align: left;
+        word-wrap: break-word;
+        /* Prevents overflow */
+        white-space: normal;
+        /* Allows proper text wrapping */
+        max-width: 300px;
+        /* Prevents excessive stretching of columns */
+        overflow: hidden;
+      }
 
-.table-wrapper {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    overflow-x: auto; /* Ensures the table doesn’t go off-screen */
-    padding-top: 5px; /* Ensures spacing between text and table */
-}
+      .scroll-content th {
+        background-color: #f2f2f2;
+      }
 
-.scroll-table {
-    border-collapse: collapse;
-    width: 95%; /* Makes sure table fits within the scrolling window */
-    max-width: 1000px; /* Keeps table within 1200px scrolling window */
-    min-width: 800px;
-    text-align: left;
-    margin: auto;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-    background-color: white;
-}
+      .table-wrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        overflow-x: auto;
+        /* Ensures the table doesn’t go off-screen */
+        padding-top: 5px;
+        /* Ensures spacing between text and table */
+      }
 
-.scroll-table th, .scroll-table td {
-    padding: 8px;
-    border: 1px solid black;
-}
+      .scroll-table {
+        border-collapse: collapse;
+        width: 95%;
+        /* Makes sure table fits within the scrolling window */
+        max-width: 1000px;
+        /* Keeps table within 1200px scrolling window */
+        min-width: 800px;
+        text-align: left;
+        margin: auto;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        background-color: white;
+      }
 
-.scroll-table thead {
-    background-color: #ddd;
-}
-        .control-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #75f;
-            opacity:0.9;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            z-index: 10;
-                }
+      .scroll-table th,
+      .scroll-table td {
+        padding: 8px;
+        border: 1px solid black;
+      }
 
+      .scroll-table thead {
+        background-color: #ddd;
+      }
 
+      .control-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #75f;
+        opacity: 0.9;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        z-index: 10;
+      }
     </style>
-</head>
-<body>
+  </head>
+
+  <body>
     <div class="scroll-wrapper">
-        <div class="scroll-container">
-          <button class="control-btn" id="toggleScroll">Pause</button>
-            <div class="scroll-content" id="scrollText"></div>
-        </div>
+      <div class="scroll-container">
+        <button class="control-btn" id="toggleScroll">Pause</button>
+        <div class="scroll-content" id="scrollText"></div>
+      </div>
     </div>
 
     <nav>
-		<ul>
-			<li id="demo1">
-				<a>start here</a>
-				<ul>
-          <li id="demo1a">
-			  <a>Local2any1</a>
-			  <ul>
-          <li id="demo1b">
-            <a>Wipro</a>
-            <ul>
-              <li><a href="https://thedot.wipro.com" target="_blank">dot</a></li>
-              <li><a href="https://myaccount.microsoft.com/" target="_blank">myaccount</a></li>
-              <li><a href="https://teams.microsoft.com/?tenantId=258ac4e4-146a-411e-9dc8-79a9e12fd6da&prompt=select_account" target="_blank">teams</a></li>
-              <li><a href="https://outlook.office.com/mail/?auth=2&domain_hint=wipro.com&prompt=select_account" target="_blank">outlook</a></li>
-              <li><a href="https://wiprocio.service-now.com/sp" target="_blank">snow</a></li>
-              <li><a href="https://my.adp.com/" target="_blank">adp</a></li>
-              <li><a href="https://m365.cloud.microsoft.mcas.ms/chat/?auth=2" target="_blank">copilot</a></li>
-              <li><a href="https://digital.alight.com/wipro" target="_blank">alight</a></li>
-              <li><a href="https://wilearn.edcast.com/" target="_blank">wilearn</a></li>
-              <li><a href="https://hcm-eu30.hr.cloud.sap.mcas.ms/sf/home?bplte_company=wiprolimitP2" target="_blank">SF-Home</a></li>
-              <li><a href="https://wipro365.sharepoint.com.mcas.ms/sites/AIFutura2026" target="_blank">AIFutura</a></li>
-              <li><a href="https://m365.cloud.microsoft/apps" target="_blank">MS365Cloud</a></li>
-              <li><a href="https://wipro.udemy.com/organization/home/" target="_blank">udemy</a></li>
-            </ul>
-          </li>
-          <li><a href="http://localhost:5000/" target="_blank">CyberNet Dashboard</a></li>
-          <li><a href="http://192.168.85.128" target="_blank">CCIE</a></li>
-          <li><a href="http://192.168.49.128" target="_blank">GNS3</a></li>
-          <li><a href="http://192.168.10.146" target="_blank">paloalto</a></li>
-			  </ul>
-		  </li>
-      <li>
-        <a>3GPP</a>
-        <ul>
-			    <li id="demo2">
-			    <a>5G</a>
-			    <ul>
-          <li><a href="https://www.tech-invite.com/3m23/tinv-3gpp-23-501.html" target="_blank">Architecture</a></li>
-          <li><a href="https://www.tech-invite.com/3m23/tinv-3gpp-23-502.html" target="_blank">Procedures</a></li>
-          <li><a href="https://www.tech-invite.com/3m23/tinv-3gpp-23-503.html" target="_blank">PCC</a></li>
-          <li><a href="https://www.tech-invite.com/3m33/tinv-3gpp-33-501.html" target="_blank">Security</a></li>
-		      <li><a href="https://www.tech-invite.com/3m22/tinv-3gpp-22-261.html" target="_blank">Service</a></li>
-		      <li><a href="https://www.tech-invite.com/3m24/tinv-3gpp-24-501.html" target="_blank">NAS</a></li>
-		      <li><a href="https://www.tech-invite.com/tinv-topic-5gnr.html" target="_blank">NR</a></li>
-		      <li><a href="https://www.tech-invite.com/tinv-topic-5gserv.html" target="_blank">SBA</a></li>
-		      <li><a href="https://github.com/jdegre/5GC_APIs/blob/Rel-18/README.md" target="_blank">5GC APIs</a></li>
-          <li><a href="https://docs.ngkore.org/" target="_blank">NGKORE</a></li>
-			  </ul>
-		  </li>
-			<li id="demo3">
-			  <a>Misc</a>
-			  <ul>
-		      <li><a href="https://www.tech-invite.com/tinv-topic-ims.html" target="_blank">IMS</a></li>
-		      <li><a href="https://www.tech-invite.com/tinv-topic-eps.html" target="_blank">EPS</a></li>
-		      <li><a href="https://www.tech-invite.com/tinv-topic-uas.html" target="_blank">UAS</a></li>
-		      <li><a href="https://www.tech-invite.com/tinv-topic-lcs.html" target="_blank">LCS</a></li>
-		      <li><a href="https://www.tech-invite.com/tinv-topic-mcs.html" target="_blank">MCS</a></li>
-	        <li><a href="https://www.tech-invite.com/tinv-topic-seal.html" target="_blank">SEAL</a></li>
-		      <li><a href="https://www.tech-invite.com/tinv-topic-sms.html" target="_blank">SMS</a></li>
-	        <li><a href="https://www.tech-invite.com/tinv-topic-cbase.html" target="_blank">CBASE</a></li>
-        </ul>  
-      </li>
-		  </ul>
-		</li>
-    <li>
-      <a>SNOW</a>
       <ul>
-        <li><a href="https://vimeo.com/980759261?fl=pl&fe=cm" target="_blank">Platform Architecture</a></li>
-        <li><a href="https://vimeo.com/973320817?fl=pl&fe=cm" target="_blank">CMDB Overview</a></li>
-        <li><a href="https://youtu.be/hANONH1c1vQ" target="_blank">CSDM 101</a></li>
-        <li><a href="https://vimeo.com/1064838270/87976f09a6?fl=pl&fe=cm" target="_blank">Integration Hub</a></li>
-        <li><a href="https://vimeo.com/958553772?fl=pl&fe=cm" target="_blank">GitHub</a></li>
-        <li><a href="https://players.brightcove.net/6274575390001/nUx4EKfUz_default/index.html?videoId=6286204365001" target="_blank">ATF</a></li>
-        <li><a href="https://www.youtube.com/watch?v=IJHPkiFr7Qo" target="_blank">CI/CD</a></li>
-        <li><a href="https://www.youtube.com/watch?v=G-PcrtXs6GI" target="_blank">AEMC</a></li>
-        <li><a href="https://www.youtube.com/watch?v=fDvEqAQIHzQ" target="_blank">Toolbox</a></li>
-        <li><a href="https://www.servicenow.com/content/dam/servicenow-assets/public/en-us/doc-type/success/quick-answer/mid-server-basics.pdf" target="_blank">MID Server</a></li>
-        <li><a href="https://www.youtube.com/watch?v=IAlqmTpfWXQ" target="_blank">Integrations</a></li>
-        <li><a href="https://www.servicenow.com/products/itsm.html?" target="_blank">ITSM</a></li>
-        <li><a href="https://www.servicenow.com/products/it-operations-management.html" target="_blank">ITOM</a></li>
-        <li><a href="https://vimeo.com/988245428?fl=pl&fe=cm" target="_blank">Virtual Agent</a></li>
-        <li><a href="https://vimeo.com/1034338435?fl=pl&fe=cm" target="_blank">Platform Analytics</a></li>
-        <li><a href="https://vimeo.com/957122379?fl=pl&fe=cm" target="_blank">OTM</a></li>
-        <li><a href="https://vimeo.com/973114049?fl=pl&fe=cm" target="_blank">Service Exchange</a></li>
-        <li><a href="https://vimeo.com/995403813?fl=pl&fe=cm" target="_blank">Mobile</a></li>
-        <li><a href="https://vimeo.com/953653961?fl=pl&fe=cm" target="_blank">App Engine Studio</a></li>
-        <li><a href="https://www.youtube.com/playlist?list=PLkGSnjw5y2U7QNr9jL6TAgwQvYBI_LEtK" target="_blank">YouTubeList</a></li>
-      </ul>
-    </li>
-          <li><a href="https://qaswarh.github.io/ipv4v6/" onclick="openIpv4v6Modal(event)">IP Visualizer</a></li>
-					<li><a href="https://github.com/qaswarh/4any1/blob/main/packetcorekt.pdf" target="_blank">4G5GPacketCore</a></li>
-          <li><a href="https://www.youtube.com/playlist?list=PLbPW06RB5w6m_xizacLr6dMXP58IHq23D" target="_blank">Satellite Communication</a></li>
-					<li id="demo4">
-						<a>AI</a>
-						<ul>
-							<li id="demo5">
-								<a>Google</a>
-								<ul>
-                  <li id="demo6">
-                  <a>WhitePapers</a>
-                  <ul>
-                    <li><a href="https://www.kaggle.com/whitepaper-foundational-llm-and-text-generation" target="_blank">LLMs & Text</a></li>
-                    <li id="demo7">
-                      <a>Gen AI @YouTube</a>
-                      <ul>
-                      <li id="demo7a">
-                      <a>AI Agents @YouTube</a>
-                      <ul>
-                        <li><a href="https://www.youtube.com/watch?v=zTxvGzpfF-g" target="_blank">Intro2Agents</a></li>
-                        <li><a href="https://www.youtube.com/watch?v=Cr4NA6rxHAM" target="_blank">Tools&MCP</a></li>
-                        <li><a href="https://www.youtube.com/watch?v=FMcExVE15a4" target="_blank">Sessions&Memory</a></li>
-                        <li><a href="https://www.youtube.com/watch?v=LFQRy-Ci-lk" target="_blank">Quality</a></li>
-                        <li><a href="https://www.youtube.com/watch?v=8Wyt9l7ge-g" target="_blank">Production</a></li>
-                        <li><a href="https://www.youtube.com/playlist?list=PLqFaTIg4myu9r7uRoNfbJhHUbLp-1t1YE" target="_blank">5Days AI Agents</a></li>
-                      </ul>  
-                    </li>
-                      <li><a href="https://www.youtube.com/watch?v=Na3O4Pkbp-U&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=2" target="_blank">LLMs & Text</a></li>
-                      <li><a href="https://www.youtube.com/watch?v=CFtX0ZyLSAY&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=3" target="_blank">Prompt Engineering</a></li>
-                      <li><a href="https://www.youtube.com/watch?v=xCAVsst6WJ8&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=4" target="_blank">Embeddings&VectorStores</a></li>
-                      <li><a href="https://www.youtube.com/watch?v=D3Kaqz7VW28&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=5" target="_blank">Agents</a></li>
-                      <li><a href="https://www.youtube.com/watch?v=MWqspvVvNzA&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=7" target="_blank">Domain Specific</a></li>
-                      <li><a href="https://www.youtube.com/watch?v=Hbk8UXavHrk&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=8" target="_blank">Vertex AI using MLOps</a></li>
-                      <li><a href="https://www.youtube.com/watch?v=yIRIT_EtALs&t=235s" target="_blank">Agent Starter Pack</a></li>
-                      <li><a href="https://www.youtube.com/playlist?list=PLqFaTIg4myu-lbBTrUpoQQIzZZxvrOaP5" target="_blank">5Days Gen AI</a></li>
-                    </ul>
-                    </li>
-                    <li><a href="https://www.kaggle.com/whitepaper-prompt-engineering" target="_blank">Prompt Engineering</a></li>
-                    <li><a href="https://www.kaggle.com/whitepaper-embeddings-and-vector-stores" target="_blank">Embeddings&VectorStores</a></li>
-                    <li><a href="https://www.kaggle.com/whitepaper-agents" target="_blank">Agents</a></li>
-                    <li><a href="https://www.kaggle.com/whitepaper-solving-domains-specific-problems-using-llms" target="_blank">Domain Specific</a></li>
-                    <li><a href="https://www.kaggle.com/whitepaper-operationalizing-generative-ai-on-vertex-ai-using-mlops" target="_blank">Vertex AI using MLOps</a></li>
-                    <li><a href="https://www.kaggle.com/whitepaper-introduction-to-agents" target="_blank">Intro2Agents</a></li>
-                    <li><a href="https://www.kaggle.com/whitepaper-agent-tools-and-interoperability-with-mcp" target="_blank">Tools&MCP</a></li>
-                    <li><a href="https://www.kaggle.com/whitepaper-context-engineering-sessions-and-memory" target="_blank">Sessions&Memory</a></li>
-                    <li><a href="https://www.kaggle.com/whitepaper-agent-quality" target="_blank">Quality</a></li>
-                    <li><a href="https://www.kaggle.com/whitepaper-prototype-to-production" target="_blank">Production</a></li>
-                    <li><a href="https://www.kaggle.com/whitepaper-agent-companion" target="_blank">Agents Companion</a></li>
-                  </ul>
-                  </li>
-									<li id="demo8">
-                  <a>Gen AI @Kaggle</a>
-                  <ul>
-                    <li id="demo8a">
-                    <a>AI Agents @Kaggle</a>
-                    <ul>
-                    <li><a href="https://www.kaggle.com/code/kaggle5daysofai/day-1a-from-prompt-to-action" target="_blank">Prompt2Action</a></li>
-                    <li><a href="https://www.kaggle.com/code/kaggle5daysofai/day-1b-agent-architectures" target="_blank">Architectures</a></li>
-                    <li><a href="https://www.kaggle.com/code/kaggle5daysofai/day-2a-agent-tools" target="_blank">Tools</a></li>
-                    <li><a href="https://www.kaggle.com/code/kaggle5daysofai/day-2b-agent-tools-best-practices" target="_blank">Best Practices</a></li>
-                    <li><a href="https://www.kaggle.com/code/kaggle5daysofai/day-3a-agent-sessions" target="_blank">Sessions</a></li>
-                    <li><a href="https://www.kaggle.com/code/kaggle5daysofai/day-3b-agent-memory" target="_blank">Memory</a></li>
-                    <li><a href="https://www.kaggle.com/code/kaggle5daysofai/day-4a-agent-observability" target="_blank">Observability</a></li>
-                    <li><a href="https://www.kaggle.com/code/kaggle5daysofai/day-4b-agent-evaluation" target="_blank">Evaluation</a></li>
-                    <li><a href="https://www.kaggle.com/code/kaggle5daysofai/day-5a-agent2agent-communication" target="_blank">Agent2Agent</a></li>
-                    <li><a href="https://www.kaggle.com/code/kaggle5daysofai/day-5b-agent-deployment" target="_blank">Deployment</a></li>
-                    </ul>
-                  </li>
-                    <li><a href="https://www.kaggle.com/code/markishere/day-1-prompting" target="_blank">Prompting</a></li>
-                    <li><a href="https://www.kaggle.com/code/markishere/day-1-evaluation-and-structured-output" target="_blank">Evaluation and structured</a></li>
-                    <li><a href="https://www.kaggle.com/code/markishere/day-2-document-q-a-with-rag" target="_blank">RAG</a></li>
-                    <li><a href="https://www.kaggle.com/code/markishere/day-2-embeddings-and-similarity-scores" target="_blank">Embeddings</a></li>
-                    <li><a href="https://www.kaggle.com/code/markishere/day-2-classifying-embeddings-with-keras" target="_blank">Embeddings with Keras</a></li>
-                    <li><a href="https://www.kaggle.com/code/markishere/day-3-function-calling-with-the-gemini-api" target="_blank">Function</a></li>
-                    <li><a href="https://www.kaggle.com/code/markishere/day-3-building-an-agent-with-langgraph/" target="_blank">LangGraph</a></li>
-                    <li><a href="https://www.kaggle.com/code/markishere/day-4-fine-tuning-a-custom-model" target="_blank">Fine Tuning</a></li>
-                    <li><a href="https://www.kaggle.com/code/markishere/day-4-google-search-grounding" target="_blank">Grounding</a></li>
-                  </ul>
-                  </li>
-									<li><a href="https://aistudio.google.com/prompts/new_chat" target="_blank">AI Studio</a></li>
-									<li><a href="https://www.kaggle.com/code/markishere/day-0-troubleshooting-and-faqs/">TS & FAQ</a></li>
-                  <li><a href="https://textfx.withgoogle.com/" target="_blank">textfx</a></li>
-                  <li><a href="https://sql-talk-r5gdynozbq-uc.a.run.app/" target="_blank">BigQuery SQLTalk</a></li>
-                  <li><a href="https://notebooklm.google/" target="_blank">NotebookLM</a></li>
-                  <li><a href="https://keras.io/guides/" target="_blank">Keras</a></li>
-                  <li><a href="https://ai.google.dev/api/caching#Schema" target="_blank">Caching</a></li>
-                  <li><a href="https://www.langchain.com/langgraph" target="_blank">LangGraph</a></li>
-                  <li><a href="https://cloud.google.com/vertex-ai/generative-ai/docs/models/evaluation-overview" target="_blank">GenAI</a></li>
-                  <li><a href="https://cloud.google.com/blog/products/ai-machine-learning/supervised-fine-tuning-for-gemini-llm" target="_blank">supervised fine-tuning</a></li>
-                  <li><a href="https://ai.google.dev/gemini-api/docs/model-tuning/tutorial?hl=en&lang=python" target="_blank">Fine-tuning tutorial</a></li>
-								</ul>
-							</li>
-							<li id="demo9">
-              <a>MS</a>
+        <li id="demo1">
+          <a>start here</a>
+          <ul>
+            <li id="demo1a">
+              <a>Local2any1</a>
               <ul>
-                <li><a href="https://adoption.microsoft.com/en-us/copilot/chat-and-agent-starter-kit/" target="_blank">Agent Starter Kit</a></li>
-                <li><a href="https://learn.microsoft.com/en-us/training/courses/ai-102t00" target="_blank">MS AI-102</a></li>	
-                <li><a href="https://learn.microsoft.com/en-us/training/modules/prepare-to-develop-ai-solutions-azure/" target="_blank">AI Azure</a></li>
+                <li id="demo1b">
+                  <a>Wipro</a>
+                  <ul>
+                    <li>
+                      <a href="https://thedot.wipro.com" target="_blank">dot</a>
+                    </li>
+                    <li>
+                      <a href="https://myaccount.microsoft.com/" target="_blank"
+                        >myaccount</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://teams.microsoft.com/?tenantId=258ac4e4-146a-411e-9dc8-79a9e12fd6da&prompt=select_account"
+                        target="_blank"
+                        >teams</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://outlook.office.com/mail/?auth=2&domain_hint=wipro.com&prompt=select_account"
+                        target="_blank"
+                        >outlook</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://wiprocio.service-now.com/sp"
+                        target="_blank"
+                        >snow</a
+                      >
+                    </li>
+                    <li>
+                      <a href="https://my.adp.com/" target="_blank">adp</a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://m365.cloud.microsoft.mcas.ms/chat/?auth=2"
+                        target="_blank"
+                        >copilot</a
+                      >
+                    </li>
+                    <li>
+                      <a href="https://digital.alight.com/wipro" target="_blank"
+                        >alight</a
+                      >
+                    </li>
+                    <li>
+                      <a href="https://wilearn.edcast.com/" target="_blank"
+                        >wilearn</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://hcm-eu30.hr.cloud.sap.mcas.ms/sf/home?bplte_company=wiprolimitP2"
+                        target="_blank"
+                        >SF-Home</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://wipro365.sharepoint.com.mcas.ms/sites/AIFutura2026"
+                        target="_blank"
+                        >AIFutura</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://m365.cloud.microsoft/apps"
+                        target="_blank"
+                        >MS365Cloud</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://wipro.udemy.com/organization/home/"
+                        target="_blank"
+                        >udemy</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="http://localhost:5000/" target="_blank"
+                    >CyberNet Dashboard</a
+                  >
+                </li>
+                <li>
+                  <a href="http://192.168.85.128" target="_blank">CCIE</a>
+                </li>
+                <li>
+                  <a href="http://192.168.49.128" target="_blank">GNS3</a>
+                </li>
+                <li>
+                  <a href="http://192.168.10.146" target="_blank">paloalto</a>
+                </li>
               </ul>
             </li>
-            <li id="demo10">
-            <a>databricks</a>
-            <ul>
-              <li><a href="https://www.databricks.com/learn/training/generative-ai-fundamentals-accreditation" target="_blank">AI Fundamentals</a></li>
-            </ul>
-          </li>
-          <li id="demo11">
-            <a>Stanford</a>
-            <ul>
-              <li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOca_Ovz1DvdtWuz8BfSWL2" target="_blank">CS221</a></li>
-              <li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D" target="_blank">CS224N</a></li>
-              <li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rPt5D0zs3YhbWSZA8Q_DyiJ" target="_blank">CS224U</a></li>
-              <li><a href="https://www.youtube.com/watch?v=K_Dh0Sxujuc&list=PLoROMvodv4rOwvldxftJTmoR3kRcWkJBp" target="_blank">XCS224U</a></li>
-              <li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU" target="_blank">CS229</a></li>
-              <li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rP8nAmISxFINlGKSK4rbLKh" target="_blank">CS229M</a></li>              
-              <li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOABXSygHTsbvUz4G_YQhOb" target="_blank">CS230</a></li>
-              <li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16" target="_blank">CS231N</a></li>
-              <li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rN4wG6Nk6sNpTEbuOSosZdX" target="_blank">CS234</a></li>
-              <li><a href="https://www.youtube.com/watch?v=SQ3fZ1sAqXI&list=PLoROMvodv4rOY23Y0BoGoBGgQ1zmU_MT_" target="_blank">CS336</a></li>
-              <li><a href="https://cme295.stanford.edu/syllabus/" target="_blank">CME295</a></li>
-              <li><a href="https://cme296.stanford.edu/syllabus/" target="_blank">CME296</a></li>
-            </ul>
-          </li>
-          <li><a href="https://scikit-learn.org/0.19/datasets/twenty_newsgroups.html" target="_blank">scikit-learn</a></li>
-          <li><a href="https://kikivoice.ai/ai-voice-cloning" target="_blank">kikivoice</a></li>
-          <li><a href="https://aireleasetracker.com/" target="_blank">AI Tracker</a></li>	
-				</ul>
-					</li>
-          <li id="demo12">
-            <a>Job Search</a>
-            <ul>
-              <li><a href="https://att.wd1.myworkdayjobs.com/en-US/ATTGeneral/login?redirect=%2Fen-US%2FATTGeneral%2FuserHome" target="_blank">AT&T</a></li>
-              <li><a href="https://boeing.wd1.myworkdayjobs.com/en-US/EXTERNAL_CAREERS/login" target="_blank">Boeing</a></li>
-              <li><a href="https://careers.cisco.com/" target="_blank">Cisco</a></li>
-              <li><a href="https://workforcenow.adp.com/mascsr/applicant/mdf/recruitment/postLogin.html?cid=09a14fa2-30e8-49e6-80ed-82a5812bd326&ccId=9200365399883_2" target="_blank">Contech</a></li>
-              <li><a href="https://attract-careers1-echostar.icims.com/jobs/dashboard" target="_blank">Echostar</a></li>
-              <li><a href="https://jobs.ericsson.com/" target="_blank">Ericsson</a></li>
-              <li><a href="https://careers.f5.com/" target="_blank">F5</a></li>
-              <li><a href="https://careers.fortinet.com/" target="_blank">Fortinet</a></li>
-              <li><a href="https://career55.sapsf.eu/careers?company=HCLPRD" target="_blank">HCL</a></li>
-              <li><a href="https://careers.hpe.com/us/en/search-results" target="_blank">HPE</a></li>
-              <li><a href="https://careers.huawei.com/reccampportal/portal5/index.html" target="_blank">Huawei</a></li>
-              <li><a href="https://careers.juniper.net/" target="_blank">Juniper</a></li>
-              <li><a href="https://inabia.applytojob.com/" target="_blank">Inabia</a></li>
-              <li><a href="https://intel.wd1.myworkdayjobs.com/en-US/External/userHome" target="_blank">Intel</a></li>
-              <li><a href="https://jobs.keysight.com/external/jobs/" target="_blank">Keysight</a></li>
-              <li><a href="https://www.governmentjobs.com/careers/kingcounty" target="_blank">kingcounty</a></li>
-              <li><a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn</a></li>
-              <li><a href="https://explore.jobs.netflix.net/careers?pid=790318653296&domain=netflix.com&sort_by=relevance" target="_blank">Netflix</a></li>
-              <li><a href="https://www.oracle.com/corporate/careers/" target="_blank">Oracle</a></li>
-              <li><a href="https://jobs.verstela.com/search?keywords=&AndOr=OR&postal_code=98008&branch=&radius=15&submit=true" target="_blank">verstela</a></li>
-              <li><a href="https://career55.sapsf.eu/careers?company=wiprolimitP2/" target="_blank">wipro</a></li>
-            </ul>
-          </li>
-          <li><a href="https://k9scli.io/topics/commands/" target="_blank">K9s</a></li>
-          <li><a href="https://rafeeqarabic.com/" target="_blank">Rafeeq Arabic</a></li>
-          <li><a href="https://pro.terefic.com/manage" target="_blank">Terefic</a></li>
-          <li><a href="https://app.skillsurvey.com/Reference/Candidate/MyReferences/?candidateId=7WploMrAh%2BY0F773c3AIag%253d%253d" target="_blank">Skillsurvey</a></li>
-				</ul>     
-			</li>
-		</ul>
-	</nav>
-<div id="traffic-stats"
-     style="position:fixed;top:10px;left:10;z-index:9999;
-            font-size:14px;font-weight:bold;color:#444;
-            padding-left:10px;">
-  Loading stats...
-</div>
-<div id="background-container"></div>
-<div id="slideshow-controls">
-  <button class="control-button" onclick="prevSlide()">Prev</button>
-  <button class="control-button" onclick="nextSlide()">Next</button>
-  <div id="number-buttons"></div>
-</div>
+            <li>
+              <a>3GPP</a>
+              <ul>
+                <li id="demo2">
+                  <a>5G</a>
+                  <ul>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/3m23/tinv-3gpp-23-501.html"
+                        target="_blank"
+                        >Architecture</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/3m23/tinv-3gpp-23-502.html"
+                        target="_blank"
+                        >Procedures</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/3m23/tinv-3gpp-23-503.html"
+                        target="_blank"
+                        >PCC</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/3m33/tinv-3gpp-33-501.html"
+                        target="_blank"
+                        >Security</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/3m22/tinv-3gpp-22-261.html"
+                        target="_blank"
+                        >Service</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/3m24/tinv-3gpp-24-501.html"
+                        target="_blank"
+                        >NAS</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/tinv-topic-5gnr.html"
+                        target="_blank"
+                        >NR</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/tinv-topic-5gserv.html"
+                        target="_blank"
+                        >SBA</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://github.com/jdegre/5GC_APIs/blob/Rel-18/README.md"
+                        target="_blank"
+                        >5GC APIs</a
+                      >
+                    </li>
+                    <li>
+                      <a href="https://docs.ngkore.org/" target="_blank"
+                        >NGKORE</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li id="demo3">
+                  <a>Misc</a>
+                  <ul>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/tinv-topic-ims.html"
+                        target="_blank"
+                        >IMS</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/tinv-topic-eps.html"
+                        target="_blank"
+                        >EPS</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/tinv-topic-uas.html"
+                        target="_blank"
+                        >UAS</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/tinv-topic-lcs.html"
+                        target="_blank"
+                        >LCS</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/tinv-topic-mcs.html"
+                        target="_blank"
+                        >MCS</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/tinv-topic-seal.html"
+                        target="_blank"
+                        >SEAL</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/tinv-topic-sms.html"
+                        target="_blank"
+                        >SMS</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.tech-invite.com/tinv-topic-cbase.html"
+                        target="_blank"
+                        >CBASE</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a>SNOW</a>
+              <ul>
+                <li>
+                  <a
+                    href="https://vimeo.com/980759261?fl=pl&fe=cm"
+                    target="_blank"
+                    >Platform Architecture</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://vimeo.com/973320817?fl=pl&fe=cm"
+                    target="_blank"
+                    >CMDB Overview</a
+                  >
+                </li>
+                <li>
+                  <a href="https://youtu.be/hANONH1c1vQ" target="_blank"
+                    >CSDM 101</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://vimeo.com/1064838270/87976f09a6?fl=pl&fe=cm"
+                    target="_blank"
+                    >Integration Hub</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://vimeo.com/958553772?fl=pl&fe=cm"
+                    target="_blank"
+                    >GitHub</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://players.brightcove.net/6274575390001/nUx4EKfUz_default/index.html?videoId=6286204365001"
+                    target="_blank"
+                    >ATF</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.youtube.com/watch?v=IJHPkiFr7Qo"
+                    target="_blank"
+                    >CI/CD</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.youtube.com/watch?v=G-PcrtXs6GI"
+                    target="_blank"
+                    >AEMC</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.youtube.com/watch?v=fDvEqAQIHzQ"
+                    target="_blank"
+                    >Toolbox</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.servicenow.com/content/dam/servicenow-assets/public/en-us/doc-type/success/quick-answer/mid-server-basics.pdf"
+                    target="_blank"
+                    >MID Server</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.youtube.com/watch?v=IAlqmTpfWXQ"
+                    target="_blank"
+                    >Integrations</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.servicenow.com/products/itsm.html?"
+                    target="_blank"
+                    >ITSM</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.servicenow.com/products/it-operations-management.html"
+                    target="_blank"
+                    >ITOM</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://vimeo.com/988245428?fl=pl&fe=cm"
+                    target="_blank"
+                    >Virtual Agent</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://vimeo.com/1034338435?fl=pl&fe=cm"
+                    target="_blank"
+                    >Platform Analytics</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://vimeo.com/957122379?fl=pl&fe=cm"
+                    target="_blank"
+                    >OTM</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://vimeo.com/973114049?fl=pl&fe=cm"
+                    target="_blank"
+                    >Service Exchange</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://vimeo.com/995403813?fl=pl&fe=cm"
+                    target="_blank"
+                    >Mobile</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://vimeo.com/953653961?fl=pl&fe=cm"
+                    target="_blank"
+                    >App Engine Studio</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.youtube.com/playlist?list=PLkGSnjw5y2U7QNr9jL6TAgwQvYBI_LEtK"
+                    target="_blank"
+                    >YouTubeList</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a>ENCOR</a>
+              <ul>
+                <li>
+                  <a
+                    href="https://github.io"
+                    onclick="openToolModal(event, this.href)"
+                    >IP Visualizer</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://github.io"
+                    onclick="openToolModal(event, this.href)"
+                    >RSTP Simulator</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.youtube.com/playlist?list=PLWZJrj6t5o0g8k1X3n7y9z5x2y5y5y5y5"
+                    target="_blank"
+                    >YouTube</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a
+                href="https://github.com/qaswarh/4any1/blob/main/packetcorekt.pdf"
+                target="_blank"
+                >4G5GPacketCore</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.youtube.com/playlist?list=PLbPW06RB5w6m_xizacLr6dMXP58IHq23D"
+                target="_blank"
+                >Satellite Communication</a
+              >
+            </li>
+            <li id="demo4">
+              <a>AI</a>
+              <ul>
+                <li id="demo5">
+                  <a>Google</a>
+                  <ul>
+                    <li id="demo6">
+                      <a>WhitePapers</a>
+                      <ul>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/whitepaper-foundational-llm-and-text-generation"
+                            target="_blank"
+                            >LLMs & Text</a
+                          >
+                        </li>
+                        <li id="demo7">
+                          <a>Gen AI @YouTube</a>
+                          <ul>
+                            <li id="demo7a">
+                              <a>AI Agents @YouTube</a>
+                              <ul>
+                                <li>
+                                  <a
+                                    href="https://www.youtube.com/watch?v=zTxvGzpfF-g"
+                                    target="_blank"
+                                    >Intro2Agents</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    href="https://www.youtube.com/watch?v=Cr4NA6rxHAM"
+                                    target="_blank"
+                                    >Tools&MCP</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    href="https://www.youtube.com/watch?v=FMcExVE15a4"
+                                    target="_blank"
+                                    >Sessions&Memory</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    href="https://www.youtube.com/watch?v=LFQRy-Ci-lk"
+                                    target="_blank"
+                                    >Quality</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    href="https://www.youtube.com/watch?v=8Wyt9l7ge-g"
+                                    target="_blank"
+                                    >Production</a
+                                  >
+                                </li>
+                                <li>
+                                  <a
+                                    href="https://www.youtube.com/playlist?list=PLqFaTIg4myu9r7uRoNfbJhHUbLp-1t1YE"
+                                    target="_blank"
+                                    >5Days AI Agents</a
+                                  >
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.youtube.com/watch?v=Na3O4Pkbp-U&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=2"
+                                target="_blank"
+                                >LLMs & Text</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.youtube.com/watch?v=CFtX0ZyLSAY&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=3"
+                                target="_blank"
+                                >Prompt Engineering</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.youtube.com/watch?v=xCAVsst6WJ8&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=4"
+                                target="_blank"
+                                >Embeddings&VectorStores</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.youtube.com/watch?v=D3Kaqz7VW28&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=5"
+                                target="_blank"
+                                >Agents</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.youtube.com/watch?v=MWqspvVvNzA&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=7"
+                                target="_blank"
+                                >Domain Specific</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.youtube.com/watch?v=Hbk8UXavHrk&list=PLqFaTIg4myu_yKJpvF8WE2JfaG5kGuvoE&index=8"
+                                target="_blank"
+                                >Vertex AI using MLOps</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.youtube.com/watch?v=yIRIT_EtALs&t=235s"
+                                target="_blank"
+                                >Agent Starter Pack</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.youtube.com/playlist?list=PLqFaTIg4myu-lbBTrUpoQQIzZZxvrOaP5"
+                                target="_blank"
+                                >5Days Gen AI</a
+                              >
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/whitepaper-prompt-engineering"
+                            target="_blank"
+                            >Prompt Engineering</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/whitepaper-embeddings-and-vector-stores"
+                            target="_blank"
+                            >Embeddings&VectorStores</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/whitepaper-agents"
+                            target="_blank"
+                            >Agents</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/whitepaper-solving-domains-specific-problems-using-llms"
+                            target="_blank"
+                            >Domain Specific</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/whitepaper-operationalizing-generative-ai-on-vertex-ai-using-mlops"
+                            target="_blank"
+                            >Vertex AI using MLOps</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/whitepaper-introduction-to-agents"
+                            target="_blank"
+                            >Intro2Agents</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/whitepaper-agent-tools-and-interoperability-with-mcp"
+                            target="_blank"
+                            >Tools&MCP</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/whitepaper-context-engineering-sessions-and-memory"
+                            target="_blank"
+                            >Sessions&Memory</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/whitepaper-agent-quality"
+                            target="_blank"
+                            >Quality</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/whitepaper-prototype-to-production"
+                            target="_blank"
+                            >Production</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/whitepaper-agent-companion"
+                            target="_blank"
+                            >Agents Companion</a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                    <li id="demo8">
+                      <a>Gen AI @Kaggle</a>
+                      <ul>
+                        <li id="demo8a">
+                          <a>AI Agents @Kaggle</a>
+                          <ul>
+                            <li>
+                              <a
+                                href="https://www.kaggle.com/code/kaggle5daysofai/day-1a-from-prompt-to-action"
+                                target="_blank"
+                                >Prompt2Action</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.kaggle.com/code/kaggle5daysofai/day-1b-agent-architectures"
+                                target="_blank"
+                                >Architectures</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.kaggle.com/code/kaggle5daysofai/day-2a-agent-tools"
+                                target="_blank"
+                                >Tools</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.kaggle.com/code/kaggle5daysofai/day-2b-agent-tools-best-practices"
+                                target="_blank"
+                                >Best Practices</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.kaggle.com/code/kaggle5daysofai/day-3a-agent-sessions"
+                                target="_blank"
+                                >Sessions</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.kaggle.com/code/kaggle5daysofai/day-3b-agent-memory"
+                                target="_blank"
+                                >Memory</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.kaggle.com/code/kaggle5daysofai/day-4a-agent-observability"
+                                target="_blank"
+                                >Observability</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.kaggle.com/code/kaggle5daysofai/day-4b-agent-evaluation"
+                                target="_blank"
+                                >Evaluation</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.kaggle.com/code/kaggle5daysofai/day-5a-agent2agent-communication"
+                                target="_blank"
+                                >Agent2Agent</a
+                              >
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.kaggle.com/code/kaggle5daysofai/day-5b-agent-deployment"
+                                target="_blank"
+                                >Deployment</a
+                              >
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/code/markishere/day-1-prompting"
+                            target="_blank"
+                            >Prompting</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/code/markishere/day-1-evaluation-and-structured-output"
+                            target="_blank"
+                            >Evaluation and structured</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/code/markishere/day-2-document-q-a-with-rag"
+                            target="_blank"
+                            >RAG</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/code/markishere/day-2-embeddings-and-similarity-scores"
+                            target="_blank"
+                            >Embeddings</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/code/markishere/day-2-classifying-embeddings-with-keras"
+                            target="_blank"
+                            >Embeddings with Keras</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/code/markishere/day-3-function-calling-with-the-gemini-api"
+                            target="_blank"
+                            >Function</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/code/markishere/day-3-building-an-agent-with-langgraph/"
+                            target="_blank"
+                            >LangGraph</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/code/markishere/day-4-fine-tuning-a-custom-model"
+                            target="_blank"
+                            >Fine Tuning</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="https://www.kaggle.com/code/markishere/day-4-google-search-grounding"
+                            target="_blank"
+                            >Grounding</a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a
+                        href="https://aistudio.google.com/prompts/new_chat"
+                        target="_blank"
+                        >AI Studio</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.kaggle.com/code/markishere/day-0-troubleshooting-and-faqs/"
+                        >TS & FAQ</a
+                      >
+                    </li>
+                    <li>
+                      <a href="https://textfx.withgoogle.com/" target="_blank"
+                        >textfx</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://sql-talk-r5gdynozbq-uc.a.run.app/"
+                        target="_blank"
+                        >BigQuery SQLTalk</a
+                      >
+                    </li>
+                    <li>
+                      <a href="https://notebooklm.google/" target="_blank"
+                        >NotebookLM</a
+                      >
+                    </li>
+                    <li>
+                      <a href="https://keras.io/guides/" target="_blank"
+                        >Keras</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://ai.google.dev/api/caching#Schema"
+                        target="_blank"
+                        >Caching</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.langchain.com/langgraph"
+                        target="_blank"
+                        >LangGraph</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://cloud.google.com/vertex-ai/generative-ai/docs/models/evaluation-overview"
+                        target="_blank"
+                        >GenAI</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://cloud.google.com/blog/products/ai-machine-learning/supervised-fine-tuning-for-gemini-llm"
+                        target="_blank"
+                        >supervised fine-tuning</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://ai.google.dev/gemini-api/docs/model-tuning/tutorial?hl=en&lang=python"
+                        target="_blank"
+                        >Fine-tuning tutorial</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li id="demo9">
+                  <a>MS</a>
+                  <ul>
+                    <li>
+                      <a
+                        href="https://adoption.microsoft.com/en-us/copilot/chat-and-agent-starter-kit/"
+                        target="_blank"
+                        >Agent Starter Kit</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://learn.microsoft.com/en-us/training/courses/ai-102t00"
+                        target="_blank"
+                        >MS AI-102</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://learn.microsoft.com/en-us/training/modules/prepare-to-develop-ai-solutions-azure/"
+                        target="_blank"
+                        >AI Azure</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li id="demo10">
+                  <a>databricks</a>
+                  <ul>
+                    <li>
+                      <a
+                        href="https://www.databricks.com/learn/training/generative-ai-fundamentals-accreditation"
+                        target="_blank"
+                        >AI Fundamentals</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li id="demo11">
+                  <a>Stanford</a>
+                  <ul>
+                    <li>
+                      <a
+                        href="https://www.youtube.com/playlist?list=PLoROMvodv4rOca_Ovz1DvdtWuz8BfSWL2"
+                        target="_blank"
+                        >CS221</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.youtube.com/playlist?list=PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D"
+                        target="_blank"
+                        >CS224N</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.youtube.com/playlist?list=PLoROMvodv4rPt5D0zs3YhbWSZA8Q_DyiJ"
+                        target="_blank"
+                        >CS224U</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.youtube.com/watch?v=K_Dh0Sxujuc&list=PLoROMvodv4rOwvldxftJTmoR3kRcWkJBp"
+                        target="_blank"
+                        >XCS224U</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU"
+                        target="_blank"
+                        >CS229</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.youtube.com/playlist?list=PLoROMvodv4rP8nAmISxFINlGKSK4rbLKh"
+                        target="_blank"
+                        >CS229M</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.youtube.com/playlist?list=PLoROMvodv4rOABXSygHTsbvUz4G_YQhOb"
+                        target="_blank"
+                        >CS230</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.youtube.com/playlist?list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16"
+                        target="_blank"
+                        >CS231N</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.youtube.com/playlist?list=PLoROMvodv4rN4wG6Nk6sNpTEbuOSosZdX"
+                        target="_blank"
+                        >CS234</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.youtube.com/watch?v=SQ3fZ1sAqXI&list=PLoROMvodv4rOY23Y0BoGoBGgQ1zmU_MT_"
+                        target="_blank"
+                        >CS336</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://cme295.stanford.edu/syllabus/"
+                        target="_blank"
+                        >CME295</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://cme296.stanford.edu/syllabus/"
+                        target="_blank"
+                        >CME296</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a
+                    href="https://scikit-learn.org/0.19/datasets/twenty_newsgroups.html"
+                    target="_blank"
+                    >scikit-learn</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://kikivoice.ai/ai-voice-cloning"
+                    target="_blank"
+                    >kikivoice</a
+                  >
+                </li>
+                <li>
+                  <a href="https://aireleasetracker.com/" target="_blank"
+                    >AI Tracker</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li id="demo12">
+              <a>Job Search</a>
+              <ul>
+                <li>
+                  <a
+                    href="https://att.wd1.myworkdayjobs.com/en-US/ATTGeneral/login?redirect=%2Fen-US%2FATTGeneral%2FuserHome"
+                    target="_blank"
+                    >AT&T</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://boeing.wd1.myworkdayjobs.com/en-US/EXTERNAL_CAREERS/login"
+                    target="_blank"
+                    >Boeing</a
+                  >
+                </li>
+                <li>
+                  <a href="https://careers.cisco.com/" target="_blank">Cisco</a>
+                </li>
+                <li>
+                  <a
+                    href="https://workforcenow.adp.com/mascsr/applicant/mdf/recruitment/postLogin.html?cid=09a14fa2-30e8-49e6-80ed-82a5812bd326&ccId=9200365399883_2"
+                    target="_blank"
+                    >Contech</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://attract-careers1-echostar.icims.com/jobs/dashboard"
+                    target="_blank"
+                    >Echostar</a
+                  >
+                </li>
+                <li>
+                  <a href="https://jobs.ericsson.com/" target="_blank"
+                    >Ericsson</a
+                  >
+                </li>
+                <li>
+                  <a href="https://careers.f5.com/" target="_blank">F5</a>
+                </li>
+                <li>
+                  <a href="https://careers.fortinet.com/" target="_blank"
+                    >Fortinet</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://career55.sapsf.eu/careers?company=HCLPRD"
+                    target="_blank"
+                    >HCL</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://careers.hpe.com/us/en/search-results"
+                    target="_blank"
+                    >HPE</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://careers.huawei.com/reccampportal/portal5/index.html"
+                    target="_blank"
+                    >Huawei</a
+                  >
+                </li>
+                <li>
+                  <a href="https://careers.juniper.net/" target="_blank"
+                    >Juniper</a
+                  >
+                </li>
+                <li>
+                  <a href="https://inabia.applytojob.com/" target="_blank"
+                    >Inabia</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://intel.wd1.myworkdayjobs.com/en-US/External/userHome"
+                    target="_blank"
+                    >Intel</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://jobs.keysight.com/external/jobs/"
+                    target="_blank"
+                    >Keysight</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.governmentjobs.com/careers/kingcounty"
+                    target="_blank"
+                    >kingcounty</a
+                  >
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com/jobs/" target="_blank"
+                    >LinkedIn</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://explore.jobs.netflix.net/careers?pid=790318653296&domain=netflix.com&sort_by=relevance"
+                    target="_blank"
+                    >Netflix</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.oracle.com/corporate/careers/"
+                    target="_blank"
+                    >Oracle</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://jobs.verstela.com/search?keywords=&AndOr=OR&postal_code=98008&branch=&radius=15&submit=true"
+                    target="_blank"
+                    >verstela</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://career55.sapsf.eu/careers?company=wiprolimitP2/"
+                    target="_blank"
+                    >wipro</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="https://k9scli.io/topics/commands/" target="_blank"
+                >K9s</a
+              >
+            </li>
+            <li>
+              <a href="https://rafeeqarabic.com/" target="_blank"
+                >Rafeeq Arabic</a
+              >
+            </li>
+            <li>
+              <a href="https://pro.terefic.com/manage" target="_blank"
+                >Terefic</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://app.skillsurvey.com/Reference/Candidate/MyReferences/?candidateId=7WploMrAh%2BY0F773c3AIag%253d%253d"
+                target="_blank"
+                >Skillsurvey</a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div
+      id="traffic-stats"
+      style="
+        position: fixed;
+        top: 10px;
+        left: 10;
+        z-index: 9999;
+        font-size: 14px;
+        font-weight: bold;
+        color: #444;
+        padding-left: 10px;
+      "
+    >
+      Loading stats...
+    </div>
+    <div id="background-container"></div>
+    <div id="slideshow-controls">
+      <button class="control-button" onclick="prevSlide()">Prev</button>
+      <button class="control-button" onclick="nextSlide()">Next</button>
+      <div id="number-buttons"></div>
+    </div>
 
     <!-- <div class="scroll-wrapper">
         <div class="scroll-container">
@@ -442,236 +1369,297 @@
             <div class="scroll-content" id="scrollText"></div>
         </div>
     </div>  -->
-<script>
-  const images = [
-'https://github.com/qaswarh/4any1/blob/main/5G.JPG?raw=true',    
-'https://github.com/qaswarh/4any1/blob/main/2345G.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/5GStack.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/IMS.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/5GAir1.jpg?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/5GAir2.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/6G.JPG?raw=true',  
-'https://github.com/qaswarh/4any1/blob/main/ORAN1.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/ORAN2.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/ORAN3.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/k8cs1.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/k8cs2.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/docker.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/sdwan.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/ath.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/aiglossary.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/5GRegister1.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/5GRegister2.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/5GDeregister1.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/5GSvcReq1.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/5GUEConfigUpdate.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/5GNSSAA.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/charging.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/UCC1.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/UCC2.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/bsf.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/CDL.JPG?raw=true',
-'https://github.com/qaswarh/4any1/blob/main/confused-smiley-clipart-3.jpg?raw=true'
-    // Add more image URLs as needed
-  ];
+    <script>
+      const images = [
+        "https://github.com/qaswarh/4any1/blob/main/5G.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/2345G.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/5GStack.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/IMS.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/5GAir1.jpg?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/5GAir2.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/6G.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/ORAN1.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/ORAN2.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/ORAN3.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/k8cs1.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/k8cs2.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/docker.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/sdwan.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/ath.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/aiglossary.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/5GRegister1.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/5GRegister2.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/5GDeregister1.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/5GSvcReq1.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/5GUEConfigUpdate.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/5GNSSAA.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/charging.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/UCC1.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/UCC2.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/bsf.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/CDL.JPG?raw=true",
+        "https://github.com/qaswarh/4any1/blob/main/confused-smiley-clipart-3.jpg?raw=true",
+        // Add more image URLs as needed
+      ];
 
-  let currentIndex = 0;
-  const backgroundContainer = document.getElementById('background-container');
-  const numberButtonsContainer = document.getElementById('number-buttons');
+      let currentIndex = 0;
+      const backgroundContainer = document.getElementById(
+        "background-container",
+      );
+      const numberButtonsContainer = document.getElementById("number-buttons");
 
-  function updateBackground() {
-    backgroundContainer.style.opacity = 0;
+      function updateBackground() {
+        backgroundContainer.style.opacity = 0;
 
-    setTimeout(() => {
-      backgroundContainer.innerHTML = `<img src="${images[currentIndex]}" alt="Slide ${currentIndex + 1}">`;
-      backgroundContainer.style.opacity = 1;
-    }, 1000); // Adjust the duration based on your preference
+        setTimeout(() => {
+          backgroundContainer.innerHTML = `<img src="${images[currentIndex]}" alt="Slide ${currentIndex + 1}">`;
+          backgroundContainer.style.opacity = 1;
+        }, 1000); // Adjust the duration based on your preference
 
-    updateNumberButtons();
-  }
+        updateNumberButtons();
+      }
 
-  function updateNumberButtons() {
-    numberButtonsContainer.innerHTML = '';
+      function updateNumberButtons() {
+        numberButtonsContainer.innerHTML = "";
 
-    images.forEach((_, index) => {
-      const button = document.createElement('div');
-      button.className = `number-button ${index === currentIndex ? 'current-slide' : ''}`;
-      button.addEventListener('click', () => {
-        currentIndex = index;
+        images.forEach((_, index) => {
+          const button = document.createElement("div");
+          button.className = `number-button ${index === currentIndex ? "current-slide" : ""}`;
+          button.addEventListener("click", () => {
+            currentIndex = index;
+            updateBackground();
+          });
+          numberButtonsContainer.appendChild(button);
+        });
+      }
+
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
         updateBackground();
-      });
-      numberButtonsContainer.appendChild(button);
-    });
-  }
+      }
 
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    updateBackground();
-  }
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateBackground();
+      }
 
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % images.length;
-    updateBackground();
-  }
+      // Initial background setup
+      updateBackground();
 
-  // Initial background setup
-  updateBackground();
+      let scrolling = true;
+      let speed = 30;
+      let pos = 0; // Store the current scroll position
+      let scrollAnimation; // Store the animation reference
 
-let scrolling = true;
-let speed = 30;
-let pos = 0; // Store the current scroll position
-let scrollAnimation; // Store the animation reference
+      async function loadGlossary() {
+        try {
+          const response = await fetch("glossary.txt");
+          const text = await response.text();
+          const textElement = document.getElementById("scrollText");
 
-async function loadGlossary() {
-    try {
-        const response = await fetch('glossary.txt');
-        const text = await response.text();
-        const textElement = document.getElementById("scrollText");
+          // Convert text to structured HTML, keeping tables in sequence
+          textElement.innerHTML = formatContent(text);
 
-        // Convert text to structured HTML, keeping tables in sequence
-        textElement.innerHTML = formatContent(text);
+          textElement.style.bottom = `${pos}px`; // Start from last position
+          startScrolling();
+        } catch (error) {
+          console.error("Error loading glossary:", error);
+        }
+      }
 
-        textElement.style.bottom = `${pos}px`; // Start from last position
-        startScrolling();
-    } catch (error) {
-        console.error('Error loading glossary:', error);
-    }
-}
+      // Function to format content while maintaining text-table order
+      function formatContent(text) {
+        let lines = text.trim().split("\n");
+        let formattedHTML = "";
+        let tableData = [];
+        let isTable = false;
 
-// Function to format content while maintaining text-table order
-function formatContent(text) {
-    let lines = text.trim().split("\n");
-    let formattedHTML = "";
-    let tableData = [];
-    let isTable = false;
+        for (let i = 0; i < lines.length; i++) {
+          let line = lines[i].trim();
 
-    for (let i = 0; i < lines.length; i++) {
-        let line = lines[i].trim();
-
-        if (line.includes("\t")) {
-            isTable = true; 
+          if (line.includes("\t")) {
+            isTable = true;
             tableData.push(line); // Collect table lines
-        } else {
+          } else {
             if (isTable) {
-                // Insert table when transitioning back to text
-                formattedHTML += convertTextToTable(tableData.join("\n"));
-                tableData = []; // Reset for next table
-                isTable = false;
+              // Insert table when transitioning back to text
+              formattedHTML += convertTextToTable(tableData.join("\n"));
+              tableData = []; // Reset for next table
+              isTable = false;
             }
             formattedHTML += `<div class="scroll-line">${line}</div>`; // Normal text
+          }
         }
-    }
 
-    // If the last part is a table, insert it at the end
-    if (tableData.length > 0) {
-        formattedHTML += convertTextToTable(tableData.join("\n"));
-    }
+        // If the last part is a table, insert it at the end
+        if (tableData.length > 0) {
+          formattedHTML += convertTextToTable(tableData.join("\n"));
+        }
 
-    return formattedHTML;
-}
+        return formattedHTML;
+      }
 
-// Function to convert tab-separated text into an HTML table
-function convertTextToTable(text) {
-    let lines = text.trim().split("\n");
-    let tableHTML = `
+      // Function to convert tab-separated text into an HTML table
+      function convertTextToTable(text) {
+        let lines = text.trim().split("\n");
+        let tableHTML = `
         <div class="table-wrapper">
             <table class="scroll-table">
     `;
 
-    lines.forEach((line, index) => {
-        let columns = line.split("\t"); // Split by tab spaces
-        if (index === 0) {
-            tableHTML += `<thead><tr>` +
-                columns.map(col => `<th>${col}</th>`).join("") +
-                `</tr></thead><tbody>`;
-        } else {
-            tableHTML += `<tr>` +
-                columns.map(col => `<td>${col}</td>`).join("") +
-                `</tr>`;
-        }
-    });
+        lines.forEach((line, index) => {
+          let columns = line.split("\t"); // Split by tab spaces
+          if (index === 0) {
+            tableHTML +=
+              `<thead><tr>` +
+              columns.map((col) => `<th>${col}</th>`).join("") +
+              `</tr></thead><tbody>`;
+          } else {
+            tableHTML +=
+              `<tr>` +
+              columns.map((col) => `<td>${col}</td>`).join("") +
+              `</tr>`;
+          }
+        });
 
-    tableHTML += "</tbody></table></div>";
-    return tableHTML;
-}
+        tableHTML += "</tbody></table></div>";
+        return tableHTML;
+      }
 
-function startScrolling() {
-    const text = document.getElementById("scrollText");
+      function startScrolling() {
+        const text = document.getElementById("scrollText");
 
-    function scrollUp() {
-        if (!scrolling) return; // Stop scrolling if paused
-        pos += 1;
-        text.style.bottom = `${pos}px`;
+        function scrollUp() {
+          if (!scrolling) return; // Stop scrolling if paused
+          pos += 1;
+          text.style.bottom = `${pos}px`;
 
-        if (pos >= document.querySelector(".scroll-container").offsetHeight) {
+          if (pos >= document.querySelector(".scroll-container").offsetHeight) {
             pos = -text.scrollHeight; // Reset when text fully scrolls out
+          }
+
+          scrollAnimation = setTimeout(scrollUp, speed);
         }
 
-        scrollAnimation = setTimeout(scrollUp, speed);
-    }
+        scrollUp();
+      }
 
-    scrollUp();
-}
+      // Toggle Play/Pause button functionality
+      document
+        .getElementById("toggleScroll")
+        .addEventListener("click", function () {
+          scrolling = !scrolling;
+          this.textContent = scrolling ? "Pause" : "Play";
 
-// Toggle Play/Pause button functionality
-document.getElementById("toggleScroll").addEventListener("click", function () {
-    scrolling = !scrolling;
-    this.textContent = scrolling ? "Pause" : "Play";
+          if (scrolling) {
+            startScrolling(); // Resume from last position
+          } else {
+            clearTimeout(scrollAnimation); // Pause without resetting position
+          }
+        });
 
-    if (scrolling) {
-        startScrolling(); // Resume from last position
-    } else {
-        clearTimeout(scrollAnimation); // Pause without resetting position
-    }
-});
+      async function loadStats() {
+        try {
+          // Add a timestamp query string to bust the cache
+          const response = await fetch(`data/stats.json?ts=${Date.now()}`);
+          const stats = await response.json();
+          document.getElementById("traffic-stats").innerText =
+            `${stats.views} Views and ${stats.clones} Clones during the last 14 Days`;
+        } catch (e) {
+          document.getElementById("traffic-stats").innerText =
+            "Stats unavailable";
+        }
+      }
+      loadStats();
 
-async function loadStats() {
-  try {
-    // Add a timestamp query string to bust the cache
-    const response = await fetch(`data/stats.json?ts=${Date.now()}`);
-    const stats = await response.json();
-    document.getElementById("traffic-stats").innerText =
-      `${stats.views} Views and ${stats.clones} Clones during the last 14 Days`;
-  } catch (e) {
-    document.getElementById("traffic-stats").innerText = "Stats unavailable";
-  }
-}
-loadStats();
+      // Load glossary on page load
+      window.onload = loadGlossary;
+    </script>
+    <!-- Full-Screen Popup Modal for IPv4 & IPv6 Visualizer -->
+    <div
+      id="ipv4v6Modal"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 9999;
+        padding: 24px;
+      "
+    >
+      <div
+        style="
+          position: relative;
+          width: 100%;
+          height: 100%;
+          max-width: 1440px;
+          margin: 0 auto;
+          background: #fff;
+          border-radius: 14px;
+          overflow: hidden;
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        "
+      >
+        <button
+          onclick="closeIpv4v6Modal()"
+          style="
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            z-index: 10000;
+            padding: 6px 14px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            background: #dc2626;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+          "
+        >
+          ✕ Close
+        </button>
+        <iframe
+          id="ipv4v6Frame"
+          src=""
+          title="IPv4 & IPv6 Visualizer"
+          style="width: 100%; height: 100%; border: none"
+        ></iframe>
+      </div>
+    </div>
 
-// Load glossary on page load
-window.onload = loadGlossary;
+    <script>
+      function openToolModal(e, url) {
+        e.preventDefault();
+        var modal = document.getElementById("ipv4v6Modal");
+        var frame = document.getElementById("ipv4v6Frame");
+        frame.src = url;
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
 
-</script>
-<!-- Full-Screen Popup Modal for IPv4 & IPv6 Visualizer -->
-<div id="ipv4v6Modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:9999; padding:24px;">
-  <div style="position:relative; width:100%; height:100%; max-width:1440px; margin:0 auto; background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 20px 25px -5px rgba(0,0,0,0.3);">
-    <button onclick="closeIpv4v6Modal()" style="position:absolute; top:12px; right:16px; z-index:10000; padding:6px 14px; font-size:14px; font-weight:700; color:#fff; background:#dc2626; border:none; border-radius:8px; cursor:pointer;">
-      ✕ Close
-    </button>
-    <iframe id="ipv4v6Frame" src="" title="IPv4 & IPv6 Visualizer" style="width:100%; height:100%; border:none;"></iframe>
-  </div>
-</div>
+      function closeIpv4v6Modal() {
+        var modal = document.getElementById("ipv4v6Modal");
+        var frame = document.getElementById("ipv4v6Frame");
+        modal.style.display = "none";
+        frame.src = "";
+        document.body.style.overflow = "";
+      }
 
-<script>
-  function openIpv4v6Modal(e) {
-    e.preventDefault();
-    var frame = document.getElementById('ipv4v6Frame');
-    if (frame.getAttribute('src') !== 'https://qaswarh.github.io/ipv4v6/') {
-      frame.src = 'https://qaswarh.github.io/ipv4v6/';
-    }
-    document.getElementById('ipv4v6Modal').style.display = 'block';
-  }
-  function closeIpv4v6Modal() {
-    document.getElementById('ipv4v6Modal').style.display = 'none';
-  }
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeIpv4v6Modal();
-  });
-    window.addEventListener('message', function (e) {
-    if (e.origin === 'https://qaswarh.github.io' && e.data === 'closeIpv4v6Modal') {
-      closeIpv4v6Modal();
-    }
-  });
-</script>
-</body>
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeIpv4v6Modal();
+        }
+      });
+
+      window.addEventListener("message", function (e) {
+        if (
+          e.origin === "https://github.io" &&
+          (e.data === "closeIpv4v6Modal" || e.data === "closeStpModal")
+        ) {
+          closeIpv4v6Modal();
+        }
+      });
+    </script>
+  </body>
 </html>
