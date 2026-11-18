@@ -1656,7 +1656,9 @@
       window.addEventListener("message", function (e) {
         if (
           e.origin === "https://qaswarh.github.io" &&
-          (e.data === "closeIpv4v6Modal" || e.data === "closeStpModal")
+          (e.data === "closeIpv4v6Modal" ||
+            e.data === "closeStpModal" ||
+            e.data === "closeOspfModal")
         ) {
           closeIpv4v6Modal();
         }
