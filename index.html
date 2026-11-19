@@ -606,6 +606,13 @@
                     >BGP &amp; EIGRP Simulator</a
                   >
                 </li>
+                <li>
+                  <a
+                    href="https://github.io"
+                    onclick="openToolModal(event, this.href)"
+                    >ACL &amp; Wildcard Tester</a
+                  >
+                </li>
               </ul>
             </li>
             <li>
@@ -1666,7 +1673,8 @@
           (e.data === "closeIpv4v6Modal" ||
             e.data === "closeStpModal" ||
             e.data === "closeOspfModal" ||
-            e.data === "closeBgpEigrpModal")
+            e.data === "closeBgpEigrpModal" ||
+            e.data === "closeAclModal")
         ) {
           closeIpv4v6Modal();
         }
