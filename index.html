@@ -599,6 +599,13 @@
                     >OSPF Explorer</a
                   >
                 </li>
+                <li>
+                  <a
+                    href="https://qaswarh.github.io/encor-bgp-eigrp"
+                    onclick="openToolModal(event, this.href)"
+                    >BGP &amp; EIGRP Simulator</a
+                  >
+                </li>
               </ul>
             </li>
             <li>
@@ -1658,7 +1665,8 @@
           e.origin === "https://qaswarh.github.io" &&
           (e.data === "closeIpv4v6Modal" ||
             e.data === "closeStpModal" ||
-            e.data === "closeOspfModal")
+            e.data === "closeOspfModal" ||
+            e.data === "closeBgpEigrpModal")
         ) {
           closeIpv4v6Modal();
         }
