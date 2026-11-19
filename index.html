@@ -613,6 +613,13 @@
                     >ACL &amp; Wildcard Tester</a
                   >
                 </li>
+                <li>
+                  <a
+                    href="https://qaswarh.github.io/encor-automation"
+                    onclick="openToolModal(event, this.href)"
+                    >RESTCONF &amp; YANG Explorer</a
+                  >
+                </li>
               </ul>
             </li>
             <li>
@@ -1674,7 +1681,8 @@
             e.data === "closeStpModal" ||
             e.data === "closeOspfModal" ||
             e.data === "closeBgpEigrpModal" ||
-            e.data === "closeAclModal")
+            e.data === "closeAclModal" ||
+            e.data === "closeAutomationModal")
         ) {
           closeIpv4v6Modal();
         }
