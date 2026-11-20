@@ -631,6 +631,14 @@
             </li>
             <li>
               <a
+                href="https://qaswarh.github.io/encor-assurance"
+                onclick="openToolModal(event, this.href)"
+                >Syslog, NetFlow &amp; SPAN Explorer</a
+              >
+            </li>
+
+            <li>
+              <a
                 href="https://github.com/qaswarh/4any1/blob/main/packetcorekt.pdf"
                 target="_blank"
                 >4G5GPacketCore</a
@@ -1690,7 +1698,8 @@
             e.data === "closeBgpEigrpModal" ||
             e.data === "closeAclModal" ||
             e.data === "closeAutomationModal" ||
-            e.data === "closeOverlayModal")
+            e.data === "closeOverlayModal" ||
+            e.data === "closeAssuranceModal")
         ) {
           closeIpv4v6Modal();
         }
