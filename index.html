@@ -620,6 +620,13 @@
                     >RESTCONF &amp; YANG Explorer</a
                   >
                 </li>
+                <li>
+                  <a
+                    href="https://github.io"
+                    onclick="openToolModal(event, this.href)"
+                    >VXLAN &amp; LISP Overlay Visualizer</a
+                  >
+                </li>
               </ul>
             </li>
             <li>
@@ -1682,7 +1689,8 @@
             e.data === "closeOspfModal" ||
             e.data === "closeBgpEigrpModal" ||
             e.data === "closeAclModal" ||
-            e.data === "closeAutomationModal")
+            e.data === "closeAutomationModal" ||
+            e.data === "closeOverlayModal")
         ) {
           closeIpv4v6Modal();
         }
