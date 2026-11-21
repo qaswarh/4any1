@@ -634,6 +634,13 @@
                     >Syslog, NetFlow &amp; SPAN Explorer</a
                   >
                 </li>
+                <li>
+                  <a
+                    href="https://qaswarh.github.io/encor-multicast-qos"
+                    onclick="openToolModal(event, this.href)"
+                    >Multicast, QoS &amp; EtherChannel Simulator</a
+                  >
+                </li>
               </ul>
             </li>
             <li>
@@ -1698,7 +1705,8 @@
             e.data === "closeAclModal" ||
             e.data === "closeAutomationModal" ||
             e.data === "closeOverlayModal" ||
-            e.data === "closeAssuranceModal")
+            e.data === "closeAssuranceModal" ||
+            e.data === "closeMulticastQosModal")
         ) {
           closeIpv4v6Modal();
         }
